@@ -4,3 +4,5 @@
 
 /.vs/EmployeesTable/v15/Server/sqlite3
 /.vs/EmployeesTable/v15/.suo
+/EmployeesTable/bin/Debug
+/EmployeesTable/obj/Debug
