@@ -8,7 +8,6 @@ namespace EmployeesTable.Forms
     public partial class GridFilterForm : Form
     {
         private readonly List<Employee> employees;
-        public GridFilterParameters Parameters { get; set; }
 
         public GridFilterForm(List<Employee> employees)
         {
@@ -17,9 +16,15 @@ namespace EmployeesTable.Forms
             InitializeComponent();
         }
 
+        public GridFilterParameters Parameters { get; set; }
+
         private void GridFilter_Load(object sender, EventArgs e)
         {
-            var representations = employees.Select(x => x.Representation).Distinct().OrderBy(x => x);
+            var representations = employees
+                .Select(x => x.Representation.Replace("  ", " "))
+                .Distinct()
+                .OrderBy(x => x);
+
             foreach (var representation in representations)
                 cbRepresentation.Items.Add(representation);
         }
@@ -28,8 +33,8 @@ namespace EmployeesTable.Forms
         {
             Parameters.IsFired = cbFiredEmployees.Checked;
             Parameters.Representation = cbRepresentation.SelectedItem.ToString();
-            Parameters.HoursNumberFrom = (int)nudHoursNumberFrom.Value;
-            Parameters.HoursNumberTo = (int)nudHoursNumberTo.Value;
+            Parameters.HoursNumberFrom = (int) nudHoursNumberFrom.Value;
+            Parameters.HoursNumberTo = (int) nudHoursNumberTo.Value;
 
             DialogResult = DialogResult.OK;
         }

@@ -5,13 +5,13 @@ namespace EmployeesTable.Forms
 {
     public partial class AddEmployeeDataForm : Form
     {
-        public Employee Employee { get; set; }
-
         public AddEmployeeDataForm(Employee employee)
         {
             InitializeComponent();
             Employee = employee;
         }
+
+        public Employee Employee { get; set; }
 
         private void AddDataToDb_Load(object sender, EventArgs e)
         {

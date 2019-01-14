@@ -29,7 +29,8 @@ namespace EmployeesTable.Forms
 
         private void btAdd_Click(object sender, EventArgs e)
         {
-            var addData = new AddFullDayDetalizationDataForm(new FullDayDetalization {WorkDate = null, RestDate = null});
+            var addData =
+                new AddFullDayDetalizationDataForm(new FullDayDetalization {WorkDate = null, RestDate = null});
 
             if (addData.ShowDialog() == DialogResult.OK)
             {
@@ -44,7 +45,8 @@ namespace EmployeesTable.Forms
 
         private void btDeleteSelectRow_Click(object sender, EventArgs e)
         {
-            var mbAreYouSure = MessageBox.Show(@"Вы уверены, что хотите удалить запись?", @"Удаление", MessageBoxButtons.YesNo,
+            var mbAreYouSure = MessageBox.Show(@"Вы уверены, что хотите удалить запись?", @"Удаление",
+                MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
             if (mbAreYouSure == DialogResult.No)
@@ -65,10 +67,11 @@ namespace EmployeesTable.Forms
 
             if (addData.ShowDialog() == DialogResult.OK
                 && employeeRepository.TryEditFullDayDetalization(wDate, id, addData.Detalization))
-                 EditRowOnGrid(selectedRow, addData);
+                EditRowOnGrid(selectedRow, addData);
         }
 
-        private void EditRowOnGrid(DataGridViewRow selectedRow, AddFullDayDetalizationDataForm addFullDayDetalizationData)
+        private void EditRowOnGrid(DataGridViewRow selectedRow,
+            AddFullDayDetalizationDataForm addFullDayDetalizationData)
         {
             selectedRow.Cells[0].Value = $"{addFullDayDetalizationData.Detalization.WorkDate:dd/MM/yyyy}";
             selectedRow.Cells[1].Value = addFullDayDetalizationData.Detalization.Payment.GetDisplayName();
@@ -81,7 +84,7 @@ namespace EmployeesTable.Forms
         private FullDayDetalization GetFDetalization(DataGridViewRow selectedRow)
         {
             DateTime? restDate = null;
-            if (!string.IsNullOrEmpty((string)selectedRow.Cells[4].Value))
+            if (!string.IsNullOrEmpty((string) selectedRow.Cells[4].Value))
                 restDate = DateTime.Parse(selectedRow.Cells[4]?.Value.ToString());
             return new FullDayDetalization
             {

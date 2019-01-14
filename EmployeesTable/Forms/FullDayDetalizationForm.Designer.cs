@@ -44,7 +44,6 @@ namespace EmployeesTable.Forms
             this.usedDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.detalizationDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,11 +51,11 @@ namespace EmployeesTable.Forms
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btAdd,
-            this.btDeleteSelectRow,
-            this.editBtn});
+            this.editBtn,
+            this.btDeleteSelectRow});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(670, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(647, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -66,7 +65,7 @@ namespace EmployeesTable.Forms
             this.btAdd.Image = ((System.Drawing.Image)(resources.GetObject("btAdd.Image")));
             this.btAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btAdd.Name = "btAdd";
-            this.btAdd.Size = new System.Drawing.Size(33, 22);
+            this.btAdd.Size = new System.Drawing.Size(63, 22);
             this.btAdd.Text = "Добавить";
             this.btAdd.ToolTipText = "Добавить запись";
             this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
@@ -77,7 +76,7 @@ namespace EmployeesTable.Forms
             this.btDeleteSelectRow.Image = ((System.Drawing.Image)(resources.GetObject("btDeleteSelectRow.Image")));
             this.btDeleteSelectRow.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btDeleteSelectRow.Name = "btDeleteSelectRow";
-            this.btDeleteSelectRow.Size = new System.Drawing.Size(44, 22);
+            this.btDeleteSelectRow.Size = new System.Drawing.Size(55, 22);
             this.btDeleteSelectRow.Text = "Удалить";
             this.btDeleteSelectRow.ToolTipText = "Удалить выбранную запись";
             this.btDeleteSelectRow.Click += new System.EventHandler(this.btDeleteSelectRow_Click);
@@ -88,17 +87,16 @@ namespace EmployeesTable.Forms
             this.editBtn.Image = ((System.Drawing.Image)(resources.GetObject("editBtn.Image")));
             this.editBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.editBtn.Name = "editBtn";
-            this.editBtn.Size = new System.Drawing.Size(31, 22);
+            this.editBtn.Size = new System.Drawing.Size(91, 22);
             this.editBtn.Text = "Редактировать";
             this.editBtn.ToolTipText = "Редактировать выбранную запись";
             this.editBtn.Click += new System.EventHandler(this.btEdit_Click);
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {});
             this.statusStrip1.Location = new System.Drawing.Point(0, 262);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(670, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(647, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -115,7 +113,7 @@ namespace EmployeesTable.Forms
             this.detalizationDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.detalizationDataGridView.Location = new System.Drawing.Point(0, 25);
             this.detalizationDataGridView.Name = "detalizationDataGridView";
-            this.detalizationDataGridView.Size = new System.Drawing.Size(670, 237);
+            this.detalizationDataGridView.Size = new System.Drawing.Size(647, 237);
             this.detalizationDataGridView.TabIndex = 2;
             // 
             // workDate
@@ -152,7 +150,7 @@ namespace EmployeesTable.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(670, 284);
+            this.ClientSize = new System.Drawing.Size(647, 284);
             this.Controls.Add(this.detalizationDataGridView);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
@@ -161,8 +159,6 @@ namespace EmployeesTable.Forms
             this.Load += new System.EventHandler(this.EmployeeFDetalizationForm_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.detalizationDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

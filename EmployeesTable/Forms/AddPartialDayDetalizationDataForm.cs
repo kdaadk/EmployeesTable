@@ -6,13 +6,13 @@ namespace EmployeesTable.Forms
 {
     public partial class AddPartialDayDetalizationDataForm : Form
     {
-        public PartialDayDetalization Detalization { get; set; }
-
         public AddPartialDayDetalizationDataForm(PartialDayDetalization Detalization)
         {
             this.Detalization = Detalization;
             InitializeComponent();
         }
+
+        public PartialDayDetalization Detalization { get; set; }
 
         private void AddDataToDb_Load(object sender, EventArgs e)
         {
@@ -29,7 +29,9 @@ namespace EmployeesTable.Forms
             Detalization.WorkHours = double.Parse(tbHours.Text);
             Detalization.Used = cbUsed.Text == @"Да"
                 ? Used.YesFull
-                : cbUsed.Text == @"Частично" ? Used.YesPartially : Used.No;
+                : cbUsed.Text == @"Частично"
+                    ? Used.YesPartially
+                    : Used.No;
             Detalization.Comment = tbComment.Text;
             Detalization.BalanceHours = double.Parse(tbBalance.Text);
 

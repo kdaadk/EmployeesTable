@@ -4,11 +4,11 @@ namespace TinyStore.Attributes
 {
     public class CollectionNameAttribute : Attribute
     {
-        public string Name { get; }
-
         public CollectionNameAttribute(string name)
         {
-            this.Name = name;
+            Name = name;
         }
+
+        public string Name { get; }
     }
 }

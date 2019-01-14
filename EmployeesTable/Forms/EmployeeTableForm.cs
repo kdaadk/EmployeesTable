@@ -1,31 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Windows.Forms;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using EmployeesTable.Import;
 using Microsoft.Office.Interop.Excel;
-using System.IO;
-using Application = Microsoft.Office.Interop.Excel.Application;
+using Application = System.Windows.Forms.Application;
 
 namespace EmployeesTable.Forms
 {
     public partial class EmployeeTableForm : Form
     {
         private readonly EmployeeRepository employeeRepository;
-        private List<Employee> employees;
-        private readonly System.Data.DataTable dgvCacheData;
         private readonly StringBuilder Log;
+        private List<Employee> employees;
 
         public EmployeeTableForm()
         {
-            InitializeComponent();
             employeeRepository = new EmployeeRepository();
-            dgvCacheData = new System.Data.DataTable();
             Log = new StringBuilder();
-            }
+            InitializeComponent();
+        }
 
         private void EmployeeTableForm_Load(object sender, EventArgs e)
         {
@@ -33,7 +31,6 @@ namespace EmployeesTable.Forms
             //dbTransfer.LoadData();
 
             LoadEmployees();
-            LoadCacheData();
         }
 
         private void EmployeeTableForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -53,62 +50,15 @@ namespace EmployeesTable.Forms
             }
         }
 
-        private void LoadCacheData()
-        {
-            foreach (DataGridViewColumn col in dgvEmployees.Columns)
-                dgvCacheData.Columns.Add(col.Name);
-
-            foreach (DataGridViewRow row in dgvEmployees.Rows)
-            {
-                var dRow = dgvCacheData.NewRow();
-                foreach (DataGridViewCell cell in row.Cells)
-                    dRow[cell.ColumnIndex] = cell.Value;
-                dgvCacheData.Rows.Add(dRow);
-            }
-        }
-
         private void LoadEmployees()
         {
             dgvEmployees.Rows.Clear();
-            employees = employeeRepository.GetWorkingEmployees().ToList();
+            employees = employeeRepository.GetWorkingEmployees().OrderBy(e => e.FullName).ToList();
 
             foreach (var employee in employees)
                 dgvEmployees.Rows.Add(employee.FullName, employee.Representation,
                     $"{employee.HoursFullDays} — {employee.HoursFullDays / 8}",
                     $"{employee.HoursPartialDays} — {employee.HoursPartialDays / 8}", employee.Comment);
-        }
-
-        private void btAdd_Click(object sender, EventArgs e)
-        {
-            var addData = new AddEmployeeDataForm(new Employee());
-            if (addData.ShowDialog() == DialogResult.OK)
-            {
-                var employee = new Employee
-                {
-                    ID = Guid.NewGuid().ToString(),
-                    FullName = addData.Employee.FullName,
-                    Representation = addData.Employee.Representation
-                };
-                employeeRepository.SaveEmployee($"{employee.FullName}, {employee.Representation}", employee);
-
-                LoadEmployees();
-            }
-        }
-
-        private void btDeleteSelectRow_Click(object sender, EventArgs e)
-        {
-            var mbAreYouSure = MessageBox.Show(@"Вы уверены, что хотите удалить запись?", @"Удаление", MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-
-            if (mbAreYouSure == DialogResult.No)
-                return;
-
-            var rowIndex = dgvEmployees.SelectedCells[0].RowIndex;
-            var selectedFullName = dgvEmployees.Rows[rowIndex].Cells[0].Value.ToString();
-            var selectedRepresentation = dgvEmployees.Rows[rowIndex].Cells[1].Value.ToString();
-            var id = $"{selectedFullName}, {selectedRepresentation}";
-            employeeRepository.DeleteEmployee(id);
-            dgvEmployees.Rows.RemoveAt(rowIndex);
         }
 
         private void employeesDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -132,31 +82,6 @@ namespace EmployeesTable.Forms
                 detalization.ShowDialog();
                 selectedRow.Cells[3].Value = $"{employee.HoursPartialDays} — {employee.HoursPartialDays / 8}";
             }
-
-
-        }
-        private void btEdit_Click(object sender, EventArgs e)
-        {
-            var selectedRow = dgvEmployees.Rows[dgvEmployees.SelectedCells[0].RowIndex];
-            var selectedFullName = selectedRow.Cells[0].Value.ToString();
-            var selectedRepresentation = selectedRow.Cells[1].Value.ToString();
-            var id = $"{selectedFullName}, {selectedRepresentation}";
-            var editData = new AddEmployeeDataForm(employeeRepository.GetEmployeeById(id));
-
-            if (editData.ShowDialog() == DialogResult.OK)
-            {
-                var employee = new Employee {
-                    FullName = editData.Employee.FullName,
-                    Representation = editData.Employee.Representation,
-                    Comment = editData.Employee.Comment,
-                    Fired = editData.Employee.Fired
-                };
-
-                employeeRepository.UpdateEmployee(id, employee);
-                selectedRow.Cells[0].Value = employee.FullName;
-                selectedRow.Cells[1].Value = employee.Representation;
-                selectedRow.Cells[4].Value = employee.Comment;
-            }
         }
 
         private void tstbFullNameSearcher_TextChanged(object sender, EventArgs e)
@@ -169,23 +94,13 @@ namespace EmployeesTable.Forms
                 return;
             }
 
-            var dt = new System.Data.DataTable();
-            foreach (DataGridViewColumn col in dgvEmployees.Columns)
-                dt.Columns.Add(col.Name);
+            dgvEmployees.Rows.Clear();
+            var filteredEmployees = employeeRepository.GetEmployeesWithFullNameBegin(input.Text);
 
-            foreach (DataRow row in dgvCacheData.Rows)
-                if (row.ItemArray[0] != null && row.ItemArray[0].ToString().StartsWith(input.Text))
-                    dt.Rows.Add(row.ItemArray[0], row.ItemArray[1], row.ItemArray[2], row.ItemArray[3],
-                        row.ItemArray[4]);
-
-            if (dt.Rows.Count != 0)
-            {
-                dgvEmployees.Rows.Clear();
-                foreach (DataRow r in dt.Rows)
-                    dgvEmployees.Rows.Add(r.ItemArray[0], r.ItemArray[1], r.ItemArray[2], r.ItemArray[3]);
-            }
-            else
-                dgvEmployees.Rows.Clear();
+            if (filteredEmployees != null)
+                foreach (var employee in filteredEmployees)
+                    dgvEmployees.Rows.Add(employee.FullName, employee.Representation,
+                        employee.HoursFullDays, employee.HoursPartialDays);
         }
 
         private async void btLoadOrder_Click(object sender, EventArgs e)
@@ -231,7 +146,8 @@ namespace EmployeesTable.Forms
                 var id = $"{orderData.FullName}, {orderData.Representation}";
                 if (!TryGetAllDetalizations(orderData.WorkDates, payment, out var fDetalizations))
                 {
-                    MessageBox.Show(@"Некорректный файл", @"Импорт приказа", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(@"Некорректный файл", @"Импорт приказа", MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
                     return;
                 }
 
@@ -270,7 +186,7 @@ namespace EmployeesTable.Forms
         private string GetLogPath()
         {
             var now = DateTime.Now;
-            var logPath = $"{Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath)}\\Logs";
+            var logPath = $"{Path.GetDirectoryName(Application.ExecutablePath)}\\Logs";
             var filePath = $"{logPath}\\{now.ToShortDateString()}.{now.Hour}.{now.Minute}.{now.Second}.txt";
 
             if (!Directory.Exists(logPath))
@@ -319,11 +235,11 @@ namespace EmployeesTable.Forms
         private void btExportTable_Click(object sender, EventArgs e)
         {
             CopyAlltoClipboard();
-            object misValue = System.Reflection.Missing.Value;
-            var xlexcel = new Application {Visible = true};
+            object misValue = Missing.Value;
+            var xlexcel = new Microsoft.Office.Interop.Excel.Application {Visible = true};
             var xlWorkBook = xlexcel.Workbooks.Add(misValue);
-            var xlWorkSheet = (Worksheet)xlWorkBook.Worksheets.Item[1];
-            var CR = (Range)xlWorkSheet.Cells[1, 1];
+            var xlWorkSheet = (Worksheet) xlWorkBook.Worksheets.Item[1];
+            var CR = (Range) xlWorkSheet.Cells[1, 1];
             CR.Select();
             xlWorkSheet.PasteSpecial(CR, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, true);
         }
@@ -342,7 +258,6 @@ namespace EmployeesTable.Forms
 
             if (gridFilter.ShowDialog() == DialogResult.OK)
                 LoadGridWith(gridFilter.Parameters);
-            
         }
 
         private void LoadGridWith(GridFilterParameters parameters)
@@ -354,6 +269,62 @@ namespace EmployeesTable.Forms
                 dgvEmployees.Rows.Add(employee.FullName, employee.Representation,
                     $"{employee.HoursFullDays} — {employee.HoursFullDays / 8}",
                     $"{employee.HoursPartialDays} — {employee.HoursPartialDays / 8}", employee.Comment);
+        }
+
+        private void miAddEmployee_Click(object sender, EventArgs e)
+        {
+            var addData = new AddEmployeeDataForm(new Employee());
+            if (addData.ShowDialog() == DialogResult.OK)
+            {
+                var employee = new Employee
+                {
+                    ID = Guid.NewGuid().ToString(),
+                    FullName = addData.Employee.FullName,
+                    Representation = addData.Employee.Representation
+                };
+                employeeRepository.SaveEmployee($"{employee.FullName}, {employee.Representation}", employee);
+                LoadEmployees();
+            }
+        }
+
+        private void miEditEmployee_Click(object sender, EventArgs e)
+        {
+            var selectedRow = dgvEmployees.Rows[dgvEmployees.SelectedCells[0].RowIndex];
+            var selectedFullName = selectedRow.Cells[0].Value.ToString();
+            var selectedRepresentation = selectedRow.Cells[1].Value.ToString();
+            var id = $"{selectedFullName}, {selectedRepresentation}";
+            var editData = new AddEmployeeDataForm(employeeRepository.GetEmployeeById(id));
+
+            if (editData.ShowDialog() == DialogResult.OK)
+            {
+                var employee = new Employee
+                {
+                    FullName = editData.Employee.FullName,
+                    Representation = editData.Employee.Representation,
+                    Comment = editData.Employee.Comment,
+                    Fired = editData.Employee.Fired
+                };
+
+                employeeRepository.UpdateEmployee(id, employee);
+                LoadEmployees();
+            }
+        }
+
+        private void miDeleteEmployee_Click(object sender, EventArgs e)
+        {
+            var mbAreYouSure = MessageBox.Show(@"Вы уверены, что хотите удалить запись?", @"Удаление",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (mbAreYouSure == DialogResult.No)
+                return;
+
+            var rowIndex = dgvEmployees.SelectedCells[0].RowIndex;
+            var selectedFullName = dgvEmployees.Rows[rowIndex].Cells[0].Value.ToString();
+            var selectedRepresentation = dgvEmployees.Rows[rowIndex].Cells[1].Value.ToString();
+            var id = $"{selectedFullName}, {selectedRepresentation}";
+            employeeRepository.DeleteEmployee(id);
+            dgvEmployees.Rows.RemoveAt(rowIndex);
         }
     }
 }

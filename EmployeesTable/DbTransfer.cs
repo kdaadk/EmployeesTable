@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace EmployeesTable
 {
-    class Data
+    internal class Data
     {
         public string Representaion { get; set; }
         public Dictionary<DateTime, FullDayDetalization> WorkDates { get; set; }
     }
 
-    class EmployeeLoad
+    internal class EmployeeLoad
     {
         public string Representation { get; set; }
         public DateTime DateRecru { get; set; }
@@ -25,16 +24,17 @@ namespace EmployeesTable
         public List<FullDayDetalization> FullDayDetalizations { get; set; }
     }
 
-    
+
     public class DbTransfer
     {
-        public List<string> Log = new List<string>();
         private readonly EmployeeRepository employeeRepository;
+        public List<string> Log = new List<string>();
 
         public DbTransfer(EmployeeRepository employeeRepository)
         {
             this.employeeRepository = employeeRepository;
         }
+
         public void LoadData()
         {
             var rightRepresentationEmployees = GetEmployeeCollection();
@@ -51,10 +51,8 @@ namespace EmployeesTable
             RemoveDates(dict, employees);
 
             foreach (var employee in employees)
-            {
                 if (dict.ContainsKey(employee.FullName))
                     employee.WorkDates = dict[employee.FullName].WorkDates;
-            }
 
             var sortedEmployees = employees.OrderBy(e => e.FullName).ToList();
 
@@ -67,7 +65,7 @@ namespace EmployeesTable
 
                 if (repre == null)
                 {
-                    Log.Add("Not found: "+emp.FullName);
+                    Log.Add("Not found: " + emp.FullName);
                     continue;
                 }
 
@@ -100,13 +98,18 @@ namespace EmployeesTable
 
             var employees = new List<EmployeeLoad>();
 
-            for (int i = 0; i < fn.Length; i++)
+            for (var i = 0; i < fn.Length; i++)
             {
                 var indexReDelimeter = re[i].IndexOf(",", StringComparison.Ordinal);
                 var representation = re[i];
                 if (indexReDelimeter != -1)
                     representation = re[i].Substring(0, indexReDelimeter);
-                employees.Add(new EmployeeLoad{FullName = fn[i], Representation = representation, DateRecru = DateTime.Parse(dr[i]) });
+                employees.Add(new EmployeeLoad
+                {
+                    FullName = fn[i],
+                    Representation = representation,
+                    DateRecru = DateTime.Parse(dr[i])
+                });
             }
 
             return employees;
@@ -114,7 +117,7 @@ namespace EmployeesTable
 
         private void GetEmployeesByRawDb(string[] dbInfo, List<EmployeeLoad> employees)
         {
-            for (int i = 0; i < dbInfo.Length; i += 5)
+            for (var i = 0; i < dbInfo.Length; i += 5)
             {
                 DateTime? dateFaired = null;
                 if (dbInfo[i + 4] != string.Empty)
@@ -150,13 +153,11 @@ namespace EmployeesTable
         private void AddDataWorkDates(List<int> indexes, Dictionary<string, Data> dict, string[] data)
         {
             for (var i = 0; i < indexes.Count - 1; i++)
-            {
                 dict.Add(data[indexes[i]], new Data
                 {
                     Representaion = data[indexes[i] + 1],
                     WorkDates = GetWorkDates(indexes[i], indexes[i + 1], data, data[indexes[i]])
                 });
-            }
         }
 
         private List<int> GetIndexes(string[] yearData)
@@ -173,7 +174,7 @@ namespace EmployeesTable
         private Dictionary<DateTime, FullDayDetalization> GetWorkDates(int i, int i1, string[] yearData, string name)
         {
             var dates = new Dictionary<DateTime, FullDayDetalization>();
-            for (int j = i + 2; j < i1; j++)
+            for (var j = i + 2; j < i1; j++)
             {
                 var indexDelimeter = yearData[j].IndexOf(";", StringComparison.Ordinal);
                 var date = yearData[j].Substring(0, indexDelimeter);

@@ -9,6 +9,7 @@ namespace EmployeesTable
             FullDayDetalizations = new List<FullDayDetalization>();
             PartialDayDetalization = new List<PartialDayDetalization>();
         }
+
         public string ID { get; set; }
         public string FullName { get; set; }
         public string Representation { get; set; }

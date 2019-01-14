@@ -29,7 +29,7 @@ namespace EmployeesTable.Forms
 
         private void btAdd_Click(object sender, EventArgs e)
         {
-            var addData = new AddPartialDayDetalizationDataForm(new PartialDayDetalization { WorkDate = null});
+            var addData = new AddPartialDayDetalizationDataForm(new PartialDayDetalization {WorkDate = null});
 
             if (addData.ShowDialog() == DialogResult.OK)
             {
@@ -43,7 +43,8 @@ namespace EmployeesTable.Forms
 
         private void btDeleteSelectRow_Click(object sender, EventArgs e)
         {
-            var mbAreYouSure = MessageBox.Show(@"Вы уверены, что хотите удалить запись?", @"Удаление", MessageBoxButtons.YesNo,
+            var mbAreYouSure = MessageBox.Show(@"Вы уверены, что хотите удалить запись?", @"Удаление",
+                MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
             if (mbAreYouSure == DialogResult.No)
@@ -63,13 +64,12 @@ namespace EmployeesTable.Forms
             var addData = new AddPartialDayDetalizationDataForm(GetPDetalization(selectedRow));
 
             if (addData.ShowDialog() == DialogResult.OK)
-            {
                 if (employeeRepository.TryEditPartialDayDetalization(wDate, id, addData.Detalization))
                     EditRowOnGrid(selectedRow, addData);
-            }
         }
 
-        private void EditRowOnGrid(DataGridViewRow selectedRow, AddPartialDayDetalizationDataForm addPartialDayDetalizationData)
+        private void EditRowOnGrid(DataGridViewRow selectedRow,
+            AddPartialDayDetalizationDataForm addPartialDayDetalizationData)
         {
             selectedRow.Cells[0].Value = $"{addPartialDayDetalizationData.Detalization.WorkDate:dd/MM/yyyy}";
             selectedRow.Cells[1].Value = addPartialDayDetalizationData.Detalization.WorkHours;
@@ -78,14 +78,17 @@ namespace EmployeesTable.Forms
             selectedRow.Cells[4].Value = addPartialDayDetalizationData.Detalization.Comment;
         }
 
-        private PartialDayDetalization GetPDetalization(DataGridViewRow selectedRow) => new PartialDayDetalization
+        private PartialDayDetalization GetPDetalization(DataGridViewRow selectedRow)
         {
-            WorkDate = DateTime.Parse(selectedRow.Cells[0]?.Value.ToString()),
-            WorkHours = double.Parse(selectedRow.Cells[1]?.Value.ToString()),
-            Used = selectedRow.Cells[2].Value?.ToString() == "Да" ? Used.YesFull
-                : selectedRow.Cells[2].Value?.ToString() == "Частично" ? Used.YesPartially : Used.No,
-            BalanceHours = double.Parse(selectedRow.Cells[3]?.Value.ToString()),
-            Comment = selectedRow.Cells[4].Value?.ToString()
-        };
+            return new PartialDayDetalization
+            {
+                WorkDate = DateTime.Parse(selectedRow.Cells[0]?.Value.ToString()),
+                WorkHours = double.Parse(selectedRow.Cells[1]?.Value.ToString()),
+                Used = selectedRow.Cells[2].Value?.ToString() == "Да" ? Used.YesFull
+                    : selectedRow.Cells[2].Value?.ToString() == "Частично" ? Used.YesPartially : Used.No,
+                BalanceHours = double.Parse(selectedRow.Cells[3]?.Value.ToString()),
+                Comment = selectedRow.Cells[4].Value?.ToString()
+            };
+        }
     }
 }

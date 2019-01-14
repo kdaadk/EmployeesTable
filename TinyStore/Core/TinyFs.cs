@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace TinyStore.Core
 {
@@ -12,15 +11,15 @@ namespace TinyStore.Core
 
         public TinyFs(string dbPath)
         {
-            this.rootDirectory = dbPath != null ? Path.Combine(dbPath, "tinyDb") : "tinyDb";
-            if (Directory.Exists(this.rootDirectory))
+            rootDirectory = dbPath != null ? Path.Combine(dbPath, "tinyDb") : "tinyDb";
+            if (Directory.Exists(rootDirectory))
                 return;
-            Directory.CreateDirectory(this.rootDirectory);
+            Directory.CreateDirectory(rootDirectory);
         }
 
         private void EnsureCollectionFolder(string name)
         {
-            string path = Path.Combine(this.rootDirectory, name);
+            var path = Path.Combine(rootDirectory, name);
             if (Directory.Exists(path))
                 return;
             Directory.CreateDirectory(path);
@@ -28,22 +27,22 @@ namespace TinyStore.Core
 
         public bool SaveToCollection(string json, string id, string collectionName)
         {
-            this.EnsureCollectionFolder(collectionName);
-            File.WriteAllText(Path.Combine(this.rootDirectory, collectionName, id), json);
+            EnsureCollectionFolder(collectionName);
+            File.WriteAllText(Path.Combine(rootDirectory, collectionName, id), json);
             return true;
         }
 
         public string GetFromCollection(string id, string collectionName)
         {
-            string path = Path.Combine(this.rootDirectory, collectionName, id);
+            var path = Path.Combine(rootDirectory, collectionName, id);
             if (File.Exists(path))
                 return File.ReadAllText(path);
-            return (string)null;
+            return null;
         }
 
         public void Delete(string id, string collectionName)
         {
-            string path = Path.Combine(this.rootDirectory, collectionName, id);
+            var path = Path.Combine(rootDirectory, collectionName, id);
             if (!File.Exists(path))
                 return;
             File.Delete(path);
@@ -51,27 +50,31 @@ namespace TinyStore.Core
 
         public IEnumerable<string> GetCollectionFiles(string collectionName)
         {
-            return Directory.EnumerateFiles(Path.Combine(this.rootDirectory, collectionName)).Select<string, string>((Func<string, string>)(x => Path.GetFileName(x)));
+            return Directory.EnumerateFiles(Path.Combine(rootDirectory, collectionName))
+                .Select(x => Path.GetFileName(x));
         }
 
         public IEnumerable<(string Id, string CollectionName, string Content)> GetAllEntities()
         {
-            foreach (string enumerateDirectory in Directory.EnumerateDirectories(this.rootDirectory))
+            foreach (var enumerateDirectory in Directory.EnumerateDirectories(rootDirectory))
             {
-                string directoryPath = enumerateDirectory;
-                foreach (string enumerateFile in Directory.EnumerateFiles(directoryPath))
+                var directoryPath = enumerateDirectory;
+                foreach (var enumerateFile in Directory.EnumerateFiles(directoryPath))
                 {
-                    string filePath = enumerateFile;
-                    yield return new ValueTuple<string, string, string>(Path.GetFileName(filePath), Path.GetFileName(directoryPath), File.ReadAllText(filePath));
-                    filePath = (string)null;
+                    var filePath = enumerateFile;
+                    yield return new ValueTuple<string, string, string>(Path.GetFileName(filePath),
+                        Path.GetFileName(directoryPath), File.ReadAllText(filePath));
+                    filePath = null;
                 }
-                directoryPath = (string)null;
+
+                directoryPath = null;
             }
         }
 
         public IEnumerable<string> GetCollection(string collectionName)
         {
-            return Directory.EnumerateFiles(Path.Combine(this.rootDirectory, collectionName)).Select<string, string>((Func<string, string>)(x => File.ReadAllText(x)));
+            return Directory.EnumerateFiles(Path.Combine(rootDirectory, collectionName))
+                .Select(x => File.ReadAllText(x));
         }
     }
 }

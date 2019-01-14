@@ -10,26 +10,33 @@ namespace EmployeesTable
     public class EmployeeRepository
     {
         private readonly Store store;
+
         public EmployeeRepository()
         {
             store = new Store(Path.GetDirectoryName(Application.ExecutablePath));
         }
 
-        public void SaveEmployee(string id, Employee employee) => store.Save(id, employee);
+        public void SaveEmployee(string id, Employee employee)
+        {
+            store.Save(id, employee);
+        }
 
-        public void UpdateEmployee(string id, Employee employee) =>
+        public void UpdateEmployee(string id, Employee employee)
+        {
             store.ModifyById<Employee>(id, e =>
             {
                 e.FullName = employee.FullName;
                 e.Representation = employee.Representation;
                 e.Comment = employee.Comment;
             });
+        }
 
         public void DeleteFullDayDetalizationByWorkDate(DateTime? workDate, string id)
         {
             store.ModifyById<Employee>(id, employee =>
             {
-                var detalization = employee.FullDayDetalizations.FirstOrDefault(d => d.WorkDate?.Date == workDate?.Date);
+                var detalization =
+                    employee.FullDayDetalizations.FirstOrDefault(d => d.WorkDate?.Date == workDate?.Date);
                 if (detalization != null)
                 {
                     employee.HoursFullDays -= detalization.WorkHours;
@@ -37,11 +44,13 @@ namespace EmployeesTable
                 }
             });
         }
+
         public void DeletePartialDayDetalizationByWorkDate(DateTime? workDate, string id)
         {
             store.ModifyById<Employee>(id, employee =>
             {
-                var detalization = employee.PartialDayDetalization.FirstOrDefault(d => d.WorkDate?.Date == workDate?.Date);
+                var detalization =
+                    employee.PartialDayDetalization.FirstOrDefault(d => d.WorkDate?.Date == workDate?.Date);
                 if (detalization != null)
                 {
                     employee.HoursPartialDays -= detalization.BalanceHours;
@@ -92,7 +101,8 @@ namespace EmployeesTable
                 var oldDetalization =
                     employee.PartialDayDetalization.FirstOrDefault(d => d.WorkDate?.Date == workDate?.Date);
 
-                if (!IsUniqueWorkPartialDayDate(detalization, employee) && workDate?.Date != detalization.WorkDate?.Date)
+                if (!IsUniqueWorkPartialDayDate(detalization, employee) &&
+                    workDate?.Date != detalization.WorkDate?.Date)
                 {
                     MessageBox.Show(@"Выбрана уже существующая дата работы.", @"Ошибка при заполнении",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -115,11 +125,29 @@ namespace EmployeesTable
             return isEdit;
         }
 
-        public Employee GetEmployeeById(string id) => store.FindById<Employee>(id);
+        public Employee GetEmployeeById(string id)
+        {
+            return store.FindById<Employee>(id);
+        }
 
-        public IEnumerable<Employee> GetAllEmployees() => store.FindByQuery<Employee>(_ => true);
+        public IEnumerable<Employee> GetAllEmployees()
+        {
+            return store.FindByQuery<Employee>(_ => true);
+        }
 
-        public IEnumerable<Employee> GetWorkingEmployees() => store.FindByQuery<Employee>(e => e.Fired == false);
+        public IEnumerable<Employee> GetWorkingEmployees()
+        {
+            return store.FindByQuery<Employee>(e => e.Fired == false);
+        }
+
+        public IEnumerable<Employee> GetEmployeesWithFullNameBegin(string input)
+        {
+            return store.FindByQuery<Employee>(e =>
+            {
+                var capitalizeFirstLetterInput = $"{input.ToUpper().First()}{input.Substring(1)}";
+                return e.FullName.StartsWith(input) || e.FullName.StartsWith(capitalizeFirstLetterInput);
+            });
+        }
 
         public IEnumerable<Employee> GetEmployeesWith(GridFilterParameters parameters)
         {
@@ -130,7 +158,10 @@ namespace EmployeesTable
                 && e.HoursFullDays <= parameters.HoursNumberTo);
         }
 
-        public void DeleteEmployee(string id) => store.DeleteById<Employee>(id);
+        public void DeleteEmployee(string id)
+        {
+            store.DeleteById<Employee>(id);
+        }
 
         public void AddFullDayDetalization(string id, FullDayDetalization detalization)
         {

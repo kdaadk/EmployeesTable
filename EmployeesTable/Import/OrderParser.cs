@@ -61,15 +61,14 @@ namespace EmployeesTable.Import
                 else if (words[i + 2].Contains(";") && date.Length > 12)
                 {
                     var lastDate = words[i + 2].Split(';').Last().Substring(0, 10);
-                    orderData.WorkDates = new List<string> { lastDate };
+                    orderData.WorkDates = new List<string> {lastDate};
                 }
                 else
                 {
-                    orderData.WorkDates = new List<string> { words[i + 2] };
+                    orderData.WorkDates = new List<string> {words[i + 2]};
                 }
 
                 orderDatas.Add(orderData);
-
             }
 
             return orderDatas;
@@ -98,17 +97,19 @@ namespace EmployeesTable.Import
                 }
                 else
                 {
-                    orderData.WorkDates = new List<string> { words[i + 2] };
+                    orderData.WorkDates = new List<string> {words[i + 2]};
                 }
 
                 orderDatas.Add(orderData);
-
             }
 
             return orderDatas;
         }
 
-        public Payment GetPayment() => payment;
+        public Payment GetPayment()
+        {
+            return payment;
+        }
 
 
         private List<string> GetWords(string path)

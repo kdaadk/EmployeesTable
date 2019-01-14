@@ -51,8 +51,9 @@ namespace EmployeesTable.Forms
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btAdd,
-            this.btDeleteSelectRow,
-            this.editBtn});
+            this.editBtn,
+            this.btDeleteSelectRow
+            });
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(670, 25);
@@ -131,7 +132,7 @@ namespace EmployeesTable.Forms
             this.used.HeaderText = "Использован?";
             this.used.Name = "used";
             // 
-            // hours
+            // balanceHours
             // 
             this.balanceHours.HeaderText = "Кол-во часов";
             this.balanceHours.Name = "hours";

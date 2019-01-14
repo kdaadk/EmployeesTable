@@ -10,10 +10,10 @@ namespace TinyStore.Core
 
         public T Value<T>()
         {
-            if (this.Object != null)
-                return (T)this.Object;
-            T obj = JsonConvert.DeserializeObject<T>(this.Json);
-            this.Object = (object)obj;
+            if (Object != null)
+                return (T) Object;
+            var obj = JsonConvert.DeserializeObject<T>(Json);
+            Object = obj;
             return obj;
         }
     }
