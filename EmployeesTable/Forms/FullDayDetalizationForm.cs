@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace EmployeesTable.Forms
@@ -15,16 +16,20 @@ namespace EmployeesTable.Forms
             InitializeComponent();
         }
 
-        private void EmployeeFDetalizationForm_Load(object sender, EventArgs e)
+        private void EmployeeFullDayDetalizationForm_Load(object sender, EventArgs e)
         {
             detalizationDataGridView.Rows.Clear();
             var employee = employeeRepository.GetEmployeeById(id);
 
             if (employee.FullDayDetalizations != null)
                 foreach (var d in employee.FullDayDetalizations)
+                {
                     detalizationDataGridView.Rows.Add($"{d.WorkDate?.Date:dd/MM/yyyy}",
                         d.Payment.GetDisplayName(), d.WorkHours, d.Used.GetDisplayName(),
                         $"{d.RestDate?.Date:dd/MM/yyyy}", d.Comment);
+                    if (d.Payment == Payment.Rest)
+                        detalizationDataGridView.Rows[detalizationDataGridView.Rows.Count - 2].Cells[1].Style.ForeColor = Color.Red;
+                }
         }
 
         private void btAdd_Click(object sender, EventArgs e)
@@ -35,11 +40,11 @@ namespace EmployeesTable.Forms
             if (addData.ShowDialog() == DialogResult.OK)
             {
                 var d = addData.Detalization;
-                employeeRepository.AddFullDayDetalization(id, d);
 
-                detalizationDataGridView.Rows.Add($"{d.WorkDate?.Date:dd/MM/yyyy}",
-                    d.Payment.GetDisplayName(), d.WorkHours,
-                    d.Used.GetDisplayName(), $"{d.RestDate?.Date:dd/MM/yyyy}", d.Comment);
+                if (employeeRepository.TryAddFullDayDetalization(id, d))
+                    detalizationDataGridView.Rows.Add($"{d.WorkDate?.Date:dd/MM/yyyy}",
+                        d.Payment.GetDisplayName(), d.WorkHours,
+                        d.Used.GetDisplayName(), $"{d.RestDate?.Date:dd/MM/yyyy}", d.Comment);
             }
         }
 

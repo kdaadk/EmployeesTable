@@ -20,7 +20,7 @@ namespace EmployeesTable.Forms
             tbHours.Text = Detalization.WorkHours.ToString(CultureInfo.InvariantCulture);
             tbComment.Text = Detalization.Comment;
             tpWorkDate.Text = Detalization.WorkDate?.ToString();
-            tbBalance.Text = Detalization.BalanceHours.ToString(CultureInfo.InvariantCulture);
+            //tbBalance.Text = Detalization.BalanceHours.ToString(CultureInfo.InvariantCulture);
         }
 
         private void btOK_Click(object sender, EventArgs e)
@@ -33,7 +33,7 @@ namespace EmployeesTable.Forms
                     ? Used.YesPartially
                     : Used.No;
             Detalization.Comment = tbComment.Text;
-            Detalization.BalanceHours = double.Parse(tbBalance.Text);
+            //Detalization.BalanceHours = double.Parse(tbBalance.Text);
 
             DialogResult = DialogResult.OK;
         }

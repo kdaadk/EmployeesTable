@@ -19,5 +19,7 @@ namespace EmployeesTable
         public List<FullDayDetalization> FullDayDetalizations { get; set; }
         public List<PartialDayDetalization> PartialDayDetalization { get; set; }
         public bool Fired { get; set; }
+
+        public string GetFullNameID => $"{FullName}, {Representation}";
     }
 }

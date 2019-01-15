@@ -40,7 +40,6 @@ namespace EmployeesTable.Forms
             this.workDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.hours = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.used = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.balanceHours = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -109,7 +108,6 @@ namespace EmployeesTable.Forms
             this.workDate,
             this.hours,
             this.used,
-            this.balanceHours,
             this.comment});
             this.detalizationDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.detalizationDataGridView.Location = new System.Drawing.Point(0, 25);
@@ -131,11 +129,6 @@ namespace EmployeesTable.Forms
             // 
             this.used.HeaderText = "Использован?";
             this.used.Name = "used";
-            // 
-            // balanceHours
-            // 
-            this.balanceHours.HeaderText = "Кол-во часов";
-            this.balanceHours.Name = "hours";
             // 
             // comment
             // 
@@ -173,7 +166,6 @@ namespace EmployeesTable.Forms
         private DataGridViewTextBoxColumn workDate;
         private DataGridViewTextBoxColumn hours;
         private DataGridViewTextBoxColumn used;
-        private DataGridViewTextBoxColumn balanceHours;
         private DataGridViewTextBoxColumn comment;
         private ToolStripButton editBtn;
     }

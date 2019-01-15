@@ -156,7 +156,7 @@ namespace EmployeesTable.Forms
             this.Controls.Add(this.toolStrip1);
             this.Name = "FullDayDetalizationForm";
             this.Text = id;
-            this.Load += new System.EventHandler(this.EmployeeFDetalizationForm_Load);
+            this.Load += new System.EventHandler(this.EmployeeFullDayDetalizationForm_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.detalizationDataGridView)).EndInit();

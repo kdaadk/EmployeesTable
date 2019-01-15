@@ -83,6 +83,7 @@ namespace EmployeesTable.Forms
             // 
             // lbSearchIcon
             // 
+            this.lbSearchIcon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.lbSearchIcon.Name = "lbSearchIcon";
             this.lbSearchIcon.Size = new System.Drawing.Size(19, 22);
             this.lbSearchIcon.Text = "🔍";

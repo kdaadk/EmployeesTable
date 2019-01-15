@@ -42,15 +42,11 @@ namespace EmployeesTable.Forms
             this.lbRest = new System.Windows.Forms.Label();
             this.btCancelbtCancel = new System.Windows.Forms.Button();
             this.btOK = new System.Windows.Forms.Button();
-            this.lbBalance = new System.Windows.Forms.Label();
-            this.tbBalance = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.lbBalance);
-            this.groupBox1.Controls.Add(this.tbBalance);
             this.groupBox1.Controls.Add(this.cbUsed);
             this.groupBox1.Controls.Add(this.lbComment);
             this.groupBox1.Controls.Add(this.tbComment);
@@ -61,7 +57,7 @@ namespace EmployeesTable.Forms
             this.groupBox1.Controls.Add(this.lbRest);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(232, 160);
+            this.groupBox1.Size = new System.Drawing.Size(232, 134);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Детализация";
@@ -71,7 +67,7 @@ namespace EmployeesTable.Forms
             this.cbUsed.FormattingEnabled = true;
             this.cbUsed.Items.AddRange(new object[] {
             "Да",
-            "Нет"});
+            "Не использован"});
             this.cbUsed.Location = new System.Drawing.Point(90, 71);
             this.cbUsed.Name = "cbUsed";
             this.cbUsed.Size = new System.Drawing.Size(130, 21);
@@ -79,7 +75,7 @@ namespace EmployeesTable.Forms
             // 
             // lbComment
             // 
-            this.lbComment.Location = new System.Drawing.Point(7, 127);
+            this.lbComment.Location = new System.Drawing.Point(7, 103);
             this.lbComment.Name = "lbComment";
             this.lbComment.Size = new System.Drawing.Size(81, 23);
             this.lbComment.TabIndex = 7;
@@ -87,7 +83,7 @@ namespace EmployeesTable.Forms
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(90, 124);
+            this.tbComment.Location = new System.Drawing.Point(90, 100);
             this.tbComment.Name = "tbComment";
             this.tbComment.Size = new System.Drawing.Size(130, 20);
             this.tbComment.TabIndex = 8;
@@ -137,7 +133,7 @@ namespace EmployeesTable.Forms
             // 
             this.btCancelbtCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btCancelbtCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btCancelbtCancel.Location = new System.Drawing.Point(157, 178);
+            this.btCancelbtCancel.Location = new System.Drawing.Point(157, 161);
             this.btCancelbtCancel.Name = "btCancelbtCancel";
             this.btCancelbtCancel.Size = new System.Drawing.Size(75, 23);
             this.btCancelbtCancel.TabIndex = 1;
@@ -147,7 +143,7 @@ namespace EmployeesTable.Forms
             // btOK
             // 
             this.btOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btOK.Location = new System.Drawing.Point(76, 178);
+            this.btOK.Location = new System.Drawing.Point(76, 161);
             this.btOK.Name = "btOK";
             this.btOK.Size = new System.Drawing.Size(75, 23);
             this.btOK.TabIndex = 2;
@@ -155,26 +151,11 @@ namespace EmployeesTable.Forms
             this.btOK.UseVisualStyleBackColor = true;
             this.btOK.Click += new System.EventHandler(this.btOK_Click);
             // 
-            // lbBalance
-            // 
-            this.lbBalance.Location = new System.Drawing.Point(6, 101);
-            this.lbBalance.Name = "lbBalance";
-            this.lbBalance.Size = new System.Drawing.Size(81, 23);
-            this.lbBalance.TabIndex = 11;
-            this.lbBalance.Text = "Осталось ч.:";
-            // 
-            // tbBalance
-            // 
-            this.tbBalance.Location = new System.Drawing.Point(90, 98);
-            this.tbBalance.Name = "tbBalance";
-            this.tbBalance.Size = new System.Drawing.Size(130, 20);
-            this.tbBalance.TabIndex = 12;
-            // 
             // AddPartialDayDetalizationDataForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(256, 213);
+            this.ClientSize = new System.Drawing.Size(256, 194);
             this.Controls.Add(this.btOK);
             this.Controls.Add(this.btCancelbtCancel);
             this.Controls.Add(this.groupBox1);
@@ -201,7 +182,5 @@ namespace EmployeesTable.Forms
         private Label lbComment;
         private TextBox tbComment;
         private ComboBox cbUsed;
-        private Label lbBalance;
-        private TextBox tbBalance;
     }
 }

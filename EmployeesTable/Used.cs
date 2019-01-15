@@ -6,6 +6,6 @@ namespace EmployeesTable
     {
         [Display(Name = "Да")] YesFull,
         [Display(Name = "Частично")] YesPartially,
-        [Display(Name = "Нет")] No
+        [Display(Name = "Не использован")] No
     }
 }

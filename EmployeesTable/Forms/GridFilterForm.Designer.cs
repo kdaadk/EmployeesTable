@@ -30,7 +30,7 @@
         {
             this.btOK = new System.Windows.Forms.Button();
             this.btCancelbtCancel = new System.Windows.Forms.Button();
-            this.lbFairedEmployees = new System.Windows.Forms.Label();
+            this.lbFiredEmployees = new System.Windows.Forms.Label();
             this.cbFiredEmployees = new System.Windows.Forms.CheckBox();
             this.lbRepresentation = new System.Windows.Forms.Label();
             this.cbRepresentation = new System.Windows.Forms.ComboBox();
@@ -64,14 +64,14 @@
             this.btCancelbtCancel.Text = "Отмена";
             this.btCancelbtCancel.UseVisualStyleBackColor = true;
             // 
-            // lbFairedEmployees
+            // lbFiredEmployees
             // 
-            this.lbFairedEmployees.AutoSize = true;
-            this.lbFairedEmployees.Location = new System.Drawing.Point(20, 20);
-            this.lbFairedEmployees.Name = "lbFairedEmployees";
-            this.lbFairedEmployees.Size = new System.Drawing.Size(113, 13);
-            this.lbFairedEmployees.TabIndex = 5;
-            this.lbFairedEmployees.Text = "Показать уволенных";
+            this.lbFiredEmployees.AutoSize = true;
+            this.lbFiredEmployees.Location = new System.Drawing.Point(20, 20);
+            this.lbFiredEmployees.Name = "lbFiredEmployees";
+            this.lbFiredEmployees.Size = new System.Drawing.Size(113, 13);
+            this.lbFiredEmployees.TabIndex = 5;
+            this.lbFiredEmployees.Text = "Показать уволенных";
             // 
             // cbFiredEmployees
             // 
@@ -151,7 +151,7 @@
             this.Controls.Add(this.cbRepresentation);
             this.Controls.Add(this.lbRepresentation);
             this.Controls.Add(this.cbFiredEmployees);
-            this.Controls.Add(this.lbFairedEmployees);
+            this.Controls.Add(this.lbFiredEmployees);
             this.Controls.Add(this.btOK);
             this.Controls.Add(this.btCancelbtCancel);
             this.Name = "GridFilterForm";
@@ -168,7 +168,7 @@
 
         private System.Windows.Forms.Button btOK;
         private System.Windows.Forms.Button btCancelbtCancel;
-        private System.Windows.Forms.Label lbFairedEmployees;
+        private System.Windows.Forms.Label lbFiredEmployees;
         private System.Windows.Forms.CheckBox cbFiredEmployees;
         private System.Windows.Forms.Label lbRepresentation;
         private System.Windows.Forms.ComboBox cbRepresentation;

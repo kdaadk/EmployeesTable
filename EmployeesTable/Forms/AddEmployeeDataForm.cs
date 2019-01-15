@@ -20,7 +20,7 @@ namespace EmployeesTable.Forms
                 tbFullName.Text = Employee.FullName;
                 tbRepresentation.Text = Employee.Representation;
                 tbComment.Text = Employee.Comment;
-                cbFaired.Checked = Employee.Fired;
+                cbFired.Checked = Employee.Fired;
             }
         }
 
@@ -29,7 +29,7 @@ namespace EmployeesTable.Forms
             Employee.FullName = tbFullName.Text;
             Employee.Representation = tbRepresentation.Text;
             Employee.Comment = tbComment.Text;
-            Employee.Fired = cbFaired.Checked;
+            Employee.Fired = cbFired.Checked;
 
             DialogResult = DialogResult.OK;
         }

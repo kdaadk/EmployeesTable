@@ -46,5 +46,19 @@ namespace EmployeesTable.Forms
         {
             tpRestDate.CustomFormat = @"dd.MM.yyyy";
         }
+
+        private void cbPayment_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbPayment.SelectedItem.ToString() == @"Отгул")
+            {
+                tbHours.Text = @"8";
+                cbUsed.SelectedItem = @"Не использован";
+            }
+            else
+            {
+                tbHours.Text = @"0";
+                cbUsed.SelectedItem = @"Да";
+            }
+        }
     }
 }

@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using EmployeesTable.Import;
 using Microsoft.Office.Interop.Excel;
-using Application = System.Windows.Forms.Application;
 
 namespace EmployeesTable.Forms
 {
@@ -172,7 +171,7 @@ namespace EmployeesTable.Forms
                 }
 
                 foreach (var d in fDetalizations)
-                    employeeRepository.AddFullDayDetalization(id, d);
+                    employeeRepository.TryAddFullDayDetalization(id, d);
             }
 
             var path = GetLogPath();
@@ -186,7 +185,7 @@ namespace EmployeesTable.Forms
         private string GetLogPath()
         {
             var now = DateTime.Now;
-            var logPath = $"{Path.GetDirectoryName(Application.ExecutablePath)}\\Logs";
+            var logPath = $"{Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath)}\\Logs";
             var filePath = $"{logPath}\\{now.ToShortDateString()}.{now.Hour}.{now.Minute}.{now.Second}.txt";
 
             if (!Directory.Exists(logPath))
@@ -297,15 +296,11 @@ namespace EmployeesTable.Forms
 
             if (editData.ShowDialog() == DialogResult.OK)
             {
-                var employee = new Employee
-                {
-                    FullName = editData.Employee.FullName,
-                    Representation = editData.Employee.Representation,
-                    Comment = editData.Employee.Comment,
-                    Fired = editData.Employee.Fired
-                };
+                if (id != editData.Employee.GetFullNameID)
+                    employeeRepository.RecreateEmployee(id, editData.Employee);
+                else
+                    employeeRepository.UpdateEmployee(id, editData.Employee);
 
-                employeeRepository.UpdateEmployee(id, employee);
                 LoadEmployees();
             }
         }

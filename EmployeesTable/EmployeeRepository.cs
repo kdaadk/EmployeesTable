@@ -10,6 +10,8 @@ namespace EmployeesTable
     public class EmployeeRepository
     {
         private readonly Store store;
+        private readonly Func<DialogResult> notUniqueDate = () => MessageBox.Show(@"Выбрана уже существующая дата работы.", @"Ошибка при заполнении",
+            MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
         public EmployeeRepository()
         {
@@ -19,6 +21,12 @@ namespace EmployeesTable
         public void SaveEmployee(string id, Employee employee)
         {
             store.Save(id, employee);
+        }
+
+        public void RecreateEmployee(string id, Employee employee)
+        {
+            SaveEmployee(employee.GetFullNameID, employee);
+            DeleteEmployee(id);
         }
 
         public void UpdateEmployee(string id, Employee employee)
@@ -53,7 +61,7 @@ namespace EmployeesTable
                     employee.PartialDayDetalization.FirstOrDefault(d => d.WorkDate?.Date == workDate?.Date);
                 if (detalization != null)
                 {
-                    employee.HoursPartialDays -= detalization.BalanceHours;
+                    employee.HoursPartialDays -= detalization.WorkHours;
                     employee.PartialDayDetalization.Remove(detalization);
                 }
             });
@@ -70,8 +78,7 @@ namespace EmployeesTable
 
                 if (!IsUniqueWorkFullDayDate(detalization, employee) && workDate?.Date != detalization.WorkDate?.Date)
                 {
-                    MessageBox.Show(@"Выбрана уже существующая дата работы.", @"Ошибка при заполнении",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    notUniqueDate();
                     isUnique = false;
                 }
 
@@ -104,19 +111,17 @@ namespace EmployeesTable
                 if (!IsUniqueWorkPartialDayDate(detalization, employee) &&
                     workDate?.Date != detalization.WorkDate?.Date)
                 {
-                    MessageBox.Show(@"Выбрана уже существующая дата работы.", @"Ошибка при заполнении",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    notUniqueDate();
                     isUnique = false;
                 }
 
                 if (oldDetalization != null && isUnique)
                 {
-                    var diffHours = detalization.BalanceHours - oldDetalization.BalanceHours;
+                    var diffHours = detalization.WorkHours - oldDetalization.WorkHours;
                     employee.HoursPartialDays += diffHours;
 
                     oldDetalization.WorkHours = detalization.WorkHours;
                     oldDetalization.WorkDate = detalization.WorkDate;
-                    oldDetalization.BalanceHours = detalization.BalanceHours;
                     oldDetalization.Used = detalization.Used;
                     oldDetalization.Comment = detalization.Comment;
                     isEdit = true;
@@ -163,12 +168,17 @@ namespace EmployeesTable
             store.DeleteById<Employee>(id);
         }
 
-        public void AddFullDayDetalization(string id, FullDayDetalization detalization)
+        public bool TryAddFullDayDetalization(string id, FullDayDetalization detalization)
         {
+            var isAdd = true;
             store.ModifyById<Employee>(id, employee =>
             {
                 if (!IsUniqueWorkFullDayDate(detalization, employee))
+                {
+                    notUniqueDate();
+                    isAdd = false;
                     return;
+                }
 
                 employee.FullDayDetalizations.Add(new FullDayDetalization
                 {
@@ -182,14 +192,21 @@ namespace EmployeesTable
                 });
                 employee.HoursFullDays += detalization.WorkHours;
             });
+
+            return isAdd;
         }
 
-        public void AddPartialDayDetalization(string id, PartialDayDetalization detalization)
+        public bool TryAddPartialDayDetalization(string id, PartialDayDetalization detalization)
         {
+            var isAdd = true;
             store.ModifyById<Employee>(id, employee =>
             {
                 if (!IsUniqueWorkPartialDayDate(detalization, employee))
+                {
+                    notUniqueDate();
+                    isAdd = false;
                     return;
+                }
 
                 employee.PartialDayDetalization.Add(new PartialDayDetalization
                 {
@@ -197,16 +214,17 @@ namespace EmployeesTable
                     WorkDate = detalization.WorkDate,
                     WorkHours = detalization.WorkHours,
                     Used = detalization.Used,
-                    BalanceHours = detalization.BalanceHours,
-                    Comment = detalization.Comment
+                    Comment = detalization.Comment,
                 });
-                employee.HoursPartialDays += detalization.BalanceHours;
+                employee.HoursPartialDays += detalization.WorkHours;
             });
+
+            return isAdd;
         }
 
         private bool IsUniqueWorkPartialDayDate(PartialDayDetalization detalization, Employee employee)
         {
-            return employee.PartialDayDetalization.Any(d => d.WorkDate?.Date != detalization?.WorkDate?.Date);
+            return employee.PartialDayDetalization.All(d => d.WorkDate?.Date != detalization?.WorkDate?.Date);
         }
 
         private bool IsUniqueWorkFullDayDate(FullDayDetalization detalization, Employee employee)

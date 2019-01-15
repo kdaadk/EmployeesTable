@@ -31,14 +31,14 @@ namespace EmployeesTable.Forms
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cbFaired = new System.Windows.Forms.CheckBox();
+            this.cbFired = new System.Windows.Forms.CheckBox();
             this.lbRepresentation = new System.Windows.Forms.Label();
             this.tbRepresentation = new System.Windows.Forms.TextBox();
             this.lbFullName = new System.Windows.Forms.Label();
             this.tbFullName = new System.Windows.Forms.TextBox();
             this.lbComment = new System.Windows.Forms.Label();
             this.tbComment = new System.Windows.Forms.TextBox();
-            this.lbFaired = new System.Windows.Forms.Label();
+            this.lbFired = new System.Windows.Forms.Label();
             this.btCancelbtCancel = new System.Windows.Forms.Button();
             this.btOK = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -46,14 +46,14 @@ namespace EmployeesTable.Forms
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.cbFaired);
+            this.groupBox1.Controls.Add(this.cbFired);
             this.groupBox1.Controls.Add(this.lbRepresentation);
             this.groupBox1.Controls.Add(this.tbRepresentation);
             this.groupBox1.Controls.Add(this.lbFullName);
             this.groupBox1.Controls.Add(this.tbFullName);
             this.groupBox1.Controls.Add(this.lbComment);
             this.groupBox1.Controls.Add(this.tbComment);
-            this.groupBox1.Controls.Add(this.lbFaired);
+            this.groupBox1.Controls.Add(this.lbFired);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(346, 121);
@@ -61,14 +61,14 @@ namespace EmployeesTable.Forms
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Сотрудник";
             // 
-            // cbFaired
+            // cbFired
             // 
-            this.cbFaired.AutoSize = true;
-            this.cbFaired.Location = new System.Drawing.Point(119, 101);
-            this.cbFaired.Name = "cbFaired";
-            this.cbFaired.Size = new System.Drawing.Size(15, 14);
-            this.cbFaired.TabIndex = 4;
-            this.cbFaired.UseVisualStyleBackColor = true;
+            this.cbFired.AutoSize = true;
+            this.cbFired.Location = new System.Drawing.Point(119, 101);
+            this.cbFired.Name = "cbFired";
+            this.cbFired.Size = new System.Drawing.Size(15, 14);
+            this.cbFired.TabIndex = 4;
+            this.cbFired.UseVisualStyleBackColor = true;
             // 
             // lbRepresentation
             // 
@@ -119,13 +119,13 @@ namespace EmployeesTable.Forms
             this.tbComment.Size = new System.Drawing.Size(211, 20);
             this.tbComment.TabIndex = 2;
             // 
-            // lbFaired
+            // lbFired
             // 
-            this.lbFaired.Location = new System.Drawing.Point(7, 101);
-            this.lbFaired.Name = "lbFaired";
-            this.lbFaired.Size = new System.Drawing.Size(61, 17);
-            this.lbFaired.TabIndex = 3;
-            this.lbFaired.Text = "Уволен:";
+            this.lbFired.Location = new System.Drawing.Point(7, 101);
+            this.lbFired.Name = "lbFired";
+            this.lbFired.Size = new System.Drawing.Size(61, 17);
+            this.lbFired.TabIndex = 3;
+            this.lbFired.Text = "Уволен:";
             // 
             // btCancelbtCancel
             // 
@@ -176,9 +176,9 @@ namespace EmployeesTable.Forms
         private System.Windows.Forms.TextBox tbRepresentation;
         private System.Windows.Forms.Label lbComment;
         private System.Windows.Forms.TextBox tbComment;
-        private System.Windows.Forms.Label lbFaired;
+        private System.Windows.Forms.Label lbFired;
         private System.Windows.Forms.Button btCancelbtCancel;
         private System.Windows.Forms.Button btOK;
-        private CheckBox cbFaired;
+        private CheckBox cbFired;
     }
 }

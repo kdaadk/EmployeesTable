@@ -23,8 +23,7 @@ namespace EmployeesTable.Forms
             if (employee.PartialDayDetalization != null)
                 foreach (var d in employee.PartialDayDetalization)
                     detalizationDataGridView.Rows.Add($"{d.WorkDate?.Date:dd/MM/yyyy}",
-                        d.WorkHours, d.Used.GetDisplayName(), d.BalanceHours,
-                        string.Format($"{0:dd/MM/yyyy}"), d.Comment);
+                        d.WorkHours, d.Used.GetDisplayName(), d.Comment);
         }
 
         private void btAdd_Click(object sender, EventArgs e)
@@ -34,10 +33,9 @@ namespace EmployeesTable.Forms
             if (addData.ShowDialog() == DialogResult.OK)
             {
                 var d = addData.Detalization;
-                employeeRepository.AddPartialDayDetalization(id, d);
-
-                detalizationDataGridView.Rows.Add($"{d.WorkDate?.Date:dd/MM/yyyy}", d.WorkHours,
-                    d.Used.GetDisplayName(), d.BalanceHours, d.Comment);
+                if (employeeRepository.TryAddPartialDayDetalization(id, d))
+                    detalizationDataGridView.Rows.Add($"{d.WorkDate?.Date:dd/MM/yyyy}", d.WorkHours,
+                        d.Used.GetDisplayName(), d.Comment);
             }
         }
 
@@ -59,12 +57,12 @@ namespace EmployeesTable.Forms
         private void btEdit_Click(object sender, EventArgs e)
         {
             var selectedRow = detalizationDataGridView.Rows[detalizationDataGridView.SelectedCells[0].RowIndex];
-            var wDate = DateTime.Parse(detalizationDataGridView.Rows[detalizationDataGridView.SelectedCells[0].RowIndex]
+            var workDate = DateTime.Parse(detalizationDataGridView.Rows[detalizationDataGridView.SelectedCells[0].RowIndex]
                 .Cells[0].Value.ToString());
             var addData = new AddPartialDayDetalizationDataForm(GetPDetalization(selectedRow));
 
             if (addData.ShowDialog() == DialogResult.OK)
-                if (employeeRepository.TryEditPartialDayDetalization(wDate, id, addData.Detalization))
+                if (employeeRepository.TryEditPartialDayDetalization(workDate, id, addData.Detalization))
                     EditRowOnGrid(selectedRow, addData);
         }
 
@@ -74,8 +72,7 @@ namespace EmployeesTable.Forms
             selectedRow.Cells[0].Value = $"{addPartialDayDetalizationData.Detalization.WorkDate:dd/MM/yyyy}";
             selectedRow.Cells[1].Value = addPartialDayDetalizationData.Detalization.WorkHours;
             selectedRow.Cells[2].Value = addPartialDayDetalizationData.Detalization.Used.GetDisplayName();
-            selectedRow.Cells[3].Value = addPartialDayDetalizationData.Detalization.BalanceHours;
-            selectedRow.Cells[4].Value = addPartialDayDetalizationData.Detalization.Comment;
+            selectedRow.Cells[3].Value = addPartialDayDetalizationData.Detalization.Comment;
         }
 
         private PartialDayDetalization GetPDetalization(DataGridViewRow selectedRow)
@@ -86,8 +83,7 @@ namespace EmployeesTable.Forms
                 WorkHours = double.Parse(selectedRow.Cells[1]?.Value.ToString()),
                 Used = selectedRow.Cells[2].Value?.ToString() == "Да" ? Used.YesFull
                     : selectedRow.Cells[2].Value?.ToString() == "Частично" ? Used.YesPartially : Used.No,
-                BalanceHours = double.Parse(selectedRow.Cells[3]?.Value.ToString()),
-                Comment = selectedRow.Cells[4].Value?.ToString()
+                Comment = selectedRow.Cells[3].Value?.ToString()
             };
         }
     }

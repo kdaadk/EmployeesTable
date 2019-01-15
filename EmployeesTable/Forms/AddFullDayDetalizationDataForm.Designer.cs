@@ -76,7 +76,7 @@ namespace EmployeesTable.Forms
             this.cbUsed.Items.AddRange(new object[] {
             "Да",
             "Частично",
-            "Нет"});
+            "Не использован"});
             this.cbUsed.Location = new System.Drawing.Point(90, 99);
             this.cbUsed.Name = "cbUsed";
             this.cbUsed.Size = new System.Drawing.Size(130, 21);
@@ -92,6 +92,7 @@ namespace EmployeesTable.Forms
             this.cbPayment.Name = "cbPayment";
             this.cbPayment.Size = new System.Drawing.Size(130, 21);
             this.cbPayment.TabIndex = 9;
+            this.cbPayment.SelectedIndexChanged += new System.EventHandler(this.cbPayment_SelectedIndexChanged);
             // 
             // lbComment
             // 
@@ -168,7 +169,6 @@ namespace EmployeesTable.Forms
             this.tbHours.Name = "tbHours";
             this.tbHours.Size = new System.Drawing.Size(130, 20);
             this.tbHours.TabIndex = 2;
-            this.tbHours.Text = "8";
             // 
             // lbRest
             // 
