@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Hopstarter-Soft-Scraps-Book.ico</ApplicationIcon>
+    <ApplicationIcon>Paomedia-Small-N-Flat-Book.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
@@ -173,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Hopstarter-Soft-Scraps-Book.ico" />
+    <Content Include="Paomedia-Small-N-Flat-Book.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

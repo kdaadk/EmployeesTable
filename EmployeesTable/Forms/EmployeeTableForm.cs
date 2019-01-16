@@ -26,12 +26,6 @@ namespace EmployeesTable.Forms
 
         private void EmployeeTableForm_Load(object sender, EventArgs e)
         {
-            //var dbTransfer = new DbTransfer(employeeRepository);
-            //dbTransfer.LoadData();
-
-            //var decemberData = new DecemberData(employeeRepository);
-            //var bb = decemberData.Load();
-
             LoadEmployees();
         }
 

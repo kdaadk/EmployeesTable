@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace EmployeesTable
 {
@@ -24,6 +25,7 @@ namespace EmployeesTable
 
         public int Load()
         {
+            var log = new List<string>();
             var counter = 0;
             var empDatas = new List<EmpData>();
 
@@ -31,6 +33,7 @@ namespace EmployeesTable
             var fn = File.ReadAllLines(path + "fn.txt");
             var re = File.ReadAllLines(path + "re.txt");
             var date = File.ReadAllLines(path + "date.txt");
+            var h = File.ReadAllLines(path + "h.txt");
 
             for (int i = 0; i < re.Length; i++)
             {
@@ -44,8 +47,8 @@ namespace EmployeesTable
                 empDatas.Add(new EmpData
                 {
                     Date = DateTime.Parse(date[i]),
-                    FN = fn[i],
-                    Hours = 0,
+                    FN = fn[i].Trim(),
+                    Hours = double.Parse(h[i]),
                     Re = re[i]
                 });
             }
@@ -53,18 +56,23 @@ namespace EmployeesTable
             foreach (var empData in empDatas)
             {
                 var employee = employeeRepository.GetEmployeeById(empData.GetId);
-                if (employeeRepository.TryAddFullDayDetalization(employee.GetFullNameID, new FullDayDetalization
+
+                if (employee == null)
                 {
-                    Payment = Payment.Money,
+                    log.Add(empData.GetId);
+                    continue;
+                }
+                if (employeeRepository.TryAddPartialDayDetalization(employee.GetFullNameID, new PartialDayDetalization
+                {
                     ID = Guid.NewGuid().ToString(),
                     WorkDate = empData.Date,
-                    RestDate = empData.Date,
                     WorkHours = empData.Hours,
-                    Used = Used.YesFull
+                    Used = Used.No
                 }))
                     counter++;
             }
 
+            File.WriteAllLines("loggg.txt", log);
             return counter;
         }
     }

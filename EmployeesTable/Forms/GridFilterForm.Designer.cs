@@ -60,7 +60,7 @@
             this.btCancelbtCancel.Location = new System.Drawing.Point(265, 112);
             this.btCancelbtCancel.Name = "btCancelbtCancel";
             this.btCancelbtCancel.Size = new System.Drawing.Size(75, 23);
-            this.btCancelbtCancel.TabIndex = 3;
+            this.btCancelbtCancel.TabIndex = 5;
             this.btCancelbtCancel.Text = "Отмена";
             this.btCancelbtCancel.UseVisualStyleBackColor = true;
             // 
@@ -79,7 +79,7 @@
             this.cbFiredEmployees.Location = new System.Drawing.Point(138, 20);
             this.cbFiredEmployees.Name = "cbFiredEmployees";
             this.cbFiredEmployees.Size = new System.Drawing.Size(15, 14);
-            this.cbFiredEmployees.TabIndex = 6;
+            this.cbFiredEmployees.TabIndex = 0;
             this.cbFiredEmployees.UseVisualStyleBackColor = true;
             // 
             // lbRepresentation
@@ -99,7 +99,7 @@
             this.cbRepresentation.Location = new System.Drawing.Point(138, 45);
             this.cbRepresentation.Name = "cbRepresentation";
             this.cbRepresentation.Size = new System.Drawing.Size(270, 21);
-            this.cbRepresentation.TabIndex = 8;
+            this.cbRepresentation.TabIndex = 1;
             this.cbRepresentation.Text = "Все";
             // 
             // lbDaysNumberFrom
@@ -125,14 +125,14 @@
             this.nudDaysNumberFrom.Location = new System.Drawing.Point(138, 76);
             this.nudDaysNumberFrom.Name = "nudDaysNumberFrom";
             this.nudDaysNumberFrom.Size = new System.Drawing.Size(36, 20);
-            this.nudDaysNumberFrom.TabIndex = 11;
+            this.nudDaysNumberFrom.TabIndex = 2;
             // 
             // nudDaysNumberTo
             // 
             this.nudDaysNumberTo.Location = new System.Drawing.Point(205, 76);
             this.nudDaysNumberTo.Name = "nudDaysNumberTo";
             this.nudDaysNumberTo.Size = new System.Drawing.Size(36, 20);
-            this.nudDaysNumberTo.TabIndex = 12;
+            this.nudDaysNumberTo.TabIndex = 3;
             this.nudDaysNumberTo.Value = new decimal(new int[] {
             2,
             0,

@@ -80,7 +80,7 @@ namespace EmployeesTable.Forms
             this.cbUsed.Location = new System.Drawing.Point(90, 99);
             this.cbUsed.Name = "cbUsed";
             this.cbUsed.Size = new System.Drawing.Size(130, 21);
-            this.cbUsed.TabIndex = 10;
+            this.cbUsed.TabIndex = 3;
             // 
             // cbPayment
             // 
@@ -91,7 +91,7 @@ namespace EmployeesTable.Forms
             this.cbPayment.Location = new System.Drawing.Point(90, 45);
             this.cbPayment.Name = "cbPayment";
             this.cbPayment.Size = new System.Drawing.Size(130, 21);
-            this.cbPayment.TabIndex = 9;
+            this.cbPayment.TabIndex = 1;
             this.cbPayment.SelectedIndexChanged += new System.EventHandler(this.cbPayment_SelectedIndexChanged);
             // 
             // lbComment
@@ -107,7 +107,7 @@ namespace EmployeesTable.Forms
             this.tbComment.Location = new System.Drawing.Point(90, 151);
             this.tbComment.Name = "tbComment";
             this.tbComment.Size = new System.Drawing.Size(130, 20);
-            this.tbComment.TabIndex = 8;
+            this.tbComment.TabIndex = 5;
             // 
             // tpRestDate
             // 
@@ -116,7 +116,7 @@ namespace EmployeesTable.Forms
             this.tpRestDate.Location = new System.Drawing.Point(90, 125);
             this.tpRestDate.Name = "tpRestDate";
             this.tpRestDate.Size = new System.Drawing.Size(130, 20);
-            this.tpRestDate.TabIndex = 6;
+            this.tpRestDate.TabIndex = 4;
             this.tpRestDate.ValueChanged += new System.EventHandler(this.tpUsedDate_ValueChanged);
             // 
             // lbRestDate
@@ -135,7 +135,7 @@ namespace EmployeesTable.Forms
             this.tpWorkDate.Location = new System.Drawing.Point(90, 19);
             this.tpWorkDate.Name = "tpWorkDate";
             this.tpWorkDate.Size = new System.Drawing.Size(130, 20);
-            this.tpWorkDate.TabIndex = 4;
+            this.tpWorkDate.TabIndex = 0;
             // 
             // lbPayment
             // 
@@ -185,7 +185,7 @@ namespace EmployeesTable.Forms
             this.btCancelbtCancel.Location = new System.Drawing.Point(157, 211);
             this.btCancelbtCancel.Name = "btCancelbtCancel";
             this.btCancelbtCancel.Size = new System.Drawing.Size(75, 23);
-            this.btCancelbtCancel.TabIndex = 1;
+            this.btCancelbtCancel.TabIndex = 7;
             this.btCancelbtCancel.Text = "Отмена";
             this.btCancelbtCancel.UseVisualStyleBackColor = true;
             // 
@@ -195,7 +195,7 @@ namespace EmployeesTable.Forms
             this.btOK.Location = new System.Drawing.Point(76, 211);
             this.btOK.Name = "btOK";
             this.btOK.Size = new System.Drawing.Size(75, 23);
-            this.btOK.TabIndex = 2;
+            this.btOK.TabIndex = 6;
             this.btOK.Text = "OK";
             this.btOK.UseVisualStyleBackColor = true;
             this.btOK.Click += new System.EventHandler(this.btOK_Click);

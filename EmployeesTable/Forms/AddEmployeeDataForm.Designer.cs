@@ -67,7 +67,7 @@ namespace EmployeesTable.Forms
             this.cbFired.Location = new System.Drawing.Point(119, 101);
             this.cbFired.Name = "cbFired";
             this.cbFired.Size = new System.Drawing.Size(15, 14);
-            this.cbFired.TabIndex = 4;
+            this.cbFired.TabIndex = 3;
             this.cbFired.UseVisualStyleBackColor = true;
             // 
             // lbRepresentation
@@ -134,7 +134,7 @@ namespace EmployeesTable.Forms
             this.btCancelbtCancel.Location = new System.Drawing.Point(201, 139);
             this.btCancelbtCancel.Name = "btCancelbtCancel";
             this.btCancelbtCancel.Size = new System.Drawing.Size(75, 23);
-            this.btCancelbtCancel.TabIndex = 1;
+            this.btCancelbtCancel.TabIndex = 5;
             this.btCancelbtCancel.Text = "Отмена";
             this.btCancelbtCancel.UseVisualStyleBackColor = true;
             // 
@@ -144,7 +144,7 @@ namespace EmployeesTable.Forms
             this.btOK.Location = new System.Drawing.Point(120, 139);
             this.btOK.Name = "btOK";
             this.btOK.Size = new System.Drawing.Size(75, 23);
-            this.btOK.TabIndex = 2;
+            this.btOK.TabIndex = 4;
             this.btOK.Text = "OK";
             this.btOK.UseVisualStyleBackColor = true;
             this.btOK.Click += new System.EventHandler(this.btOK_Click);

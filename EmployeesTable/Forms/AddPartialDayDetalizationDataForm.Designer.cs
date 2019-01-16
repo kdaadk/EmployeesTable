@@ -32,7 +32,7 @@ namespace EmployeesTable.Forms
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cbUsed = new System.Windows.Forms.ComboBox();
+            this.cbRest = new System.Windows.Forms.ComboBox();
             this.lbComment = new System.Windows.Forms.Label();
             this.tbComment = new System.Windows.Forms.TextBox();
             this.tpWorkDate = new System.Windows.Forms.DateTimePicker();
@@ -47,7 +47,7 @@ namespace EmployeesTable.Forms
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.cbUsed);
+            this.groupBox1.Controls.Add(this.cbRest);
             this.groupBox1.Controls.Add(this.lbComment);
             this.groupBox1.Controls.Add(this.tbComment);
             this.groupBox1.Controls.Add(this.tpWorkDate);
@@ -62,23 +62,23 @@ namespace EmployeesTable.Forms
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Детализация";
             // 
-            // cbUsed
+            // cbRest
             // 
-            this.cbUsed.FormattingEnabled = true;
-            this.cbUsed.Items.AddRange(new object[] {
-            "Да",
-            "Не использован"});
-            this.cbUsed.Location = new System.Drawing.Point(90, 71);
-            this.cbUsed.Name = "cbUsed";
-            this.cbUsed.Size = new System.Drawing.Size(130, 21);
-            this.cbUsed.TabIndex = 10;
+            this.cbRest.FormattingEnabled = true;
+            this.cbRest.Items.AddRange(new object[] {
+            "Не использован",
+            "Да"});
+            this.cbRest.Location = new System.Drawing.Point(90, 71);
+            this.cbRest.Name = "cbRest";
+            this.cbRest.Size = new System.Drawing.Size(130, 21);
+            this.cbRest.TabIndex = 2;
             // 
             // lbComment
             // 
             this.lbComment.Location = new System.Drawing.Point(7, 103);
             this.lbComment.Name = "lbComment";
             this.lbComment.Size = new System.Drawing.Size(81, 23);
-            this.lbComment.TabIndex = 7;
+            this.lbComment.TabIndex = 4;
             this.lbComment.Text = "Комментарий:";
             // 
             // tbComment
@@ -86,7 +86,7 @@ namespace EmployeesTable.Forms
             this.tbComment.Location = new System.Drawing.Point(90, 100);
             this.tbComment.Name = "tbComment";
             this.tbComment.Size = new System.Drawing.Size(130, 20);
-            this.tbComment.TabIndex = 8;
+            this.tbComment.TabIndex = 4;
             // 
             // tpWorkDate
             // 
@@ -95,7 +95,7 @@ namespace EmployeesTable.Forms
             this.tpWorkDate.Location = new System.Drawing.Point(90, 19);
             this.tpWorkDate.Name = "tpWorkDate";
             this.tpWorkDate.Size = new System.Drawing.Size(130, 20);
-            this.tpWorkDate.TabIndex = 4;
+            this.tpWorkDate.TabIndex = 0;
             // 
             // lbWorkDate
             // 
@@ -111,7 +111,7 @@ namespace EmployeesTable.Forms
             this.lbHours.Location = new System.Drawing.Point(7, 48);
             this.lbHours.Name = "lbHours";
             this.lbHours.Size = new System.Drawing.Size(51, 13);
-            this.lbHours.TabIndex = 2;
+            this.lbHours.TabIndex = 1;
             this.lbHours.Text = "Часы:";
             // 
             // tbHours
@@ -119,14 +119,14 @@ namespace EmployeesTable.Forms
             this.tbHours.Location = new System.Drawing.Point(90, 45);
             this.tbHours.Name = "tbHours";
             this.tbHours.Size = new System.Drawing.Size(130, 20);
-            this.tbHours.TabIndex = 2;
+            this.tbHours.TabIndex = 1;
             // 
             // lbRest
             // 
             this.lbRest.Location = new System.Drawing.Point(7, 74);
             this.lbRest.Name = "lbRest";
             this.lbRest.Size = new System.Drawing.Size(81, 23);
-            this.lbRest.TabIndex = 3;
+            this.lbRest.TabIndex = 2;
             this.lbRest.Text = "Использован?";
             // 
             // btCancelbtCancel
@@ -136,7 +136,7 @@ namespace EmployeesTable.Forms
             this.btCancelbtCancel.Location = new System.Drawing.Point(157, 161);
             this.btCancelbtCancel.Name = "btCancelbtCancel";
             this.btCancelbtCancel.Size = new System.Drawing.Size(75, 23);
-            this.btCancelbtCancel.TabIndex = 1;
+            this.btCancelbtCancel.TabIndex = 6;
             this.btCancelbtCancel.Text = "Отмена";
             this.btCancelbtCancel.UseVisualStyleBackColor = true;
             // 
@@ -146,7 +146,7 @@ namespace EmployeesTable.Forms
             this.btOK.Location = new System.Drawing.Point(76, 161);
             this.btOK.Name = "btOK";
             this.btOK.Size = new System.Drawing.Size(75, 23);
-            this.btOK.TabIndex = 2;
+            this.btOK.TabIndex = 5;
             this.btOK.Text = "OK";
             this.btOK.UseVisualStyleBackColor = true;
             this.btOK.Click += new System.EventHandler(this.btOK_Click);
@@ -181,6 +181,6 @@ namespace EmployeesTable.Forms
         private DateTimePicker tpWorkDate;
         private Label lbComment;
         private TextBox tbComment;
-        private ComboBox cbUsed;
+        private ComboBox cbRest;
     }
 }
