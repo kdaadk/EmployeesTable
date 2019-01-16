@@ -68,7 +68,7 @@ namespace EmployeesTable.Forms
             var selectedRow = detalizationDataGridView.Rows[detalizationDataGridView.SelectedCells[0].RowIndex];
             var wDate = DateTime.Parse(detalizationDataGridView.Rows[detalizationDataGridView.SelectedCells[0].RowIndex]
                 .Cells[0].Value.ToString());
-            var addData = new AddFullDayDetalizationDataForm(GetFDetalization(selectedRow));
+            var addData = new AddFullDayDetalizationDataForm(GetFullDayDetalization(selectedRow));
 
             if (addData.ShowDialog() == DialogResult.OK
                 && employeeRepository.TryEditFullDayDetalization(wDate, id, addData.Detalization))
@@ -86,7 +86,7 @@ namespace EmployeesTable.Forms
             selectedRow.Cells[5].Value = addFullDayDetalizationData.Detalization.Comment;
         }
 
-        private FullDayDetalization GetFDetalization(DataGridViewRow selectedRow)
+        private FullDayDetalization GetFullDayDetalization(DataGridViewRow selectedRow)
         {
             DateTime? restDate = null;
             if (!string.IsNullOrEmpty((string) selectedRow.Cells[4].Value))

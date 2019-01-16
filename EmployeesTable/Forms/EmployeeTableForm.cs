@@ -29,6 +29,9 @@ namespace EmployeesTable.Forms
             //var dbTransfer = new DbTransfer(employeeRepository);
             //dbTransfer.LoadData();
 
+            //var decemberData = new DecemberData(employeeRepository);
+            //var bb = decemberData.Load();
+
             LoadEmployees();
         }
 
@@ -56,8 +59,7 @@ namespace EmployeesTable.Forms
 
             foreach (var employee in employees)
                 dgvEmployees.Rows.Add(employee.FullName, employee.Representation,
-                    $"{employee.HoursFullDays} — {employee.HoursFullDays / 8}",
-                    $"{employee.HoursPartialDays} — {employee.HoursPartialDays / 8}", employee.Comment);
+                    employee.HoursFullDays / 8, employee.HoursPartialDays, employee.Comment);
         }
 
         private void employeesDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -72,14 +74,14 @@ namespace EmployeesTable.Forms
             {
                 var detalization = new FullDayDetalizationForm(id, employeeRepository);
                 detalization.ShowDialog();
-                selectedRow.Cells[2].Value = $"{employee.HoursFullDays} — {employee.HoursFullDays / 8}";
+                selectedRow.Cells[2].Value = employee.HoursFullDays / 8;
             }
 
             if (e.ColumnIndex == 3)
             {
                 var detalization = new PartialDayDetalizationForm(id, employeeRepository);
                 detalization.ShowDialog();
-                selectedRow.Cells[3].Value = $"{employee.HoursPartialDays} — {employee.HoursPartialDays / 8}";
+                selectedRow.Cells[3].Value = employee.HoursPartialDays;
             }
         }
 
@@ -266,8 +268,7 @@ namespace EmployeesTable.Forms
 
             foreach (var employee in fiteredEmployees)
                 dgvEmployees.Rows.Add(employee.FullName, employee.Representation,
-                    $"{employee.HoursFullDays} — {employee.HoursFullDays / 8}",
-                    $"{employee.HoursPartialDays} — {employee.HoursPartialDays / 8}", employee.Comment);
+                    employee.HoursFullDays / 8, employee.HoursPartialDays, employee.Comment);
         }
 
         private void miAddEmployee_Click(object sender, EventArgs e)

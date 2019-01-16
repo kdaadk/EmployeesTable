@@ -34,12 +34,12 @@
             this.cbFiredEmployees = new System.Windows.Forms.CheckBox();
             this.lbRepresentation = new System.Windows.Forms.Label();
             this.cbRepresentation = new System.Windows.Forms.ComboBox();
-            this.lbHoursNumberFrom = new System.Windows.Forms.Label();
-            this.lbHoursNumberTo = new System.Windows.Forms.Label();
-            this.nudHoursNumberFrom = new System.Windows.Forms.NumericUpDown();
-            this.nudHoursNumberTo = new System.Windows.Forms.NumericUpDown();
-            ((System.ComponentModel.ISupportInitialize)(this.nudHoursNumberFrom)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudHoursNumberTo)).BeginInit();
+            this.lbDaysNumberFrom = new System.Windows.Forms.Label();
+            this.lbDaysNumberTo = new System.Windows.Forms.Label();
+            this.nudDaysNumberFrom = new System.Windows.Forms.NumericUpDown();
+            this.nudDaysNumberTo = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDaysNumberFrom)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDaysNumberTo)).BeginInit();
             this.SuspendLayout();
             // 
             // btOK
@@ -102,39 +102,39 @@
             this.cbRepresentation.TabIndex = 8;
             this.cbRepresentation.Text = "Все";
             // 
-            // lbHoursNumberFrom
+            // lbDaysNumberFrom
             // 
-            this.lbHoursNumberFrom.AutoSize = true;
-            this.lbHoursNumberFrom.Location = new System.Drawing.Point(20, 78);
-            this.lbHoursNumberFrom.Name = "lbHoursNumberFrom";
-            this.lbHoursNumberFrom.Size = new System.Drawing.Size(112, 13);
-            this.lbHoursNumberFrom.TabIndex = 9;
-            this.lbHoursNumberFrom.Text = "Количество часов от";
+            this.lbDaysNumberFrom.AutoSize = true;
+            this.lbDaysNumberFrom.Location = new System.Drawing.Point(20, 78);
+            this.lbDaysNumberFrom.Name = "lbDaysNumberFrom";
+            this.lbDaysNumberFrom.Size = new System.Drawing.Size(107, 13);
+            this.lbDaysNumberFrom.TabIndex = 9;
+            this.lbDaysNumberFrom.Text = "Количество дней от";
             // 
-            // lbHoursNumberTo
+            // lbDaysNumberTo
             // 
-            this.lbHoursNumberTo.AutoSize = true;
-            this.lbHoursNumberTo.Location = new System.Drawing.Point(180, 78);
-            this.lbHoursNumberTo.Name = "lbHoursNumberTo";
-            this.lbHoursNumberTo.Size = new System.Drawing.Size(19, 13);
-            this.lbHoursNumberTo.TabIndex = 10;
-            this.lbHoursNumberTo.Text = "до";
+            this.lbDaysNumberTo.AutoSize = true;
+            this.lbDaysNumberTo.Location = new System.Drawing.Point(180, 78);
+            this.lbDaysNumberTo.Name = "lbDaysNumberTo";
+            this.lbDaysNumberTo.Size = new System.Drawing.Size(19, 13);
+            this.lbDaysNumberTo.TabIndex = 10;
+            this.lbDaysNumberTo.Text = "до";
             // 
-            // nudHoursNumberFrom
+            // nudDaysNumberFrom
             // 
-            this.nudHoursNumberFrom.Location = new System.Drawing.Point(138, 76);
-            this.nudHoursNumberFrom.Name = "nudHoursNumberFrom";
-            this.nudHoursNumberFrom.Size = new System.Drawing.Size(36, 20);
-            this.nudHoursNumberFrom.TabIndex = 11;
+            this.nudDaysNumberFrom.Location = new System.Drawing.Point(138, 76);
+            this.nudDaysNumberFrom.Name = "nudDaysNumberFrom";
+            this.nudDaysNumberFrom.Size = new System.Drawing.Size(36, 20);
+            this.nudDaysNumberFrom.TabIndex = 11;
             // 
-            // nudHoursNumberTo
+            // nudDaysNumberTo
             // 
-            this.nudHoursNumberTo.Location = new System.Drawing.Point(205, 76);
-            this.nudHoursNumberTo.Name = "nudHoursNumberTo";
-            this.nudHoursNumberTo.Size = new System.Drawing.Size(36, 20);
-            this.nudHoursNumberTo.TabIndex = 12;
-            this.nudHoursNumberTo.Value = new decimal(new int[] {
-            10,
+            this.nudDaysNumberTo.Location = new System.Drawing.Point(205, 76);
+            this.nudDaysNumberTo.Name = "nudDaysNumberTo";
+            this.nudDaysNumberTo.Size = new System.Drawing.Size(36, 20);
+            this.nudDaysNumberTo.TabIndex = 12;
+            this.nudDaysNumberTo.Value = new decimal(new int[] {
+            2,
             0,
             0,
             0});
@@ -144,10 +144,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(437, 147);
-            this.Controls.Add(this.nudHoursNumberTo);
-            this.Controls.Add(this.nudHoursNumberFrom);
-            this.Controls.Add(this.lbHoursNumberTo);
-            this.Controls.Add(this.lbHoursNumberFrom);
+            this.Controls.Add(this.nudDaysNumberTo);
+            this.Controls.Add(this.nudDaysNumberFrom);
+            this.Controls.Add(this.lbDaysNumberTo);
+            this.Controls.Add(this.lbDaysNumberFrom);
             this.Controls.Add(this.cbRepresentation);
             this.Controls.Add(this.lbRepresentation);
             this.Controls.Add(this.cbFiredEmployees);
@@ -157,8 +157,8 @@
             this.Name = "GridFilterForm";
             this.Text = "Фильтр";
             this.Load += new System.EventHandler(this.GridFilter_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.nudHoursNumberFrom)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudHoursNumberTo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDaysNumberFrom)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDaysNumberTo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -172,9 +172,9 @@
         private System.Windows.Forms.CheckBox cbFiredEmployees;
         private System.Windows.Forms.Label lbRepresentation;
         private System.Windows.Forms.ComboBox cbRepresentation;
-        private System.Windows.Forms.Label lbHoursNumberFrom;
-        private System.Windows.Forms.Label lbHoursNumberTo;
-        private System.Windows.Forms.NumericUpDown nudHoursNumberFrom;
-        private System.Windows.Forms.NumericUpDown nudHoursNumberTo;
+        private System.Windows.Forms.Label lbDaysNumberFrom;
+        private System.Windows.Forms.Label lbDaysNumberTo;
+        private System.Windows.Forms.NumericUpDown nudDaysNumberFrom;
+        private System.Windows.Forms.NumericUpDown nudDaysNumberTo;
     }
 }

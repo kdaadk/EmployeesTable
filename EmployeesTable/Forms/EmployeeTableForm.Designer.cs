@@ -211,12 +211,12 @@ namespace EmployeesTable.Forms
             // 
             // hoursFullDaysBtn
             // 
-            this.hoursFullDaysBtn.HeaderText = "Полные дни";
+            this.hoursFullDaysBtn.HeaderText = "Полные дни (д)";
             this.hoursFullDaysBtn.Name = "hoursFullDaysBtn";
             // 
             // hoursPartialDaysBtn
             // 
-            this.hoursPartialDaysBtn.HeaderText = "Неполные дни";
+            this.hoursPartialDaysBtn.HeaderText = "Неполные дни (ч)";
             this.hoursPartialDaysBtn.Name = "hoursPartialDaysBtn";
             // 
             // comment

@@ -33,8 +33,8 @@ namespace EmployeesTable.Forms
         {
             Parameters.IsFired = cbFiredEmployees.Checked;
             Parameters.Representation = cbRepresentation.SelectedItem.ToString();
-            Parameters.HoursNumberFrom = (int) nudHoursNumberFrom.Value;
-            Parameters.HoursNumberTo = (int) nudHoursNumberTo.Value;
+            Parameters.DaysNumberFrom = (double) nudDaysNumberFrom.Value;
+            Parameters.DaysNumberTo = (double) nudDaysNumberTo.Value;
 
             DialogResult = DialogResult.OK;
         }
