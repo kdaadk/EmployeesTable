@@ -60,5 +60,23 @@ namespace EmployeesTable.Forms
                 cbUsed.SelectedItem = @"Да";
             }
         }
+
+        private void cbUsed_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbUsed.SelectedItem.ToString() == @"Да")
+            {
+                tbHours.Text = @"0";
+                tbHours.ReadOnly = true;
+            }
+            else
+            {
+                tbHours.ReadOnly = false;
+            }
+        }
+
+        private void btDeleteRestDate_Click(object sender, EventArgs e)
+        {
+            tpRestDate.CustomFormat = @" ";
+        }
     }
 }

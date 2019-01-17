@@ -150,7 +150,7 @@ namespace EmployeesTable
             return store.FindByQuery<Employee>(e =>
             {
                 var capitalizeFirstLetterInput = $"{input.ToUpper().First()}{input.Substring(1)}";
-                return e.FullName.StartsWith(input) || e.FullName.StartsWith(capitalizeFirstLetterInput);
+                return e.Fired == false && (e.FullName.StartsWith(input) || e.FullName.StartsWith(capitalizeFirstLetterInput));
             });
         }
 

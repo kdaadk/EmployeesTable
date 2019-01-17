@@ -35,5 +35,18 @@ namespace EmployeesTable.Forms
 
             DialogResult = DialogResult.OK;
         }
+
+        private void cbRest_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbRest.SelectedItem.ToString() == @"Да")
+            {
+                tbHours.Text = @"0";
+                tbHours.ReadOnly = true;
+            }
+            else
+            {
+                tbHours.ReadOnly = false;
+            }
+        }
     }
 }

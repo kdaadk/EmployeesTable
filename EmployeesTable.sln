@@ -3,14 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeesTable", "EmployeesTable\EmployeesTable.csproj", "{C310BFAA-95E0-464D-9CDF-A1F1ABD0EF44}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtraWork", "EmployeesTable\ExtraWork.csproj", "{C310BFAA-95E0-464D-9CDF-A1F1ABD0EF44}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TinyStore", "TinyStore\TinyStore.csproj", "{AC6E8202-40E4-4D00-B973-C7A6E987F4E6}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{527AF719-3FB9-4B70-B08D-0CB6AC97772E}"
-	ProjectSection(SolutionItems) = preProject
-		IconApp.ico = IconApp.ico
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

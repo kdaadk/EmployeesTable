@@ -33,10 +33,10 @@ namespace EmployeesTable.Forms
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FullDayDetalizationForm));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btAdd = new System.Windows.Forms.ToolStripButton();
-            this.btDeleteSelectRow = new System.Windows.Forms.ToolStripButton();
             this.editBtn = new System.Windows.Forms.ToolStripButton();
+            this.btDeleteSelectRow = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.detalizationDataGridView = new System.Windows.Forms.DataGridView();
+            this.dgvFullDayDetalization = new System.Windows.Forms.DataGridView();
             this.workDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.payment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.hours = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -44,7 +44,7 @@ namespace EmployeesTable.Forms
             this.usedDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.detalizationDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFullDayDetalization)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -70,17 +70,6 @@ namespace EmployeesTable.Forms
             this.btAdd.ToolTipText = "Добавить запись";
             this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
             // 
-            // btDeleteSelectRow
-            // 
-            this.btDeleteSelectRow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btDeleteSelectRow.Image = ((System.Drawing.Image)(resources.GetObject("btDeleteSelectRow.Image")));
-            this.btDeleteSelectRow.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btDeleteSelectRow.Name = "btDeleteSelectRow";
-            this.btDeleteSelectRow.Size = new System.Drawing.Size(55, 22);
-            this.btDeleteSelectRow.Text = "Удалить";
-            this.btDeleteSelectRow.ToolTipText = "Удалить выбранную запись";
-            this.btDeleteSelectRow.Click += new System.EventHandler(this.btDeleteSelectRow_Click);
-            // 
             // editBtn
             // 
             this.editBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -92,6 +81,17 @@ namespace EmployeesTable.Forms
             this.editBtn.ToolTipText = "Редактировать выбранную запись";
             this.editBtn.Click += new System.EventHandler(this.btEdit_Click);
             // 
+            // btDeleteSelectRow
+            // 
+            this.btDeleteSelectRow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btDeleteSelectRow.Image = ((System.Drawing.Image)(resources.GetObject("btDeleteSelectRow.Image")));
+            this.btDeleteSelectRow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btDeleteSelectRow.Name = "btDeleteSelectRow";
+            this.btDeleteSelectRow.Size = new System.Drawing.Size(55, 22);
+            this.btDeleteSelectRow.Text = "Удалить";
+            this.btDeleteSelectRow.ToolTipText = "Удалить выбранную запись";
+            this.btDeleteSelectRow.Click += new System.EventHandler(this.btDeleteSelectRow_Click);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Location = new System.Drawing.Point(0, 262);
@@ -100,66 +100,74 @@ namespace EmployeesTable.Forms
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // detalizationDataGridView
+            // dgvFullDayDetalization
             // 
-            this.detalizationDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.detalizationDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvFullDayDetalization.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.workDate,
             this.payment,
             this.hours,
             this.used,
             this.usedDate,
             this.comment});
-            this.detalizationDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.detalizationDataGridView.Location = new System.Drawing.Point(0, 25);
-            this.detalizationDataGridView.Name = "detalizationDataGridView";
-            this.detalizationDataGridView.Size = new System.Drawing.Size(647, 237);
-            this.detalizationDataGridView.TabIndex = 2;
+            this.dgvFullDayDetalization.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgvFullDayDetalization.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvFullDayDetalization.Location = new System.Drawing.Point(0, 25);
+            this.dgvFullDayDetalization.Name = "dgvFullDayDetalization";
+            this.dgvFullDayDetalization.ReadOnly = true;
+            this.dgvFullDayDetalization.Size = new System.Drawing.Size(800, 284);
+            this.dgvFullDayDetalization.TabIndex = 2;
             // 
             // workDate
             // 
             this.workDate.HeaderText = "Дата работы";
             this.workDate.Name = "workDate";
+            this.workDate.ReadOnly = true;
             // 
             // payment
             // 
             this.payment.HeaderText = "Оплата/Отгул";
             this.payment.Name = "payment";
+            this.payment.ReadOnly = true;
             // 
             // hours
             // 
             this.hours.HeaderText = "Кол-во часов";
             this.hours.Name = "hours";
+            this.hours.ReadOnly = true;
             // 
             // used
             // 
             this.used.HeaderText = "Использован?";
             this.used.Name = "used";
+            this.used.ReadOnly = true;
             // 
             // usedDate
             // 
             this.usedDate.HeaderText = "Дата отдыха";
             this.usedDate.Name = "usedDate";
+            this.usedDate.ReadOnly = true;
             // 
             // comment
             // 
             this.comment.HeaderText = "Комментарий";
             this.comment.Name = "comment";
+            this.comment.ReadOnly = true;
             // 
             // FullDayDetalizationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(647, 284);
-            this.Controls.Add(this.detalizationDataGridView);
+            this.ClientSize = new System.Drawing.Size(800, 284);
+            this.Controls.Add(this.dgvFullDayDetalization);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FullDayDetalizationForm";
             this.Text = id;
             this.Load += new System.EventHandler(this.EmployeeFullDayDetalizationForm_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.detalizationDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFullDayDetalization)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -170,7 +178,7 @@ namespace EmployeesTable.Forms
         private ToolStrip toolStrip1;
         private ToolStripButton btAdd;
         private StatusStrip statusStrip1;
-        private DataGridView detalizationDataGridView;
+        private DataGridView dgvFullDayDetalization;
         private ToolStripButton btDeleteSelectRow;
         private DataGridViewTextBoxColumn workDate;
         private DataGridViewTextBoxColumn payment;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace EmployeesTable.Forms
@@ -17,12 +18,12 @@ namespace EmployeesTable.Forms
 
         private void EmployeeFDetalizationForm_Load(object sender, EventArgs e)
         {
-            detalizationDataGridView.Rows.Clear();
+            dgvPartialDayDetalization.Rows.Clear();
             var employee = employeeRepository.GetEmployeeById(id);
 
             if (employee.PartialDayDetalization != null)
-                foreach (var d in employee.PartialDayDetalization)
-                    detalizationDataGridView.Rows.Add($"{d.WorkDate?.Date:dd/MM/yyyy}",
+                foreach (var d in employee.PartialDayDetalization.OrderBy(d => d.WorkDate))
+                    dgvPartialDayDetalization.Rows.Add($"{d.WorkDate?.Date:dd/MM/yyyy}",
                         d.WorkHours, d.Used.GetDisplayName(), d.Comment);
         }
 
@@ -34,7 +35,7 @@ namespace EmployeesTable.Forms
             {
                 var d = addData.Detalization;
                 if (employeeRepository.TryAddPartialDayDetalization(id, d))
-                    detalizationDataGridView.Rows.Add($"{d.WorkDate?.Date:dd/MM/yyyy}", d.WorkHours,
+                    dgvPartialDayDetalization.Rows.Add($"{d.WorkDate?.Date:dd/MM/yyyy}", d.WorkHours,
                         d.Used.GetDisplayName(), d.Comment);
             }
         }
@@ -48,16 +49,16 @@ namespace EmployeesTable.Forms
             if (mbAreYouSure == DialogResult.No)
                 return;
 
-            var selectedRowIndex = detalizationDataGridView.SelectedCells[0].RowIndex;
-            var wDate = DateTime.Parse(detalizationDataGridView.Rows[selectedRowIndex].Cells[0].Value.ToString());
+            var selectedRowIndex = dgvPartialDayDetalization.SelectedCells[0].RowIndex;
+            var wDate = DateTime.Parse(dgvPartialDayDetalization.Rows[selectedRowIndex].Cells[0].Value.ToString());
             employeeRepository.DeletePartialDayDetalizationByWorkDate(wDate, id);
-            detalizationDataGridView.Rows.RemoveAt(selectedRowIndex);
+            dgvPartialDayDetalization.Rows.RemoveAt(selectedRowIndex);
         }
 
         private void btEdit_Click(object sender, EventArgs e)
         {
-            var selectedRow = detalizationDataGridView.Rows[detalizationDataGridView.SelectedCells[0].RowIndex];
-            var workDate = DateTime.Parse(detalizationDataGridView.Rows[detalizationDataGridView.SelectedCells[0].RowIndex]
+            var selectedRow = dgvPartialDayDetalization.Rows[dgvPartialDayDetalization.SelectedCells[0].RowIndex];
+            var workDate = DateTime.Parse(dgvPartialDayDetalization.Rows[dgvPartialDayDetalization.SelectedCells[0].RowIndex]
                 .Cells[0].Value.ToString());
             var addData = new AddPartialDayDetalizationDataForm(GetPDetalization(selectedRow));
 

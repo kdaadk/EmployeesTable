@@ -30,6 +30,7 @@ namespace EmployeesTable.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddEmployeeDataForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cbFired = new System.Windows.Forms.CheckBox();
             this.lbRepresentation = new System.Windows.Forms.Label();
@@ -158,6 +159,7 @@ namespace EmployeesTable.Forms
             this.Controls.Add(this.btCancelbtCancel);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AddEmployeeDataForm";
             this.Text = "Запись сотрудника";
             this.Load += new System.EventHandler(this.AddDataToDb_Load);

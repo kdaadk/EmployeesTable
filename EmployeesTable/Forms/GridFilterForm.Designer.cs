@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GridFilterForm));
             this.btOK = new System.Windows.Forms.Button();
             this.btCancelbtCancel = new System.Windows.Forms.Button();
             this.lbFiredEmployees = new System.Windows.Forms.Label();
@@ -154,6 +155,7 @@
             this.Controls.Add(this.lbFiredEmployees);
             this.Controls.Add(this.btOK);
             this.Controls.Add(this.btCancelbtCancel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "GridFilterForm";
             this.Text = "Фильтр";
             this.Load += new System.EventHandler(this.GridFilter_Load);

@@ -31,6 +31,7 @@ namespace EmployeesTable.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddPartialDayDetalizationDataForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cbRest = new System.Windows.Forms.ComboBox();
             this.lbComment = new System.Windows.Forms.Label();
@@ -72,6 +73,7 @@ namespace EmployeesTable.Forms
             this.cbRest.Name = "cbRest";
             this.cbRest.Size = new System.Drawing.Size(130, 21);
             this.cbRest.TabIndex = 2;
+            this.cbRest.SelectedIndexChanged += new System.EventHandler(this.cbRest_SelectedIndexChanged);
             // 
             // lbComment
             // 
@@ -160,6 +162,7 @@ namespace EmployeesTable.Forms
             this.Controls.Add(this.btCancelbtCancel);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AddPartialDayDetalizationDataForm";
             this.Text = "Запись детализации";
             this.Load += new System.EventHandler(this.AddDataToDb_Load);

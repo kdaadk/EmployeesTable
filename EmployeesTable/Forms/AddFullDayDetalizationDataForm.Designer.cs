@@ -31,6 +31,7 @@ namespace EmployeesTable.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddFullDayDetalizationDataForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cbUsed = new System.Windows.Forms.ComboBox();
             this.cbPayment = new System.Windows.Forms.ComboBox();
@@ -46,11 +47,13 @@ namespace EmployeesTable.Forms
             this.lbRest = new System.Windows.Forms.Label();
             this.btCancelbtCancel = new System.Windows.Forms.Button();
             this.btOK = new System.Windows.Forms.Button();
+            this.btDeleteRestDate = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btDeleteRestDate);
             this.groupBox1.Controls.Add(this.cbUsed);
             this.groupBox1.Controls.Add(this.cbPayment);
             this.groupBox1.Controls.Add(this.lbComment);
@@ -65,7 +68,7 @@ namespace EmployeesTable.Forms
             this.groupBox1.Controls.Add(this.lbRest);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(232, 193);
+            this.groupBox1.Size = new System.Drawing.Size(232, 220);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Детализация";
@@ -81,6 +84,7 @@ namespace EmployeesTable.Forms
             this.cbUsed.Name = "cbUsed";
             this.cbUsed.Size = new System.Drawing.Size(130, 21);
             this.cbUsed.TabIndex = 3;
+            this.cbUsed.SelectedIndexChanged += new System.EventHandler(this.cbUsed_SelectedIndexChanged);
             // 
             // cbPayment
             // 
@@ -96,7 +100,7 @@ namespace EmployeesTable.Forms
             // 
             // lbComment
             // 
-            this.lbComment.Location = new System.Drawing.Point(7, 154);
+            this.lbComment.Location = new System.Drawing.Point(7, 185);
             this.lbComment.Name = "lbComment";
             this.lbComment.Size = new System.Drawing.Size(81, 23);
             this.lbComment.TabIndex = 7;
@@ -104,9 +108,9 @@ namespace EmployeesTable.Forms
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(90, 151);
+            this.tbComment.Location = new System.Drawing.Point(90, 182);
             this.tbComment.Name = "tbComment";
-            this.tbComment.Size = new System.Drawing.Size(130, 20);
+            this.tbComment.Size = new System.Drawing.Size(129, 20);
             this.tbComment.TabIndex = 5;
             // 
             // tpRestDate
@@ -174,7 +178,7 @@ namespace EmployeesTable.Forms
             // 
             this.lbRest.Location = new System.Drawing.Point(7, 102);
             this.lbRest.Name = "lbRest";
-            this.lbRest.Size = new System.Drawing.Size(51, 23);
+            this.lbRest.Size = new System.Drawing.Size(81, 23);
             this.lbRest.TabIndex = 3;
             this.lbRest.Text = "Использован?";
             // 
@@ -182,7 +186,7 @@ namespace EmployeesTable.Forms
             // 
             this.btCancelbtCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btCancelbtCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btCancelbtCancel.Location = new System.Drawing.Point(157, 211);
+            this.btCancelbtCancel.Location = new System.Drawing.Point(155, 238);
             this.btCancelbtCancel.Name = "btCancelbtCancel";
             this.btCancelbtCancel.Size = new System.Drawing.Size(75, 23);
             this.btCancelbtCancel.TabIndex = 7;
@@ -192,7 +196,7 @@ namespace EmployeesTable.Forms
             // btOK
             // 
             this.btOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btOK.Location = new System.Drawing.Point(76, 211);
+            this.btOK.Location = new System.Drawing.Point(74, 238);
             this.btOK.Name = "btOK";
             this.btOK.Size = new System.Drawing.Size(75, 23);
             this.btOK.TabIndex = 6;
@@ -200,15 +204,26 @@ namespace EmployeesTable.Forms
             this.btOK.UseVisualStyleBackColor = true;
             this.btOK.Click += new System.EventHandler(this.btOK_Click);
             // 
+            // btDeleteRestDate
+            // 
+            this.btDeleteRestDate.Location = new System.Drawing.Point(90, 151);
+            this.btDeleteRestDate.Name = "btDeleteRestDate";
+            this.btDeleteRestDate.Size = new System.Drawing.Size(129, 25);
+            this.btDeleteRestDate.TabIndex = 8;
+            this.btDeleteRestDate.Text = "Удалить дату отдыха";
+            this.btDeleteRestDate.UseVisualStyleBackColor = true;
+            this.btDeleteRestDate.Click += new System.EventHandler(this.btDeleteRestDate_Click);
+            // 
             // AddFullDayDetalizationDataForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(256, 246);
+            this.ClientSize = new System.Drawing.Size(263, 273);
             this.Controls.Add(this.btOK);
             this.Controls.Add(this.btCancelbtCancel);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AddFullDayDetalizationDataForm";
             this.Text = "Запись детализации";
             this.Load += new System.EventHandler(this.AddDataToDb_Load);
@@ -235,5 +250,6 @@ namespace EmployeesTable.Forms
         private TextBox tbComment;
         private ComboBox cbUsed;
         private ComboBox cbPayment;
+        private Button btDeleteRestDate;
     }
 }

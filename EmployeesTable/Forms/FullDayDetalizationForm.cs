@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace EmployeesTable.Forms
@@ -18,17 +19,17 @@ namespace EmployeesTable.Forms
 
         private void EmployeeFullDayDetalizationForm_Load(object sender, EventArgs e)
         {
-            detalizationDataGridView.Rows.Clear();
+            dgvFullDayDetalization.Rows.Clear();
             var employee = employeeRepository.GetEmployeeById(id);
 
             if (employee.FullDayDetalizations != null)
-                foreach (var d in employee.FullDayDetalizations)
+                foreach (var d in employee.FullDayDetalizations.OrderBy(d => d.WorkDate))
                 {
-                    detalizationDataGridView.Rows.Add($"{d.WorkDate?.Date:dd/MM/yyyy}",
+                    dgvFullDayDetalization.Rows.Add($"{d.WorkDate?.Date:dd/MM/yyyy}",
                         d.Payment.GetDisplayName(), d.WorkHours, d.Used.GetDisplayName(),
                         $"{d.RestDate?.Date:dd/MM/yyyy}", d.Comment);
                     if (d.Payment == Payment.Rest)
-                        detalizationDataGridView.Rows[detalizationDataGridView.Rows.Count - 2].Cells[1].Style.ForeColor = Color.Red;
+                        dgvFullDayDetalization.Rows[dgvFullDayDetalization.Rows.Count - 2].Cells[1].Style.ForeColor = Color.Red;
                 }
         }
 
@@ -42,7 +43,7 @@ namespace EmployeesTable.Forms
                 var d = addData.Detalization;
 
                 if (employeeRepository.TryAddFullDayDetalization(id, d))
-                    detalizationDataGridView.Rows.Add($"{d.WorkDate?.Date:dd/MM/yyyy}",
+                    dgvFullDayDetalization.Rows.Add($"{d.WorkDate?.Date:dd/MM/yyyy}",
                         d.Payment.GetDisplayName(), d.WorkHours,
                         d.Used.GetDisplayName(), $"{d.RestDate?.Date:dd/MM/yyyy}", d.Comment);
             }
@@ -57,16 +58,16 @@ namespace EmployeesTable.Forms
             if (mbAreYouSure == DialogResult.No)
                 return;
 
-            var selectedRowIndex = detalizationDataGridView.SelectedCells[0].RowIndex;
-            var wDate = DateTime.Parse(detalizationDataGridView.Rows[selectedRowIndex].Cells[0].Value.ToString());
+            var selectedRowIndex = dgvFullDayDetalization.SelectedCells[0].RowIndex;
+            var wDate = DateTime.Parse(dgvFullDayDetalization.Rows[selectedRowIndex].Cells[0].Value.ToString());
             employeeRepository.DeleteFullDayDetalizationByWorkDate(wDate, id);
-            detalizationDataGridView.Rows.RemoveAt(selectedRowIndex);
+            dgvFullDayDetalization.Rows.RemoveAt(selectedRowIndex);
         }
 
         private void btEdit_Click(object sender, EventArgs e)
         {
-            var selectedRow = detalizationDataGridView.Rows[detalizationDataGridView.SelectedCells[0].RowIndex];
-            var wDate = DateTime.Parse(detalizationDataGridView.Rows[detalizationDataGridView.SelectedCells[0].RowIndex]
+            var selectedRow = dgvFullDayDetalization.Rows[dgvFullDayDetalization.SelectedCells[0].RowIndex];
+            var wDate = DateTime.Parse(dgvFullDayDetalization.Rows[dgvFullDayDetalization.SelectedCells[0].RowIndex]
                 .Cells[0].Value.ToString());
             var addData = new AddFullDayDetalizationDataForm(GetFullDayDetalization(selectedRow));
 

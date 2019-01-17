@@ -95,7 +95,7 @@ namespace EmployeesTable.Forms
             if (filteredEmployees != null)
                 foreach (var employee in filteredEmployees)
                     dgvEmployees.Rows.Add(employee.FullName, employee.Representation,
-                        employee.HoursFullDays, employee.HoursPartialDays);
+                        employee.HoursFullDays / 8, employee.HoursPartialDays);
         }
 
         private async void btLoadOrder_Click(object sender, EventArgs e)

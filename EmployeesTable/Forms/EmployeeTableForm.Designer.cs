@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Runtime.Remoting.Channels;
+using System.Windows.Forms;
 
 namespace EmployeesTable.Forms
 {
@@ -71,7 +73,7 @@ namespace EmployeesTable.Forms
             this.BtnGridFilter});
             this.stripMenu.Location = new System.Drawing.Point(0, 0);
             this.stripMenu.Name = "stripMenu";
-            this.stripMenu.Size = new System.Drawing.Size(912, 25);
+            this.stripMenu.Size = new System.Drawing.Size(1075, 25);
             this.stripMenu.TabIndex = 0;
             // 
             // tstbFullNameSearcher
@@ -170,9 +172,9 @@ namespace EmployeesTable.Forms
             // 
             this.stripStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pbStatusImportOrder});
-            this.stripStatus.Location = new System.Drawing.Point(0, 262);
+            this.stripStatus.Location = new System.Drawing.Point(0, 303);
             this.stripStatus.Name = "stripStatus";
-            this.stripStatus.Size = new System.Drawing.Size(912, 22);
+            this.stripStatus.Size = new System.Drawing.Size(1075, 22);
             this.stripStatus.TabIndex = 3;
             // 
             // pbStatusImportOrder
@@ -183,17 +185,18 @@ namespace EmployeesTable.Forms
             // 
             // dgvEmployees
             // 
-            this.dgvEmployees.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEmployees.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.fullName,
             this.representation,
             this.hoursFullDaysBtn,
             this.hoursPartialDaysBtn,
             this.comment});
+            this.dgvEmployees.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.dgvEmployees.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvEmployees.Location = new System.Drawing.Point(0, 25);
             this.dgvEmployees.Name = "dgvEmployees";
-            this.dgvEmployees.Size = new System.Drawing.Size(912, 237);
+            this.dgvEmployees.ReadOnly = true;
+            this.dgvEmployees.Size = new System.Drawing.Size(1075, 278);
             this.dgvEmployees.TabIndex = 2;
             this.dgvEmployees.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.employeesDataGridView_CellContentClick);
             // 
@@ -201,38 +204,44 @@ namespace EmployeesTable.Forms
             // 
             this.fullName.HeaderText = "ФИО";
             this.fullName.Name = "fullName";
+            this.fullName.ReadOnly = true;
             this.fullName.Width = 250;
             // 
             // representation
             // 
             this.representation.HeaderText = "Представительство";
             this.representation.Name = "representation";
+            this.representation.ReadOnly = true;
             this.representation.Width = 250;
             // 
             // hoursFullDaysBtn
             // 
             this.hoursFullDaysBtn.HeaderText = "Полные дни (д)";
             this.hoursFullDaysBtn.Name = "hoursFullDaysBtn";
+            this.hoursFullDaysBtn.ReadOnly = true;
             // 
             // hoursPartialDaysBtn
             // 
             this.hoursPartialDaysBtn.HeaderText = "Неполные дни (ч)";
             this.hoursPartialDaysBtn.Name = "hoursPartialDaysBtn";
+            this.hoursPartialDaysBtn.ReadOnly = true;
             // 
             // comment
             // 
             this.comment.HeaderText = "Комментарий";
             this.comment.Name = "comment";
-            this.comment.Width = 150;
+            this.comment.ReadOnly = true;
+            this.comment.Width = 300;
             // 
             // EmployeeTableForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(912, 284);
+            this.ClientSize = new System.Drawing.Size(1075, 325);
             this.Controls.Add(this.dgvEmployees);
             this.Controls.Add(this.stripStatus);
             this.Controls.Add(this.stripMenu);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EmployeeTableForm";
             this.Text = "Реестр сотрудников";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EmployeeTableForm_FormClosing);
@@ -252,11 +261,6 @@ namespace EmployeesTable.Forms
         private ToolStrip stripMenu;
         private StatusStrip stripStatus;
         private DataGridView dgvEmployees;
-        private DataGridViewTextBoxColumn fullName;
-        private DataGridViewTextBoxColumn representation;
-        private DataGridViewButtonColumn hoursFullDaysBtn;
-        private DataGridViewButtonColumn hoursPartialDaysBtn;
-        private DataGridViewTextBoxColumn comment;
         private ToolStripButton btImportOrder;
         private ToolStripButton btExportTable;
         private ToolStripTextBox tstbFullNameSearcher;
@@ -270,6 +274,11 @@ namespace EmployeesTable.Forms
         private ToolStripSeparator toolStripSeparator3;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripSeparator toolStripSeparator2;
+        private DataGridViewTextBoxColumn fullName;
+        private DataGridViewTextBoxColumn representation;
+        private DataGridViewButtonColumn hoursFullDaysBtn;
+        private DataGridViewButtonColumn hoursPartialDaysBtn;
+        private DataGridViewTextBoxColumn comment;
     }
 }
 

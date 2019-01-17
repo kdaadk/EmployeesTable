@@ -8,8 +8,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("EmployeesTable")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyProduct("EmployeesTable 2019")]
+[assembly: AssemblyCopyright("Klopov Dmitriy")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
