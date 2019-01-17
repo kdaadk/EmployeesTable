@@ -40,7 +40,7 @@ namespace EmployeesTable.Forms
             this.lbComment = new System.Windows.Forms.Label();
             this.tbComment = new System.Windows.Forms.TextBox();
             this.lbFired = new System.Windows.Forms.Label();
-            this.btCancelbtCancel = new System.Windows.Forms.Button();
+            this.btCancel = new System.Windows.Forms.Button();
             this.btOK = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -128,16 +128,16 @@ namespace EmployeesTable.Forms
             this.lbFired.TabIndex = 3;
             this.lbFired.Text = "Уволен:";
             // 
-            // btCancelbtCancel
+            // btCancel
             // 
-            this.btCancelbtCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btCancelbtCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btCancelbtCancel.Location = new System.Drawing.Point(201, 139);
-            this.btCancelbtCancel.Name = "btCancelbtCancel";
-            this.btCancelbtCancel.Size = new System.Drawing.Size(75, 23);
-            this.btCancelbtCancel.TabIndex = 5;
-            this.btCancelbtCancel.Text = "Отмена";
-            this.btCancelbtCancel.UseVisualStyleBackColor = true;
+            this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btCancel.Location = new System.Drawing.Point(201, 139);
+            this.btCancel.Name = "btCancel";
+            this.btCancel.Size = new System.Drawing.Size(75, 23);
+            this.btCancel.TabIndex = 5;
+            this.btCancel.Text = "Отмена";
+            this.btCancel.UseVisualStyleBackColor = true;
             // 
             // btOK
             // 
@@ -156,7 +156,7 @@ namespace EmployeesTable.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(370, 170);
             this.Controls.Add(this.btOK);
-            this.Controls.Add(this.btCancelbtCancel);
+            this.Controls.Add(this.btCancel);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -179,7 +179,7 @@ namespace EmployeesTable.Forms
         private System.Windows.Forms.Label lbComment;
         private System.Windows.Forms.TextBox tbComment;
         private System.Windows.Forms.Label lbFired;
-        private System.Windows.Forms.Button btCancelbtCancel;
+        private System.Windows.Forms.Button btCancel;
         private System.Windows.Forms.Button btOK;
         private CheckBox cbFired;
     }

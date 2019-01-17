@@ -9,9 +9,11 @@ namespace EmployeesTable
 {
     public class EmployeeRepository
     {
-        private readonly Store store;
-        private readonly Func<DialogResult> notUniqueDate = () => MessageBox.Show(@"Выбрана уже существующая дата работы.", @"Ошибка при заполнении",
+        private readonly Func<DialogResult> notUniqueDate = () => MessageBox.Show(
+            @"Выбрана уже существующая дата работы.", @"Ошибка при заполнении",
             MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+        private readonly Store store;
 
         public EmployeeRepository()
         {
@@ -150,7 +152,8 @@ namespace EmployeesTable
             return store.FindByQuery<Employee>(e =>
             {
                 var capitalizeFirstLetterInput = $"{input.ToUpper().First()}{input.Substring(1)}";
-                return e.Fired == false && (e.FullName.StartsWith(input) || e.FullName.StartsWith(capitalizeFirstLetterInput));
+                return e.Fired == false &&
+                       (e.FullName.StartsWith(input) || e.FullName.StartsWith(capitalizeFirstLetterInput));
             });
         }
 
@@ -159,7 +162,7 @@ namespace EmployeesTable
             return store.FindByQuery<Employee>(e =>
                 e.Fired == parameters.IsFired
                 && (parameters.Representation == "Все" || e.Representation == parameters.Representation)
-                && e.HoursFullDays >= parameters.DaysNumberFrom *8
+                && e.HoursFullDays >= parameters.DaysNumberFrom * 8
                 && e.HoursFullDays <= parameters.DaysNumberTo * 8);
         }
 
@@ -214,7 +217,7 @@ namespace EmployeesTable
                     WorkDate = detalization.WorkDate,
                     WorkHours = detalization.WorkHours,
                     Used = detalization.Used,
-                    Comment = detalization.Comment,
+                    Comment = detalization.Comment
                 });
                 employee.HoursPartialDays += detalization.WorkHours;
             });

@@ -79,10 +79,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbTransfer.cs" />
-    <Compile Include="DecemberData.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="EmployeeRepository.cs" />
+    <Compile Include="EmployeeTableFormHelper.cs" />
     <Compile Include="EnumExtensions.cs" />
     <Compile Include="Forms\AddEmployeeDataForm.cs">
       <SubType>Form</SubType>

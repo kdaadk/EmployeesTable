@@ -29,7 +29,8 @@ namespace EmployeesTable.Forms
                         d.Payment.GetDisplayName(), d.WorkHours, d.Used.GetDisplayName(),
                         $"{d.RestDate?.Date:dd/MM/yyyy}", d.Comment);
                     if (d.Payment == Payment.Rest)
-                        dgvFullDayDetalization.Rows[dgvFullDayDetalization.Rows.Count - 2].Cells[1].Style.ForeColor = Color.Red;
+                        dgvFullDayDetalization.Rows[dgvFullDayDetalization.Rows.Count - 2].Cells[1].Style.ForeColor =
+                            Color.Red;
                 }
         }
 
@@ -51,6 +52,11 @@ namespace EmployeesTable.Forms
 
         private void btDeleteSelectRow_Click(object sender, EventArgs e)
         {
+            var selectedRowIndex = dgvFullDayDetalization.SelectedCells[0].RowIndex;
+            if (!DateTime.TryParse(dgvFullDayDetalization.Rows[selectedRowIndex].Cells[0]?.Value?.ToString(),
+                out var wDate))
+                return;
+
             var mbAreYouSure = MessageBox.Show(@"Вы уверены, что хотите удалить запись?", @"Удаление",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
@@ -58,8 +64,6 @@ namespace EmployeesTable.Forms
             if (mbAreYouSure == DialogResult.No)
                 return;
 
-            var selectedRowIndex = dgvFullDayDetalization.SelectedCells[0].RowIndex;
-            var wDate = DateTime.Parse(dgvFullDayDetalization.Rows[selectedRowIndex].Cells[0].Value.ToString());
             employeeRepository.DeleteFullDayDetalizationByWorkDate(wDate, id);
             dgvFullDayDetalization.Rows.RemoveAt(selectedRowIndex);
         }
@@ -67,8 +71,11 @@ namespace EmployeesTable.Forms
         private void btEdit_Click(object sender, EventArgs e)
         {
             var selectedRow = dgvFullDayDetalization.Rows[dgvFullDayDetalization.SelectedCells[0].RowIndex];
-            var wDate = DateTime.Parse(dgvFullDayDetalization.Rows[dgvFullDayDetalization.SelectedCells[0].RowIndex]
-                .Cells[0].Value.ToString());
+
+            if (!DateTime.TryParse(dgvFullDayDetalization.Rows[dgvFullDayDetalization.SelectedCells[0].RowIndex]
+                .Cells[0]?.Value?.ToString(), out var wDate))
+                return;
+
             var addData = new AddFullDayDetalizationDataForm(GetFullDayDetalization(selectedRow));
 
             if (addData.ShowDialog() == DialogResult.OK

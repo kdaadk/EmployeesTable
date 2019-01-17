@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtraWork", "EmployeesTable\ExtraWork.csproj", "{C310BFAA-95E0-464D-9CDF-A1F1ABD0EF44}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeesTable", "EmployeesTable\EmployeesTable.csproj", "{C310BFAA-95E0-464D-9CDF-A1F1ABD0EF44}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TinyStore", "TinyStore\TinyStore.csproj", "{AC6E8202-40E4-4D00-B973-C7A6E987F4E6}"
 EndProject

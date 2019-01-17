@@ -1,26 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using EmployeesTable.Import;
 using Microsoft.Office.Interop.Excel;
+using Application = Microsoft.Office.Interop.Excel.Application;
 
 namespace EmployeesTable.Forms
 {
     public partial class EmployeeTableForm : Form
     {
         private readonly EmployeeRepository employeeRepository;
-        private readonly StringBuilder Log;
+        private readonly EmployeeTableFormHelper employeeTableFormHelper;
         private List<Employee> employees;
 
         public EmployeeTableForm()
         {
             employeeRepository = new EmployeeRepository();
-            Log = new StringBuilder();
+            employeeTableFormHelper = new EmployeeTableFormHelper(employeeRepository);
             InitializeComponent();
         }
 
@@ -58,7 +57,14 @@ namespace EmployeesTable.Forms
 
         private void employeesDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.ColumnIndex != 2 && e.ColumnIndex != 3)
+                return;
+
             var selectedRow = dgvEmployees.Rows[dgvEmployees.SelectedCells[0].RowIndex];
+
+            if (selectedRow.Cells[0]?.Value == null)
+                return;
+
             var selectedFullName = selectedRow.Cells[0].Value.ToString();
             var selectedRepresentation = selectedRow.Cells[1].Value.ToString();
             var id = $"{selectedFullName}, {selectedRepresentation}";
@@ -122,7 +128,7 @@ namespace EmployeesTable.Forms
                 await Task.Run(() => orderDatas = parser.Parse(orderPath));
 
             if (orderDatas.Count > 0)
-                await Task.Run(() => AddOrderData(parser, orderDatas));
+                await Task.Run(() => employeeTableFormHelper.AddOrderData(parser, orderDatas));
 
             LoadEmployees();
             btImportOrder.Enabled = true;
@@ -131,120 +137,16 @@ namespace EmployeesTable.Forms
             pbStatusImportOrder.Visible = false;
         }
 
-        private void AddOrderData(OrderParser parser, IEnumerable<OrderData> orderDatas)
-        {
-            var recordCounter = 0;
-            var newEmployeesName = new List<string>();
-            var payment = parser.GetPayment();
-            foreach (var orderData in orderDatas)
-            {
-                var id = $"{orderData.FullName}, {orderData.Representation}";
-                if (!TryGetAllDetalizations(orderData.WorkDates, payment, out var fDetalizations))
-                {
-                    MessageBox.Show(@"Некорректный файл", @"Импорт приказа", MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                    return;
-                }
-
-                recordCounter += fDetalizations.Count;
-
-                if (employeeRepository.GetEmployeeById(id) == null)
-                {
-                    newEmployeesName.Add(orderData.FullName);
-                    var newEmployee = new Employee
-                    {
-                        FullName = orderData.FullName,
-                        Representation = orderData.Representation,
-                        FullDayDetalizations = fDetalizations,
-                        PartialDayDetalization = new List<PartialDayDetalization>(),
-                        Fired = false,
-                        HoursFullDays = fDetalizations.Sum(d => d.WorkHours)
-                    };
-                    employeeRepository.SaveEmployee(id, newEmployee);
-                    Log.AppendLine(
-                        $"Добавлен: {newEmployee.FullName}, {newEmployee.Representation}");
-                    continue;
-                }
-
-                foreach (var d in fDetalizations)
-                    employeeRepository.TryAddFullDayDetalization(id, d);
-            }
-
-            var path = GetLogPath();
-            MessageBox.Show(
-                $@"Загружено {recordCounter} записей
-Из них новых сотрудников {newEmployeesName.Count}:
-Посмотреть их можно в файле: {path}",
-                @"Импорт приказа", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private string GetLogPath()
-        {
-            var now = DateTime.Now;
-            var logPath = $"{Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath)}\\Logs";
-            var filePath = $"{logPath}\\{now.ToShortDateString()}.{now.Hour}.{now.Minute}.{now.Second}.txt";
-
-            if (!Directory.Exists(logPath))
-                Directory.CreateDirectory(logPath);
-            File.WriteAllLines(filePath, Log.ToString().Split('\n'));
-
-            return filePath;
-        }
-
-        private bool TryGetAllDetalizations(IEnumerable<string> workDates, Payment payment,
-            out List<FullDayDetalization> detalizations)
-        {
-            detalizations = new List<FullDayDetalization>();
-            foreach (var workDateLine in workDates)
-            {
-                if (!DateTime.TryParse(workDateLine, out var workDate))
-                    return false;
-
-                switch (payment)
-                {
-                    case Payment.Rest:
-                        detalizations.Add(new FullDayDetalization
-                        {
-                            Payment = payment,
-                            WorkDate = workDate,
-                            WorkHours = 8,
-                            Used = Used.No
-                        });
-                        break;
-                    case Payment.Money:
-                        detalizations.Add(new FullDayDetalization
-                        {
-                            Payment = payment,
-                            WorkDate = workDate,
-                            WorkHours = 0,
-                            Used = Used.YesFull,
-                            RestDate = workDate
-                        });
-                        break;
-                }
-            }
-
-            return true;
-        }
-
         private void btExportTable_Click(object sender, EventArgs e)
         {
-            CopyAlltoClipboard();
+            employeeTableFormHelper.CopyAlltoClipboard(dgvEmployees);
             object misValue = Missing.Value;
-            var xlexcel = new Microsoft.Office.Interop.Excel.Application {Visible = true};
+            var xlexcel = new Application {Visible = true};
             var xlWorkBook = xlexcel.Workbooks.Add(misValue);
             var xlWorkSheet = (Worksheet) xlWorkBook.Worksheets.Item[1];
             var CR = (Range) xlWorkSheet.Cells[1, 1];
             CR.Select();
             xlWorkSheet.PasteSpecial(CR, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, true);
-        }
-
-        private void CopyAlltoClipboard()
-        {
-            dgvEmployees.SelectAll();
-            var dataObj = dgvEmployees.GetClipboardContent();
-            if (dataObj != null)
-                Clipboard.SetDataObject(dataObj);
         }
 
         private void BtnGridFilter_Click(object sender, EventArgs e)
@@ -284,6 +186,10 @@ namespace EmployeesTable.Forms
         private void miEditEmployee_Click(object sender, EventArgs e)
         {
             var selectedRow = dgvEmployees.Rows[dgvEmployees.SelectedCells[0].RowIndex];
+
+            if (selectedRow.Cells[0]?.Value == null)
+                return;
+
             var selectedFullName = selectedRow.Cells[0].Value.ToString();
             var selectedRepresentation = selectedRow.Cells[1].Value.ToString();
             var id = $"{selectedFullName}, {selectedRepresentation}";
@@ -302,6 +208,15 @@ namespace EmployeesTable.Forms
 
         private void miDeleteEmployee_Click(object sender, EventArgs e)
         {
+            var rowIndex = dgvEmployees.SelectedCells[0].RowIndex;
+
+            if (dgvEmployees.Rows[rowIndex].Cells[0]?.Value == null)
+                return;
+
+            var selectedFullName = dgvEmployees.Rows[rowIndex].Cells[0].Value.ToString();
+            var selectedRepresentation = dgvEmployees.Rows[rowIndex].Cells[1].Value.ToString();
+            var id = $"{selectedFullName}, {selectedRepresentation}";
+
             var mbAreYouSure = MessageBox.Show(@"Вы уверены, что хотите удалить запись?", @"Удаление",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
@@ -309,10 +224,6 @@ namespace EmployeesTable.Forms
             if (mbAreYouSure == DialogResult.No)
                 return;
 
-            var rowIndex = dgvEmployees.SelectedCells[0].RowIndex;
-            var selectedFullName = dgvEmployees.Rows[rowIndex].Cells[0].Value.ToString();
-            var selectedRepresentation = dgvEmployees.Rows[rowIndex].Cells[1].Value.ToString();
-            var id = $"{selectedFullName}, {selectedRepresentation}";
             employeeRepository.DeleteEmployee(id);
             dgvEmployees.Rows.RemoveAt(rowIndex);
         }

@@ -7,8 +7,8 @@ namespace EmployeesTable.Forms
     {
         public AddEmployeeDataForm(Employee employee)
         {
-            InitializeComponent();
             Employee = employee;
+            InitializeComponent();
         }
 
         public Employee Employee { get; set; }

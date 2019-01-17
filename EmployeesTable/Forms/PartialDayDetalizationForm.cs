@@ -42,6 +42,11 @@ namespace EmployeesTable.Forms
 
         private void btDeleteSelectRow_Click(object sender, EventArgs e)
         {
+            var selectedRowIndex = dgvPartialDayDetalization.SelectedCells[0].RowIndex;
+            if (!DateTime.TryParse(dgvPartialDayDetalization.Rows[selectedRowIndex].Cells[0]?.Value?.ToString(),
+                out var wDate))
+                return;
+
             var mbAreYouSure = MessageBox.Show(@"Вы уверены, что хотите удалить запись?", @"Удаление",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
@@ -49,8 +54,6 @@ namespace EmployeesTable.Forms
             if (mbAreYouSure == DialogResult.No)
                 return;
 
-            var selectedRowIndex = dgvPartialDayDetalization.SelectedCells[0].RowIndex;
-            var wDate = DateTime.Parse(dgvPartialDayDetalization.Rows[selectedRowIndex].Cells[0].Value.ToString());
             employeeRepository.DeletePartialDayDetalizationByWorkDate(wDate, id);
             dgvPartialDayDetalization.Rows.RemoveAt(selectedRowIndex);
         }
@@ -58,12 +61,13 @@ namespace EmployeesTable.Forms
         private void btEdit_Click(object sender, EventArgs e)
         {
             var selectedRow = dgvPartialDayDetalization.Rows[dgvPartialDayDetalization.SelectedCells[0].RowIndex];
-            var workDate = DateTime.Parse(dgvPartialDayDetalization.Rows[dgvPartialDayDetalization.SelectedCells[0].RowIndex]
-                .Cells[0].Value.ToString());
+            if (!DateTime.TryParse(dgvPartialDayDetalization.Rows[dgvPartialDayDetalization.SelectedCells[0].RowIndex]
+                .Cells[0]?.Value?.ToString(), out var wDate))
+                return;
             var addData = new AddPartialDayDetalizationDataForm(GetPDetalization(selectedRow));
 
             if (addData.ShowDialog() == DialogResult.OK)
-                if (employeeRepository.TryEditPartialDayDetalization(workDate, id, addData.Detalization))
+                if (employeeRepository.TryEditPartialDayDetalization(wDate, id, addData.Detalization))
                     EditRowOnGrid(selectedRow, addData);
         }
 
