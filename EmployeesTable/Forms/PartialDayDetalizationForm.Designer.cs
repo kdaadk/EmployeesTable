@@ -59,33 +59,30 @@ namespace EmployeesTable.Forms
             // 
             // btAdd
             // 
-            this.btAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.btAdd.Image = ((System.Drawing.Image)(resources.GetObject("btAdd.Image")));
             this.btAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btAdd.Name = "btAdd";
-            this.btAdd.Size = new System.Drawing.Size(63, 22);
+            this.btAdd.Size = new System.Drawing.Size(79, 22);
             this.btAdd.Text = "Добавить";
             this.btAdd.ToolTipText = "Добавить запись";
             this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
             // 
             // editBtn
             // 
-            this.editBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.editBtn.Image = ((System.Drawing.Image)(resources.GetObject("editBtn.Image")));
             this.editBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.editBtn.Name = "editBtn";
-            this.editBtn.Size = new System.Drawing.Size(91, 22);
+            this.editBtn.Size = new System.Drawing.Size(107, 22);
             this.editBtn.Text = "Редактировать";
             this.editBtn.ToolTipText = "Редактировать выбранную запись";
             this.editBtn.Click += new System.EventHandler(this.btEdit_Click);
             // 
             // btDeleteSelectRow
             // 
-            this.btDeleteSelectRow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.btDeleteSelectRow.Image = ((System.Drawing.Image)(resources.GetObject("btDeleteSelectRow.Image")));
             this.btDeleteSelectRow.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btDeleteSelectRow.Name = "btDeleteSelectRow";
-            this.btDeleteSelectRow.Size = new System.Drawing.Size(55, 22);
+            this.btDeleteSelectRow.Size = new System.Drawing.Size(71, 22);
             this.btDeleteSelectRow.Text = "Удалить";
             this.btDeleteSelectRow.ToolTipText = "Удалить выбранную запись";
             this.btDeleteSelectRow.Click += new System.EventHandler(this.btDeleteSelectRow_Click);

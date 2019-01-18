@@ -1,4 +1,6 @@
-﻿namespace EmployeesTable.Forms
+﻿using System.Windows.Forms;
+
+namespace EmployeesTable.Forms
 {
     partial class GridFilterForm
     {
@@ -34,11 +36,11 @@
             this.lbFiredEmployees = new System.Windows.Forms.Label();
             this.cbFiredEmployees = new System.Windows.Forms.CheckBox();
             this.lbRepresentation = new System.Windows.Forms.Label();
-            this.cbRepresentation = new System.Windows.Forms.ComboBox();
             this.lbDaysNumberFrom = new System.Windows.Forms.Label();
             this.lbDaysNumberTo = new System.Windows.Forms.Label();
             this.nudDaysNumberFrom = new System.Windows.Forms.NumericUpDown();
             this.nudDaysNumberTo = new System.Windows.Forms.NumericUpDown();
+            this.clbRepresentation = new System.Windows.Forms.CheckedListBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudDaysNumberFrom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDaysNumberTo)).BeginInit();
             this.SuspendLayout();
@@ -46,7 +48,7 @@
             // btOK
             // 
             this.btOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btOK.Location = new System.Drawing.Point(184, 112);
+            this.btOK.Location = new System.Drawing.Point(166, 506);
             this.btOK.Name = "btOK";
             this.btOK.Size = new System.Drawing.Size(75, 23);
             this.btOK.TabIndex = 4;
@@ -58,7 +60,7 @@
             // 
             this.btCancelbtCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btCancelbtCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btCancelbtCancel.Location = new System.Drawing.Point(265, 112);
+            this.btCancelbtCancel.Location = new System.Drawing.Point(247, 506);
             this.btCancelbtCancel.Name = "btCancelbtCancel";
             this.btCancelbtCancel.Size = new System.Drawing.Size(75, 23);
             this.btCancelbtCancel.TabIndex = 5;
@@ -68,7 +70,7 @@
             // lbFiredEmployees
             // 
             this.lbFiredEmployees.AutoSize = true;
-            this.lbFiredEmployees.Location = new System.Drawing.Point(20, 20);
+            this.lbFiredEmployees.Location = new System.Drawing.Point(21, 20);
             this.lbFiredEmployees.Name = "lbFiredEmployees";
             this.lbFiredEmployees.Size = new System.Drawing.Size(113, 13);
             this.lbFiredEmployees.TabIndex = 5;
@@ -77,7 +79,7 @@
             // cbFiredEmployees
             // 
             this.cbFiredEmployees.AutoSize = true;
-            this.cbFiredEmployees.Location = new System.Drawing.Point(138, 20);
+            this.cbFiredEmployees.Location = new System.Drawing.Point(135, 20);
             this.cbFiredEmployees.Name = "cbFiredEmployees";
             this.cbFiredEmployees.Size = new System.Drawing.Size(15, 14);
             this.cbFiredEmployees.TabIndex = 0;
@@ -86,27 +88,16 @@
             // lbRepresentation
             // 
             this.lbRepresentation.AutoSize = true;
-            this.lbRepresentation.Location = new System.Drawing.Point(20, 48);
+            this.lbRepresentation.Location = new System.Drawing.Point(20, 79);
             this.lbRepresentation.Name = "lbRepresentation";
             this.lbRepresentation.Size = new System.Drawing.Size(108, 13);
             this.lbRepresentation.TabIndex = 7;
             this.lbRepresentation.Text = "Представительство";
             // 
-            // cbRepresentation
-            // 
-            this.cbRepresentation.FormattingEnabled = true;
-            this.cbRepresentation.Items.AddRange(new object[] {
-            "Все"});
-            this.cbRepresentation.Location = new System.Drawing.Point(138, 45);
-            this.cbRepresentation.Name = "cbRepresentation";
-            this.cbRepresentation.Size = new System.Drawing.Size(270, 21);
-            this.cbRepresentation.TabIndex = 1;
-            this.cbRepresentation.Text = "Все";
-            // 
             // lbDaysNumberFrom
             // 
             this.lbDaysNumberFrom.AutoSize = true;
-            this.lbDaysNumberFrom.Location = new System.Drawing.Point(20, 78);
+            this.lbDaysNumberFrom.Location = new System.Drawing.Point(21, 50);
             this.lbDaysNumberFrom.Name = "lbDaysNumberFrom";
             this.lbDaysNumberFrom.Size = new System.Drawing.Size(107, 13);
             this.lbDaysNumberFrom.TabIndex = 9;
@@ -115,7 +106,7 @@
             // lbDaysNumberTo
             // 
             this.lbDaysNumberTo.AutoSize = true;
-            this.lbDaysNumberTo.Location = new System.Drawing.Point(180, 78);
+            this.lbDaysNumberTo.Location = new System.Drawing.Point(177, 50);
             this.lbDaysNumberTo.Name = "lbDaysNumberTo";
             this.lbDaysNumberTo.Size = new System.Drawing.Size(19, 13);
             this.lbDaysNumberTo.TabIndex = 10;
@@ -123,14 +114,14 @@
             // 
             // nudDaysNumberFrom
             // 
-            this.nudDaysNumberFrom.Location = new System.Drawing.Point(138, 76);
+            this.nudDaysNumberFrom.Location = new System.Drawing.Point(135, 48);
             this.nudDaysNumberFrom.Name = "nudDaysNumberFrom";
             this.nudDaysNumberFrom.Size = new System.Drawing.Size(36, 20);
             this.nudDaysNumberFrom.TabIndex = 2;
             // 
             // nudDaysNumberTo
             // 
-            this.nudDaysNumberTo.Location = new System.Drawing.Point(205, 76);
+            this.nudDaysNumberTo.Location = new System.Drawing.Point(202, 48);
             this.nudDaysNumberTo.Name = "nudDaysNumberTo";
             this.nudDaysNumberTo.Size = new System.Drawing.Size(36, 20);
             this.nudDaysNumberTo.TabIndex = 3;
@@ -140,16 +131,26 @@
             0,
             0});
             // 
+            // clbRepresentation
+            // 
+            this.clbRepresentation.FormattingEnabled = true;
+            this.clbRepresentation.Location = new System.Drawing.Point(24, 106);
+            this.clbRepresentation.Name = "clbRepresentation";
+            this.clbRepresentation.Size = new System.Drawing.Size(385, 379);
+            this.clbRepresentation.TabIndex = 11;
+            this.clbRepresentation.MouseClick += new System.Windows.Forms.MouseEventHandler(this.clRepresentation_MouseClick);
+            this.clbRepresentation.SelectedIndexChanged += new System.EventHandler(this.clRepresentation_SelectedIndexChanged);
+            // 
             // GridFilterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(437, 147);
+            this.ClientSize = new System.Drawing.Size(437, 554);
+            this.Controls.Add(this.clbRepresentation);
             this.Controls.Add(this.nudDaysNumberTo);
             this.Controls.Add(this.nudDaysNumberFrom);
             this.Controls.Add(this.lbDaysNumberTo);
             this.Controls.Add(this.lbDaysNumberFrom);
-            this.Controls.Add(this.cbRepresentation);
             this.Controls.Add(this.lbRepresentation);
             this.Controls.Add(this.cbFiredEmployees);
             this.Controls.Add(this.lbFiredEmployees);
@@ -173,10 +174,10 @@
         private System.Windows.Forms.Label lbFiredEmployees;
         private System.Windows.Forms.CheckBox cbFiredEmployees;
         private System.Windows.Forms.Label lbRepresentation;
-        private System.Windows.Forms.ComboBox cbRepresentation;
         private System.Windows.Forms.Label lbDaysNumberFrom;
         private System.Windows.Forms.Label lbDaysNumberTo;
         private System.Windows.Forms.NumericUpDown nudDaysNumberFrom;
         private System.Windows.Forms.NumericUpDown nudDaysNumberTo;
+        private System.Windows.Forms.CheckedListBox clbRepresentation;
     }
 }

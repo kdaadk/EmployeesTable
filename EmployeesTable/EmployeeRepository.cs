@@ -161,7 +161,7 @@ namespace EmployeesTable
         {
             return store.FindByQuery<Employee>(e =>
                 e.Fired == parameters.IsFired
-                && (parameters.Representation == "Все" || e.Representation == parameters.Representation)
+                && parameters.Representations.Contains(e.Representation)
                 && e.HoursFullDays >= parameters.DaysNumberFrom * 8
                 && e.HoursFullDays <= parameters.DaysNumberTo * 8);
         }

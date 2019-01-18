@@ -37,7 +37,7 @@ namespace EmployeesTable.Forms
         private void btAdd_Click(object sender, EventArgs e)
         {
             var addData =
-                new AddFullDayDetalizationDataForm(new FullDayDetalization {WorkDate = null, RestDate = null});
+                new AddFullDayDetalizationDataForm(new FullDayDetalization {WorkDate = null, RestDate = null}, "Добавить детализацию полного дня");
 
             if (addData.ShowDialog() == DialogResult.OK)
             {
@@ -76,11 +76,11 @@ namespace EmployeesTable.Forms
                 .Cells[0]?.Value?.ToString(), out var wDate))
                 return;
 
-            var addData = new AddFullDayDetalizationDataForm(GetFullDayDetalization(selectedRow));
+            var editData = new AddFullDayDetalizationDataForm(GetFullDayDetalization(selectedRow), "Редактировать детализацию полного дня");
 
-            if (addData.ShowDialog() == DialogResult.OK
-                && employeeRepository.TryEditFullDayDetalization(wDate, id, addData.Detalization))
-                EditRowOnGrid(selectedRow, addData);
+            if (editData.ShowDialog() == DialogResult.OK
+                && employeeRepository.TryEditFullDayDetalization(wDate, id, editData.Detalization))
+                EditRowOnGrid(selectedRow, editData);
         }
 
         private void EditRowOnGrid(DataGridViewRow selectedRow,

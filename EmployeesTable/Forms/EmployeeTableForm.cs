@@ -15,9 +15,11 @@ namespace EmployeesTable.Forms
         private readonly EmployeeRepository employeeRepository;
         private readonly EmployeeTableFormHelper employeeTableFormHelper;
         private List<Employee> employees;
+        private GridFilterParameters filterParameters;
 
         public EmployeeTableForm()
         {
+            filterParameters = new GridFilterParameters{Representations = new List<string>()};
             employeeRepository = new EmployeeRepository();
             employeeTableFormHelper = new EmployeeTableFormHelper(employeeRepository);
             InitializeComponent();
@@ -151,10 +153,13 @@ namespace EmployeesTable.Forms
 
         private void BtnGridFilter_Click(object sender, EventArgs e)
         {
-            var gridFilter = new GridFilterForm(employees);
+            var gridFilter = new GridFilterForm(employees, filterParameters);
 
             if (gridFilter.ShowDialog() == DialogResult.OK)
+            {
+                filterParameters = gridFilter.Parameters;
                 LoadGridWith(gridFilter.Parameters);
+            }
         }
 
         private void LoadGridWith(GridFilterParameters parameters)
@@ -167,9 +172,9 @@ namespace EmployeesTable.Forms
                     employee.HoursFullDays / 8, employee.HoursPartialDays, employee.Comment);
         }
 
-        private void miAddEmployee_Click(object sender, EventArgs e)
+        private void btEmployeeAdd_Click(object sender, EventArgs e)
         {
-            var addData = new AddEmployeeDataForm(new Employee());
+            var addData = new AddEmployeeDataForm(new Employee(), "Добавить сотрудника");
             if (addData.ShowDialog() == DialogResult.OK)
             {
                 var employee = new Employee
@@ -183,7 +188,7 @@ namespace EmployeesTable.Forms
             }
         }
 
-        private void miEditEmployee_Click(object sender, EventArgs e)
+        private void btEmployeeEdit_Click(object sender, EventArgs e)
         {
             var selectedRow = dgvEmployees.Rows[dgvEmployees.SelectedCells[0].RowIndex];
 
@@ -193,7 +198,7 @@ namespace EmployeesTable.Forms
             var selectedFullName = selectedRow.Cells[0].Value.ToString();
             var selectedRepresentation = selectedRow.Cells[1].Value.ToString();
             var id = $"{selectedFullName}, {selectedRepresentation}";
-            var editData = new AddEmployeeDataForm(employeeRepository.GetEmployeeById(id));
+            var editData = new AddEmployeeDataForm(employeeRepository.GetEmployeeById(id), "Редактировать сотрудника");
 
             if (editData.ShowDialog() == DialogResult.OK)
             {
@@ -206,7 +211,7 @@ namespace EmployeesTable.Forms
             }
         }
 
-        private void miDeleteEmployee_Click(object sender, EventArgs e)
+        private void btEmployeeDelete_Click(object sender, EventArgs e)
         {
             var rowIndex = dgvEmployees.SelectedCells[0].RowIndex;
 
@@ -226,6 +231,11 @@ namespace EmployeesTable.Forms
 
             employeeRepository.DeleteEmployee(id);
             dgvEmployees.Rows.RemoveAt(rowIndex);
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            LoadEmployees();
         }
     }
 }

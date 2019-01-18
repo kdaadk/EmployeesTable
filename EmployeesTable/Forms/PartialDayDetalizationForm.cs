@@ -29,7 +29,8 @@ namespace EmployeesTable.Forms
 
         private void btAdd_Click(object sender, EventArgs e)
         {
-            var addData = new AddPartialDayDetalizationDataForm(new PartialDayDetalization {WorkDate = null});
+            var addData = new AddPartialDayDetalizationDataForm(new PartialDayDetalization {WorkDate = null},
+                "Добавить детализацию неполного дня");
 
             if (addData.ShowDialog() == DialogResult.OK)
             {
@@ -64,11 +65,11 @@ namespace EmployeesTable.Forms
             if (!DateTime.TryParse(dgvPartialDayDetalization.Rows[dgvPartialDayDetalization.SelectedCells[0].RowIndex]
                 .Cells[0]?.Value?.ToString(), out var wDate))
                 return;
-            var addData = new AddPartialDayDetalizationDataForm(GetPDetalization(selectedRow));
+            var editData = new AddPartialDayDetalizationDataForm(GetPDetalization(selectedRow), "Редактировать детализацию неполного дня");
 
-            if (addData.ShowDialog() == DialogResult.OK)
-                if (employeeRepository.TryEditPartialDayDetalization(wDate, id, addData.Detalization))
-                    EditRowOnGrid(selectedRow, addData);
+            if (editData.ShowDialog() == DialogResult.OK)
+                if (employeeRepository.TryEditPartialDayDetalization(wDate, id, editData.Detalization))
+                    EditRowOnGrid(selectedRow, editData);
         }
 
         private void EditRowOnGrid(DataGridViewRow selectedRow,

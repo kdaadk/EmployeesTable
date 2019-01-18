@@ -6,13 +6,16 @@ namespace EmployeesTable.Forms
 {
     public partial class AddPartialDayDetalizationDataForm : Form
     {
-        public AddPartialDayDetalizationDataForm(PartialDayDetalization Detalization)
+        public PartialDayDetalization Detalization { get; set; }
+        private readonly string headName;
+
+        public AddPartialDayDetalizationDataForm(PartialDayDetalization Detalization, string headName)
         {
+            this.headName = headName;
             this.Detalization = Detalization;
             InitializeComponent();
         }
 
-        public PartialDayDetalization Detalization { get; set; }
 
         private void AddDataToDb_Load(object sender, EventArgs e)
         {

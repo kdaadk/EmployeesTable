@@ -6,8 +6,11 @@ namespace EmployeesTable.Forms
 {
     public partial class AddFullDayDetalizationDataForm : Form
     {
-        public AddFullDayDetalizationDataForm(FullDayDetalization Detalization)
+        private readonly string headName;
+
+        public AddFullDayDetalizationDataForm(FullDayDetalization Detalization, string headName)
         {
+            this.headName = headName;
             InitializeComponent();
             this.Detalization = Detalization;
         }

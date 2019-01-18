@@ -187,6 +187,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Elegantthemes-Beautiful-Flat-Booklet.ico" />
+    <None Include="Resources\searcher.Image.png" />
+    <None Include="Resources\modify.Image.png" />
+    <None Include="Resources\iconfinder.Image.png" />
+    <None Include="Resources\iconFinder.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.1">
