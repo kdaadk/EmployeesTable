@@ -55,10 +55,8 @@ namespace EmployeesTable.Forms
             this.hoursFullDaysBtn = new System.Windows.Forms.DataGridViewButtonColumn();
             this.hoursPartialDaysBtn = new System.Windows.Forms.DataGridViewButtonColumn();
             this.comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
-            this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
+            this.bnPaging = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
-            this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
@@ -66,12 +64,14 @@ namespace EmployeesTable.Forms
             this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.bsPaging = new System.Windows.Forms.BindingSource(this.components);
+            this.cbPaging = new System.Windows.Forms.CheckBox();
             this.stripMenu.SuspendLayout();
             this.stripStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployees)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
-            this.bindingNavigator1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bnPaging)).BeginInit();
+            this.bnPaging.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bsPaging)).BeginInit();
             this.SuspendLayout();
             // 
             // stripMenu
@@ -97,7 +97,8 @@ namespace EmployeesTable.Forms
             // lbSearchIcon
             // 
             this.lbSearchIcon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.lbSearchIcon.Image = ((System.Drawing.Image)(resources.GetObject("lbSearchIcon.Image")));
+            this.lbSearchIcon.Image = global::EmployeesTable.Properties.Resources.lbSearcher_Image;
+            this.lbSearchIcon.Margin = new System.Windows.Forms.Padding(0, 1, 10, 2);
             this.lbSearchIcon.Name = "lbSearchIcon";
             this.lbSearchIcon.Size = new System.Drawing.Size(16, 22);
             this.lbSearchIcon.ToolTipText = "Поиск по ФИО";
@@ -105,6 +106,7 @@ namespace EmployeesTable.Forms
             // tstbFullNameSearcher
             // 
             this.tstbFullNameSearcher.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tstbFullNameSearcher.Margin = new System.Windows.Forms.Padding(1, 0, 10, 0);
             this.tstbFullNameSearcher.Name = "tstbFullNameSearcher";
             this.tstbFullNameSearcher.Size = new System.Drawing.Size(150, 25);
             this.tstbFullNameSearcher.ToolTipText = "Поиск по ФИО";
@@ -117,7 +119,7 @@ namespace EmployeesTable.Forms
             // 
             // btAddEmployee
             // 
-            this.btAddEmployee.Image = ((System.Drawing.Image)(resources.GetObject("btAddEmployee.Image")));
+            this.btAddEmployee.Image = global::EmployeesTable.Properties.Resources.btAddEmployee_Image;
             this.btAddEmployee.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btAddEmployee.Margin = new System.Windows.Forms.Padding(10, 1, 0, 2);
             this.btAddEmployee.Name = "btAddEmployee";
@@ -128,7 +130,7 @@ namespace EmployeesTable.Forms
             // 
             // btEditEmployee
             // 
-            this.btEditEmployee.Image = ((System.Drawing.Image)(resources.GetObject("btEditEmployee.Image")));
+            this.btEditEmployee.Image = global::EmployeesTable.Properties.Resources.btEditEmployee_Image;
             this.btEditEmployee.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btEditEmployee.Name = "btEditEmployee";
             this.btEditEmployee.Size = new System.Drawing.Size(107, 22);
@@ -138,7 +140,7 @@ namespace EmployeesTable.Forms
             // 
             // btDeleteEmployee
             // 
-            this.btDeleteEmployee.Image = ((System.Drawing.Image)(resources.GetObject("btDeleteEmployee.Image")));
+            this.btDeleteEmployee.Image = global::EmployeesTable.Properties.Resources.btDeleteEmployee_Image;
             this.btDeleteEmployee.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btDeleteEmployee.Margin = new System.Windows.Forms.Padding(0, 1, 10, 2);
             this.btDeleteEmployee.Name = "btDeleteEmployee";
@@ -154,7 +156,7 @@ namespace EmployeesTable.Forms
             // 
             // btImportOrder
             // 
-            this.btImportOrder.Image = ((System.Drawing.Image)(resources.GetObject("btImportOrder.Image")));
+            this.btImportOrder.Image = global::EmployeesTable.Properties.Resources.btImportOrder_Image;
             this.btImportOrder.Margin = new System.Windows.Forms.Padding(10, 1, 0, 2);
             this.btImportOrder.Name = "btImportOrder";
             this.btImportOrder.Size = new System.Drawing.Size(81, 22);
@@ -164,7 +166,7 @@ namespace EmployeesTable.Forms
             // 
             // btExportTable
             // 
-            this.btExportTable.Image = ((System.Drawing.Image)(resources.GetObject("btExportTable.Image")));
+            this.btExportTable.Image = global::EmployeesTable.Properties.Resources.btExportTable1;
             this.btExportTable.Margin = new System.Windows.Forms.Padding(0, 1, 10, 2);
             this.btExportTable.Name = "btExportTable";
             this.btExportTable.Size = new System.Drawing.Size(84, 22);
@@ -179,7 +181,7 @@ namespace EmployeesTable.Forms
             // 
             // BtnGridFilter
             // 
-            this.BtnGridFilter.Image = ((System.Drawing.Image)(resources.GetObject("BtnGridFilter.Image")));
+            this.BtnGridFilter.Image = global::EmployeesTable.Properties.Resources.BtnGridFilter_Image;
             this.BtnGridFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.BtnGridFilter.Margin = new System.Windows.Forms.Padding(10, 1, 0, 2);
             this.BtnGridFilter.Name = "BtnGridFilter";
@@ -191,8 +193,9 @@ namespace EmployeesTable.Forms
             // 
             this.btnRefresh.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.btnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
+            this.btnRefresh.Image = global::EmployeesTable.Properties.Resources.btnRefresh1;
             this.btnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(0, 1, 5, 2);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(23, 22);
             this.btnRefresh.ToolTipText = "Обновить информацию";
@@ -221,7 +224,6 @@ namespace EmployeesTable.Forms
             this.hoursFullDaysBtn,
             this.hoursPartialDaysBtn,
             this.comment});
-            this.dgvEmployees.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.dgvEmployees.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvEmployees.Location = new System.Drawing.Point(0, 25);
             this.dgvEmployees.Name = "dgvEmployees";
@@ -263,14 +265,14 @@ namespace EmployeesTable.Forms
             this.comment.ReadOnly = true;
             this.comment.Width = 300;
             // 
-            // bindingNavigator1
+            // bnPaging
             // 
-            this.bindingNavigator1.AddNewItem = this.bindingNavigatorAddNewItem;
-            this.bindingNavigator1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.bindingNavigator1.CountItem = this.bindingNavigatorCountItem;
-            this.bindingNavigator1.DeleteItem = this.bindingNavigatorDeleteItem;
-            this.bindingNavigator1.Dock = System.Windows.Forms.DockStyle.None;
-            this.bindingNavigator1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bnPaging.AddNewItem = null;
+            this.bnPaging.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.bnPaging.CountItem = this.bindingNavigatorCountItem;
+            this.bnPaging.DeleteItem = null;
+            this.bnPaging.Dock = System.Windows.Forms.DockStyle.None;
+            this.bnPaging.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorMoveFirstItem,
             this.bindingNavigatorMovePreviousItem,
             this.bindingNavigatorSeparator,
@@ -278,29 +280,17 @@ namespace EmployeesTable.Forms
             this.bindingNavigatorCountItem,
             this.bindingNavigatorSeparator1,
             this.bindingNavigatorMoveNextItem,
-            this.bindingNavigatorMoveLastItem,
-            this.bindingNavigatorSeparator2,
-            this.bindingNavigatorAddNewItem,
-            this.bindingNavigatorDeleteItem});
-            this.bindingNavigator1.Location = new System.Drawing.Point(0, 278);
-            this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
-            this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem;
-            this.bindingNavigator1.MoveNextItem = this.bindingNavigatorMoveNextItem;
-            this.bindingNavigator1.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
-            this.bindingNavigator1.Name = "bindingNavigator1";
-            this.bindingNavigator1.PositionItem = this.bindingNavigatorPositionItem;
-            this.bindingNavigator1.Size = new System.Drawing.Size(255, 25);
-            this.bindingNavigator1.TabIndex = 4;
-            this.bindingNavigator1.Text = "bindingNavigator1";
-            // 
-            // bindingNavigatorAddNewItem
-            // 
-            this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
-            this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
-            this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorAddNewItem.Text = "Add new";
+            this.bindingNavigatorMoveLastItem});
+            this.bnPaging.Location = new System.Drawing.Point(781, 303);
+            this.bnPaging.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
+            this.bnPaging.MoveLastItem = this.bindingNavigatorMoveLastItem;
+            this.bnPaging.MoveNextItem = this.bindingNavigatorMoveNextItem;
+            this.bnPaging.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
+            this.bnPaging.Name = "bnPaging";
+            this.bnPaging.PositionItem = this.bindingNavigatorPositionItem;
+            this.bnPaging.Size = new System.Drawing.Size(234, 25);
+            this.bnPaging.TabIndex = 4;
+            this.bnPaging.Visible = false;
             // 
             // bindingNavigatorCountItem
             // 
@@ -308,15 +298,6 @@ namespace EmployeesTable.Forms
             this.bindingNavigatorCountItem.Size = new System.Drawing.Size(35, 22);
             this.bindingNavigatorCountItem.Text = "of {0}";
             this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
-            // 
-            // bindingNavigatorDeleteItem
-            // 
-            this.bindingNavigatorDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorDeleteItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem.Image")));
-            this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
-            this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorDeleteItem.Text = "Delete";
             // 
             // bindingNavigatorMoveFirstItem
             // 
@@ -373,17 +354,24 @@ namespace EmployeesTable.Forms
             this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 22);
             this.bindingNavigatorMoveLastItem.Text = "Move last";
             // 
-            // bindingNavigatorSeparator2
+            // cbPaging
             // 
-            this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
-            this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
+            this.cbPaging.AutoSize = true;
+            this.cbPaging.Location = new System.Drawing.Point(863, 2);
+            this.cbPaging.Name = "cbPaging";
+            this.cbPaging.Size = new System.Drawing.Size(58, 17);
+            this.cbPaging.TabIndex = 5;
+            this.cbPaging.Text = "paging";
+            this.cbPaging.UseVisualStyleBackColor = true;
+            this.cbPaging.CheckedChanged += new System.EventHandler(this.cbPaging_CheckedChanged);
             // 
             // EmployeeTableForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1075, 325);
-            this.Controls.Add(this.bindingNavigator1);
+            this.Controls.Add(this.cbPaging);
+            this.Controls.Add(this.bnPaging);
             this.Controls.Add(this.dgvEmployees);
             this.Controls.Add(this.stripStatus);
             this.Controls.Add(this.stripMenu);
@@ -397,9 +385,10 @@ namespace EmployeesTable.Forms
             this.stripStatus.ResumeLayout(false);
             this.stripStatus.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployees)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
-            this.bindingNavigator1.ResumeLayout(false);
-            this.bindingNavigator1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bnPaging)).EndInit();
+            this.bnPaging.ResumeLayout(false);
+            this.bnPaging.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bsPaging)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -423,10 +412,13 @@ namespace EmployeesTable.Forms
         private DataGridViewButtonColumn hoursFullDaysBtn;
         private DataGridViewButtonColumn hoursPartialDaysBtn;
         private DataGridViewTextBoxColumn comment;
-        private BindingNavigator bindingNavigator1;
-        private ToolStripButton bindingNavigatorAddNewItem;
+        private ToolStripButton btEditEmployee;
+        private ToolStripButton btDeleteEmployee;
+        private ToolStripButton btAddEmployee;
+        private ToolStripLabel lbSearchIcon;
+        private ToolStripButton btnRefresh;
+        private BindingNavigator bnPaging;
         private ToolStripLabel bindingNavigatorCountItem;
-        private ToolStripButton bindingNavigatorDeleteItem;
         private ToolStripButton bindingNavigatorMoveFirstItem;
         private ToolStripButton bindingNavigatorMovePreviousItem;
         private ToolStripSeparator bindingNavigatorSeparator;
@@ -434,12 +426,8 @@ namespace EmployeesTable.Forms
         private ToolStripSeparator bindingNavigatorSeparator1;
         private ToolStripButton bindingNavigatorMoveNextItem;
         private ToolStripButton bindingNavigatorMoveLastItem;
-        private ToolStripSeparator bindingNavigatorSeparator2;
-        private ToolStripButton btEditEmployee;
-        private ToolStripButton btDeleteEmployee;
-        private ToolStripButton btAddEmployee;
-        private ToolStripLabel lbSearchIcon;
-        private ToolStripButton btnRefresh;
+        private BindingSource bsPaging;
+        private CheckBox cbPaging;
     }
 }
 

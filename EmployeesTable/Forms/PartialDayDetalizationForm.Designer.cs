@@ -102,7 +102,6 @@ namespace EmployeesTable.Forms
             this.hours,
             this.used,
             this.comment});
-            this.dgvPartialDayDetalization.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.dgvPartialDayDetalization.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvPartialDayDetalization.Location = new System.Drawing.Point(0, 25);
             this.dgvPartialDayDetalization.Name = "dgvPartialDayDetalization";
@@ -144,7 +143,6 @@ namespace EmployeesTable.Forms
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PartialDayDetalizationForm";
-            this.Text = id;
             this.Load += new System.EventHandler(this.EmployeeFDetalizationForm_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

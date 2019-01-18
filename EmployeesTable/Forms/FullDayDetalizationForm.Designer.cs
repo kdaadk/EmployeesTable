@@ -106,7 +106,7 @@ namespace EmployeesTable.Forms
             this.used,
             this.usedDate,
             this.comment});
-            this.dgvFullDayDetalization.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
             this.dgvFullDayDetalization.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvFullDayDetalization.Location = new System.Drawing.Point(0, 25);
             this.dgvFullDayDetalization.Name = "dgvFullDayDetalization";
@@ -160,7 +160,6 @@ namespace EmployeesTable.Forms
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FullDayDetalizationForm";
-            this.Text = id;
             this.Load += new System.EventHandler(this.EmployeeFullDayDetalizationForm_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

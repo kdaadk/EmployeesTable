@@ -5,12 +5,12 @@ namespace EmployeesTable.Forms
 {
     public partial class AddEmployeeDataForm : Form
     {
-        private readonly string headName;
         public AddEmployeeDataForm(Employee employee, string headName)
         {
-            this.headName = headName;
             Employee = employee;
             InitializeComponent();
+            Text = headName;
+
         }
 
         public Employee Employee { get; set; }

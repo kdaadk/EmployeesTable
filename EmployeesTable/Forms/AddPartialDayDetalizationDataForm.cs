@@ -7,13 +7,13 @@ namespace EmployeesTable.Forms
     public partial class AddPartialDayDetalizationDataForm : Form
     {
         public PartialDayDetalization Detalization { get; set; }
-        private readonly string headName;
 
         public AddPartialDayDetalizationDataForm(PartialDayDetalization Detalization, string headName)
         {
-            this.headName = headName;
             this.Detalization = Detalization;
             InitializeComponent();
+            Text = headName;
+
         }
 
 

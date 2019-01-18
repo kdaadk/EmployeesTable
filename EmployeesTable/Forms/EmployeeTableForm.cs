@@ -23,6 +23,36 @@ namespace EmployeesTable.Forms
             employeeRepository = new EmployeeRepository();
             employeeTableFormHelper = new EmployeeTableFormHelper(employeeRepository);
             InitializeComponent();
+            dgvEmployees.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        }
+
+        class PageOffsetList : System.ComponentModel.IListSource
+        {
+            private readonly int count;
+
+            public PageOffsetList(int count)
+            {
+                this.count = count;
+            }
+
+            public bool ContainsListCollection { get; protected set; }
+
+            public System.Collections.IList GetList()
+            {
+                var pageOffsets = new List<int>();
+                for (int offset = 0; offset < count; offset += 50)
+                    pageOffsets.Add(offset);
+                return pageOffsets;
+            }
+        }
+
+        private void bsPaging_CurrentChanged(object sender, EventArgs e)
+        {
+            int offset = (int)bsPaging.Current;
+            dgvEmployees.Rows.Clear();
+            for (int i = offset; i < offset + 50 && i < employees.Count; i++)
+                dgvEmployees.Rows.Add(employees[i].FullName, employees[i].Representation,
+                    employees[i].HoursFullDays / 8, employees[i].HoursPartialDays, employees[i].Comment);
         }
 
         private void EmployeeTableForm_Load(object sender, EventArgs e)
@@ -236,6 +266,21 @@ namespace EmployeesTable.Forms
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             LoadEmployees();
+        }
+
+        private void cbPaging_CheckedChanged(object sender, EventArgs e)
+        {
+            bnPaging.Visible = cbPaging.Checked;
+            if (cbPaging.Checked)
+            {
+                bnPaging.BindingSource = bsPaging;
+                bsPaging.CurrentChanged += bsPaging_CurrentChanged;
+                bsPaging.DataSource = new PageOffsetList(employees.Count);
+            }
+            else
+            {
+                LoadEmployees();
+            }
         }
     }
 }

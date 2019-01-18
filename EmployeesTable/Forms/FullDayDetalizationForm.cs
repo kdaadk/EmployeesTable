@@ -15,6 +15,9 @@ namespace EmployeesTable.Forms
             this.employeeRepository = employeeRepository;
             this.id = id;
             InitializeComponent();
+            dgvFullDayDetalization.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Text = id;
+
         }
 
         private void EmployeeFullDayDetalizationForm_Load(object sender, EventArgs e)

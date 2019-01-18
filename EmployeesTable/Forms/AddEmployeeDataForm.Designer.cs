@@ -161,7 +161,6 @@ namespace EmployeesTable.Forms
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AddEmployeeDataForm";
-            this.Text = headName;
             this.Load += new System.EventHandler(this.AddDataToDb_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

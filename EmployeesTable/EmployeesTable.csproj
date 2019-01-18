@@ -187,10 +187,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Elegantthemes-Beautiful-Flat-Booklet.ico" />
-    <None Include="Resources\searcher.Image.png" />
-    <None Include="Resources\modify.Image.png" />
-    <None Include="Resources\iconfinder.Image.png" />
-    <None Include="Resources\iconFinder.png" />
+    <Content Include="Resources\btAddEmployee.Image.png" />
+    <Content Include="Resources\btDeleteEmployee.Image.png" />
+    <Content Include="Resources\btEditEmployee.Image.png" />
+    <Content Include="Resources\btExportTable.Image.png" />
+    <Content Include="Resources\btImportOrder.Image.png" />
+    <Content Include="Resources\BtnGridFilter.Image.png" />
+    <Content Include="Resources\btnRefresh.Image.png" />
+    <None Include="Resources\lbSearcher.Image.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.1">
