@@ -12,52 +12,61 @@ namespace EmployeesTable.Forms
 {
     public partial class EmployeeTableForm : Form
     {
-        private readonly EmployeeRepository employeeRepository;
-        private readonly EmployeeTableFormHelper employeeTableFormHelper;
-        private List<Employee> employees;
+        private EmployeeRepository employeeRepository;
+        private EmployeeTableFormHelper employeeTableFormHelper;
+        private List<Employee> filteredEmployees;
+        private List<Employee> allEmployees;
         private GridFilterParameters filterParameters;
 
         public EmployeeTableForm()
         {
-            filterParameters = new GridFilterParameters{Representations = new List<string>()};
-            employeeRepository = new EmployeeRepository();
-            employeeTableFormHelper = new EmployeeTableFormHelper(employeeRepository);
+            DefineLocalFields();
             InitializeComponent();
             dgvEmployees.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
-        class PageOffsetList : System.ComponentModel.IListSource
+        private void DefineLocalFields()
         {
-            private readonly int count;
-
-            public PageOffsetList(int count)
+            filteredEmployees = new List<Employee>();
+            employeeRepository = new EmployeeRepository();
+            allEmployees = employeeRepository.GetAllEmployees().ToList();
+            filterParameters = new GridFilterParameters
             {
-                this.count = count;
-            }
+                Representations = allEmployees
+                    .Select(e => e.Representation).Distinct().ToList(),
+                DaysNumberFrom = 0,
+                DaysNumberTo = 50,
+                AnyDaysNumber = true,
+                IsFired = false,
+                RepresentationGroupName = @"Все"
+            };
+            employeeTableFormHelper = new EmployeeTableFormHelper(employeeRepository);
+        }
 
-            public bool ContainsListCollection { get; protected set; }
+        private void LoadEmployeesWith(GridFilterParameters parameters)
+        {
+            dgvEmployees.Rows.Clear();
+            filteredEmployees.Clear();
+            filteredEmployees.AddRange(employeeRepository.GetEmployeesWith(parameters));
 
-            public System.Collections.IList GetList()
-            {
-                var pageOffsets = new List<int>();
-                for (int offset = 0; offset < count; offset += 50)
-                    pageOffsets.Add(offset);
-                return pageOffsets;
-            }
+            foreach (var employee in filteredEmployees)
+                dgvEmployees.Rows.Add(employee.FullName, employee.Representation,
+                    employee.HoursFullDays / 8, employee.HoursPartialDays, employee.Comment);
         }
 
         private void bsPaging_CurrentChanged(object sender, EventArgs e)
         {
-            int offset = (int)bsPaging.Current;
+            var offset = (int)bsPaging.Current;
             dgvEmployees.Rows.Clear();
-            for (int i = offset; i < offset + 50 && i < employees.Count; i++)
-                dgvEmployees.Rows.Add(employees[i].FullName, employees[i].Representation,
-                    employees[i].HoursFullDays / 8, employees[i].HoursPartialDays, employees[i].Comment);
+            for (var i = offset; i < offset + 50 && i < filteredEmployees.Count; i++)
+                dgvEmployees.Rows.Add(filteredEmployees[i].FullName, filteredEmployees[i].Representation,
+                    filteredEmployees[i].HoursFullDays / 8, filteredEmployees[i].HoursPartialDays,
+                    filteredEmployees[i].Comment);
         }
 
         private void EmployeeTableForm_Load(object sender, EventArgs e)
         {
-            LoadEmployees();
+            LoadEmployeesWith(filterParameters);
         }
 
         private void EmployeeTableForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -75,16 +84,6 @@ namespace EmployeesTable.Forms
             {
                 e.Cancel = true;
             }
-        }
-
-        private void LoadEmployees()
-        {
-            dgvEmployees.Rows.Clear();
-            employees = employeeRepository.GetWorkingEmployees().OrderBy(e => e.FullName).ToList();
-
-            foreach (var employee in employees)
-                dgvEmployees.Rows.Add(employee.FullName, employee.Representation,
-                    employee.HoursFullDays / 8, employee.HoursPartialDays, employee.Comment);
         }
 
         private void employeesDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -123,12 +122,12 @@ namespace EmployeesTable.Forms
 
             if (string.IsNullOrWhiteSpace(input.Text))
             {
-                LoadEmployees();
+                LoadEmployeesWith(filterParameters);
                 return;
             }
 
             dgvEmployees.Rows.Clear();
-            var filteredEmployees = employeeRepository.GetEmployeesWithFullNameBegin(input.Text);
+            filteredEmployees = employeeRepository.GetEmployeesWithFullNameBegin(input.Text).ToList();
 
             if (filteredEmployees != null)
                 foreach (var employee in filteredEmployees)
@@ -162,7 +161,7 @@ namespace EmployeesTable.Forms
             if (orderDatas.Count > 0)
                 await Task.Run(() => employeeTableFormHelper.AddOrderData(parser, orderDatas));
 
-            LoadEmployees();
+            LoadEmployeesWith(filterParameters);
             btImportOrder.Enabled = true;
             pbStatusImportOrder.Style = ProgressBarStyle.Continuous;
             pbStatusImportOrder.MarqueeAnimationSpeed = 0;
@@ -183,23 +182,13 @@ namespace EmployeesTable.Forms
 
         private void BtnGridFilter_Click(object sender, EventArgs e)
         {
-            var gridFilter = new GridFilterForm(employees, filterParameters);
+            var gridFilter = new GridFilterForm(allEmployees, filterParameters);
 
             if (gridFilter.ShowDialog() == DialogResult.OK)
             {
                 filterParameters = gridFilter.Parameters;
-                LoadGridWith(gridFilter.Parameters);
+                LoadEmployeesWith(gridFilter.Parameters);
             }
-        }
-
-        private void LoadGridWith(GridFilterParameters parameters)
-        {
-            dgvEmployees.Rows.Clear();
-            var fiteredEmployees = employeeRepository.GetEmployeesWith(parameters).ToList();
-
-            foreach (var employee in fiteredEmployees)
-                dgvEmployees.Rows.Add(employee.FullName, employee.Representation,
-                    employee.HoursFullDays / 8, employee.HoursPartialDays, employee.Comment);
         }
 
         private void btEmployeeAdd_Click(object sender, EventArgs e)
@@ -214,7 +203,7 @@ namespace EmployeesTable.Forms
                     Representation = addData.Employee.Representation
                 };
                 employeeRepository.SaveEmployee($"{employee.FullName}, {employee.Representation}", employee);
-                LoadEmployees();
+                LoadEmployeesWith(filterParameters);
             }
         }
 
@@ -237,7 +226,7 @@ namespace EmployeesTable.Forms
                 else
                     employeeRepository.UpdateEmployee(id, editData.Employee);
 
-                LoadEmployees();
+                LoadEmployeesWith(filterParameters);
             }
         }
 
@@ -263,9 +252,9 @@ namespace EmployeesTable.Forms
             dgvEmployees.Rows.RemoveAt(rowIndex);
         }
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        private void btnRefresh_Click(object sender, EventArgs e)
         {
-            LoadEmployees();
+            LoadEmployeesWith(filterParameters);
         }
 
         private void cbPaging_CheckedChanged(object sender, EventArgs e)
@@ -275,11 +264,11 @@ namespace EmployeesTable.Forms
             {
                 bnPaging.BindingSource = bsPaging;
                 bsPaging.CurrentChanged += bsPaging_CurrentChanged;
-                bsPaging.DataSource = new PageOffsetList(employees.Count);
+                bsPaging.DataSource = new PageOffsetList(filteredEmployees.Count);
             }
             else
             {
-                LoadEmployees();
+                LoadEmployeesWith(filterParameters);
             }
         }
     }

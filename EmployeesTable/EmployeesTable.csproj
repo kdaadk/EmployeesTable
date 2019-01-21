@@ -129,6 +129,7 @@
     <Compile Include="GridFilterParameters.cs" />
     <Compile Include="Import\OrderData.cs" />
     <Compile Include="Import\OrderParser.cs" />
+    <Compile Include="PageOffsetList.cs" />
     <Compile Include="PartialDayDetalization.cs" />
     <Compile Include="Payment.cs" />
     <Compile Include="Program.cs" />

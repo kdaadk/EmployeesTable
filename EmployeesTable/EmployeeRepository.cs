@@ -142,11 +142,6 @@ namespace EmployeesTable
             return store.FindByQuery<Employee>(_ => true);
         }
 
-        public IEnumerable<Employee> GetWorkingEmployees()
-        {
-            return store.FindByQuery<Employee>(e => e.Fired == false);
-        }
-
         public IEnumerable<Employee> GetEmployeesWithFullNameBegin(string input)
         {
             return store.FindByQuery<Employee>(e =>
@@ -159,11 +154,14 @@ namespace EmployeesTable
 
         public IEnumerable<Employee> GetEmployeesWith(GridFilterParameters parameters)
         {
-            return store.FindByQuery<Employee>(e =>
-                e.Fired == parameters.IsFired
-                && parameters.Representations.Contains(e.Representation)
-                && e.HoursFullDays >= parameters.DaysNumberFrom * 8
-                && e.HoursFullDays <= parameters.DaysNumberTo * 8);
+            if(!parameters.AnyDaysNumber)
+                return store.FindByQuery<Employee>(e =>
+                    e.Fired == parameters.IsFired
+                    && parameters.Representations.Contains(e.Representation)
+                    && e.HoursFullDays >= parameters.DaysNumberFrom * 8
+                    && e.HoursFullDays <= parameters.DaysNumberTo * 8).OrderBy(e => e.FullName);
+            return store.FindByQuery<Employee>(e => e.Fired == parameters.IsFired
+                && parameters.Representations.Contains(e.Representation)).OrderBy(e => e.FullName);
         }
 
         public void DeleteEmployee(string id)

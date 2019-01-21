@@ -7,14 +7,41 @@ namespace EmployeesTable.Forms
 {
     public partial class GridFilterForm : Form
     {
-        private readonly List<Employee> employees;
+        private readonly List<string> centralOffices = new List<string>
+        {
+            @"Бюро администрирования функциональных комплексов",
+            @"Бюро развития IT",
+            @"Бюро системного администрирования и защиты информации",
+            @"Бюро технического и системного сопровождения",
+            @"Нормативно-правовой отдел",
+            @"Операционная дирекция",
+            @"Отдел документационного обеспечения",
+            @"Отдел по работе с государственными информационными системами",
+            @"Отдел по работе с персоналом",
+            @"Отдел по работе с физическими лицами",
+            @"Отдел по работе с юридическими лицами",
+            @"Отдел по сопровождению договоров и планированию",
+            @"Отдел претензионно-исковой работы",
+            @"Планово - экономический отдел",
+            @"Правовое управление",
+            @"Сектор по работе с задолженностью потребителей",
+            @"Сектор по расчетам мер социальной поддержки",
+            @"Транспортный отдел",
+            @"Управление",
+            @"Управление информационных технологий",
+            @"Управление логистики",
+            @"Управление реализации",
+            @"Финансово - экономическое управление",
+            @"Финансовый отдел"
+        };
+        private readonly List<Employee> allEmployees;
         private readonly Dictionary<string, List<string>> representationDictionary;
         public GridFilterParameters Parameters { get; set; }
 
 
-        public GridFilterForm(List<Employee> employees, GridFilterParameters parameters)
+        public GridFilterForm(List<Employee> allEmployees, GridFilterParameters parameters)
         {
-            this.employees = employees;
+            this.allEmployees = allEmployees;
             Parameters = parameters;
             representationDictionary = new Dictionary<string, List<string>>();
             InitializeComponent();
@@ -27,6 +54,8 @@ namespace EmployeesTable.Forms
             cbFiredEmployees.Checked = Parameters.IsFired;
             nudDaysNumberFrom.Value = (decimal) Parameters.DaysNumberFrom;
             nudDaysNumberTo.Value = (decimal)Parameters.DaysNumberTo;
+            cbRepresentation.SelectedText = Parameters.RepresentationGroupName;
+            cbAnyDaysNumber.Checked = Parameters.AnyDaysNumber;
 
             if (clbRepresentation.Items.Count == 0)
                 return;
@@ -41,8 +70,7 @@ namespace EmployeesTable.Forms
 
         private void LoadRepresentationsToCheckedListBox()
         {
-            representationDictionary.Add("Все", new List<string>{"Все"});
-            var allRepresentations = employees.Select(x => x.Representation).Distinct();
+            var allRepresentations = allEmployees.Select(x => x.Representation).Distinct();
             var representationsWithTwoWhiteSpace = allRepresentations.Where(x => x.Contains("  "));
 
             foreach (var r in representationsWithTwoWhiteSpace)
@@ -58,8 +86,7 @@ namespace EmployeesTable.Forms
                     representationDictionary[r].Add(r);
             }
 
-            clbRepresentation.Items.Add(representationDictionary.First().Key);
-            foreach (var representation in representationDictionary.Skip(1).OrderBy(r => r.Key))
+            foreach (var representation in representationDictionary.OrderBy(r => r.Key))
                 clbRepresentation.Items.Add(representation.Key);
         }
 
@@ -82,16 +109,54 @@ namespace EmployeesTable.Forms
             clbRepresentation.CheckOnClick = true;
         }
 
-        private void clRepresentation_SelectedIndexChanged(object sender, EventArgs e)
+        private void cbRepresentation_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var checkedListBoxRepresentation = (CheckedListBox) sender;
-            if ((string)checkedListBoxRepresentation?.SelectedItem == "Все")
+            if (cbRepresentation.SelectedItem.ToString() == @"Все")
             {
-                var itemChecked =
-                    checkedListBoxRepresentation.GetItemChecked(checkedListBoxRepresentation.SelectedIndex);
+                Parameters.RepresentationGroupName = @"Все";
                 for (int i = 0; i < clbRepresentation.Items.Count; i++)
-                    clbRepresentation.SetItemChecked(i, itemChecked);
+                    clbRepresentation.SetItemChecked(i, true);
             }
+
+            if (cbRepresentation.SelectedItem.ToString() == @"Центральный офис")
+            {
+                UncheckedAll();
+                Parameters.RepresentationGroupName = @"Центральный офис";
+                foreach (var centralOffice in centralOffices)
+                {
+                    var index = clbRepresentation.Items.IndexOf(centralOffice);
+                    clbRepresentation.SetItemChecked(index, true);
+                }
+            }
+
+            if (cbRepresentation.SelectedItem.ToString() == @"Выбрать из списка")
+            {
+                Parameters.RepresentationGroupName = @"Выбрать из списка";
+                UncheckedAll();
+            }
+        }
+
+        private void UncheckedAll()
+        {
+            for (int i = 0; i < clbRepresentation.Items.Count; i++)
+                clbRepresentation.SetItemChecked(i, false);
+        }
+
+        private void cbAnyDaysNumber_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbAnyDaysNumber.Checked)
+            {
+                Parameters.AnyDaysNumber = true;
+                nudDaysNumberFrom.Enabled = false;
+                nudDaysNumberTo.Enabled = false;
+            }
+            else
+            {
+                Parameters.AnyDaysNumber = false;
+                nudDaysNumberFrom.Enabled = true;
+                nudDaysNumberTo.Enabled = true;
+            }
+
         }
     }
 }

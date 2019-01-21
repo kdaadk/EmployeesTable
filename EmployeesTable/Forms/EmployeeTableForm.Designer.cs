@@ -64,8 +64,8 @@ namespace EmployeesTable.Forms
             this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
-            this.bsPaging = new System.Windows.Forms.BindingSource(this.components);
             this.cbPaging = new System.Windows.Forms.CheckBox();
+            this.bsPaging = new System.Windows.Forms.BindingSource(this.components);
             this.stripMenu.SuspendLayout();
             this.stripStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployees)).BeginInit();
@@ -199,7 +199,7 @@ namespace EmployeesTable.Forms
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(23, 22);
             this.btnRefresh.ToolTipText = "Обновить информацию";
-            this.btnRefresh.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // stripStatus
             // 
@@ -281,14 +281,14 @@ namespace EmployeesTable.Forms
             this.bindingNavigatorSeparator1,
             this.bindingNavigatorMoveNextItem,
             this.bindingNavigatorMoveLastItem});
-            this.bnPaging.Location = new System.Drawing.Point(781, 303);
+            this.bnPaging.Location = new System.Drawing.Point(0, 303);
             this.bnPaging.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
             this.bnPaging.MoveLastItem = this.bindingNavigatorMoveLastItem;
             this.bnPaging.MoveNextItem = this.bindingNavigatorMoveNextItem;
             this.bnPaging.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.bnPaging.Name = "bnPaging";
             this.bnPaging.PositionItem = this.bindingNavigatorPositionItem;
-            this.bnPaging.Size = new System.Drawing.Size(234, 25);
+            this.bnPaging.Size = new System.Drawing.Size(203, 25);
             this.bnPaging.TabIndex = 4;
             this.bnPaging.Visible = false;
             // 
@@ -356,12 +356,13 @@ namespace EmployeesTable.Forms
             // 
             // cbPaging
             // 
+            this.cbPaging.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbPaging.AutoSize = true;
-            this.cbPaging.Location = new System.Drawing.Point(863, 2);
+            this.cbPaging.Location = new System.Drawing.Point(929, 307);
             this.cbPaging.Name = "cbPaging";
-            this.cbPaging.Size = new System.Drawing.Size(58, 17);
+            this.cbPaging.Size = new System.Drawing.Size(127, 17);
             this.cbPaging.TabIndex = 5;
-            this.cbPaging.Text = "paging";
+            this.cbPaging.Text = "Включить пейджинг";
             this.cbPaging.UseVisualStyleBackColor = true;
             this.cbPaging.CheckedChanged += new System.EventHandler(this.cbPaging_CheckedChanged);
             // 
