@@ -5,19 +5,18 @@ using System.Windows.Forms;
 
 namespace EmployeesTable.Forms
 {
-    public partial class FullDayDetalizationForm : Form
+    public sealed partial class FullDayDetalizationForm : Form
     {
-        private readonly EmployeeRepository employeeRepository;
+        private readonly Repository employeeRepository;
         private readonly string id;
 
-        public FullDayDetalizationForm(string id, EmployeeRepository employeeRepository)
+        public FullDayDetalizationForm(string id, Repository employeeRepository)
         {
             this.employeeRepository = employeeRepository;
             this.id = id;
             InitializeComponent();
             dgvFullDayDetalization.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Text = id;
-
         }
 
         private void EmployeeFullDayDetalizationForm_Load(object sender, EventArgs e)
@@ -100,17 +99,19 @@ namespace EmployeesTable.Forms
         private FullDayDetalization GetFullDayDetalization(DataGridViewRow selectedRow)
         {
             DateTime? restDate = null;
+
             if (!string.IsNullOrEmpty((string) selectedRow.Cells[4].Value))
                 restDate = DateTime.Parse(selectedRow.Cells[4]?.Value.ToString());
+
+            double.TryParse(selectedRow.Cells[2]?.Value.ToString(), out var workHours);
             return new FullDayDetalization
             {
                 WorkDate = DateTime.Parse(selectedRow.Cells[0]?.Value.ToString()),
                 Comment = selectedRow.Cells[5].Value?.ToString(),
-                Payment = selectedRow.Cells[1].Value?.ToString() == "Оплата" ? Payment.Money : Payment.Rest,
+                Payment = PaymentDetector.DetectFromComboBox(selectedRow.Cells[1].Value?.ToString()),
                 RestDate = restDate,
-                WorkHours = double.Parse(selectedRow.Cells[2]?.Value.ToString()),
-                Used = selectedRow.Cells[3].Value?.ToString() == "Да" ? Used.YesFull
-                    : selectedRow.Cells[3].Value?.ToString() == "Частично" ? Used.YesPartially : Used.No
+                WorkHours = workHours,
+                Used = UsedDetector.DetectFromComboBox(selectedRow.Cells[3].Value?.ToString())
             };
         }
     }

@@ -5,6 +5,7 @@ namespace EmployeesTable
     public enum Payment
     {
         [Display(Name = "Оплата")] Money,
-        [Display(Name = "Отгул")] Rest
+        [Display(Name = "Отгул")] Rest,
+        Undefined
     }
 }

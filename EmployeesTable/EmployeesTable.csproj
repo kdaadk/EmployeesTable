@@ -80,7 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Employee.cs" />
-    <Compile Include="EmployeeRepository.cs" />
+    <Compile Include="Repository.cs" />
     <Compile Include="EmployeeTableFormHelper.cs" />
     <Compile Include="EnumExtensions.cs" />
     <Compile Include="Forms\AddEmployeeDataForm.cs">
@@ -132,9 +132,11 @@
     <Compile Include="PageOffsetList.cs" />
     <Compile Include="PartialDayDetalization.cs" />
     <Compile Include="Payment.cs" />
+    <Compile Include="PaymentDetector.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Used.cs" />
+    <Compile Include="UsedDetector.cs" />
     <EmbeddedResource Include="Forms\AddEmployeeDataForm.resx">
       <DependentUpon>AddEmployeeDataForm.cs</DependentUpon>
     </EmbeddedResource>

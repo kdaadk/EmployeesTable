@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using EmployeesTable.Import;
-using Microsoft.Office.Interop.Excel;
-using Application = Microsoft.Office.Interop.Excel.Application;
 
 namespace EmployeesTable.Forms
 {
     public partial class EmployeeTableForm : Form
     {
-        private EmployeeRepository employeeRepository;
+        private Repository repository;
         private EmployeeTableFormHelper employeeTableFormHelper;
         private List<Employee> filteredEmployees;
-        private List<Employee> allEmployees;
         private GridFilterParameters filterParameters;
 
         public EmployeeTableForm()
@@ -28,38 +24,47 @@ namespace EmployeesTable.Forms
         private void DefineLocalFields()
         {
             filteredEmployees = new List<Employee>();
-            employeeRepository = new EmployeeRepository();
-            allEmployees = employeeRepository.GetAllEmployees().ToList();
+            repository = new Repository();
+            var selectedOffices = repository.GetAllEmployees().Select(e => e.Office).Distinct().ToList();
+            var allOffices = repository.GetAllEmployees().Select(e => e.Office).Distinct().ToList();
             filterParameters = new GridFilterParameters
             {
-                Representations = allEmployees
-                    .Select(e => e.Representation).Distinct().ToList(),
+                SelectedOffices = selectedOffices,
+                AllOffices = allOffices,
                 DaysNumberFrom = 0,
                 DaysNumberTo = 50,
                 AnyDaysNumber = true,
                 IsFired = false,
-                RepresentationGroupName = @"Все"
+                OfficeGroupName = @"Все",
             };
-            employeeTableFormHelper = new EmployeeTableFormHelper(employeeRepository);
+            employeeTableFormHelper = new EmployeeTableFormHelper(repository);
         }
 
         private void LoadEmployeesWith(GridFilterParameters parameters)
         {
             dgvEmployees.Rows.Clear();
             filteredEmployees.Clear();
-            filteredEmployees.AddRange(employeeRepository.GetEmployeesWith(parameters));
+
+            if (repository.TryGetNewOffices(parameters.AllOffices, out var newOffices))
+                parameters.AllOffices.AddRange(newOffices);
+
+            filteredEmployees.AddRange(repository.GetEmployeesWith(parameters));
 
             foreach (var employee in filteredEmployees)
-                dgvEmployees.Rows.Add(employee.FullName, employee.Representation,
+                dgvEmployees.Rows.Add(employee.FullName, employee.Office,
                     employee.HoursFullDays / 8, employee.HoursPartialDays, employee.Comment);
+
+            slbEmployeesCount.Text = $@"Найдено: {filteredEmployees.Count} {employeeTableFormHelper.GetDeclension(filteredEmployees.Count, "сотрудник", "сотрудника", "сотрудников")}";
         }
+
+
 
         private void bsPaging_CurrentChanged(object sender, EventArgs e)
         {
             var offset = (int)bsPaging.Current;
             dgvEmployees.Rows.Clear();
             for (var i = offset; i < offset + 50 && i < filteredEmployees.Count; i++)
-                dgvEmployees.Rows.Add(filteredEmployees[i].FullName, filteredEmployees[i].Representation,
+                dgvEmployees.Rows.Add(filteredEmployees[i].FullName, filteredEmployees[i].Office,
                     filteredEmployees[i].HoursFullDays / 8, filteredEmployees[i].HoursPartialDays,
                     filteredEmployees[i].Comment);
         }
@@ -97,20 +102,20 @@ namespace EmployeesTable.Forms
                 return;
 
             var selectedFullName = selectedRow.Cells[0].Value.ToString();
-            var selectedRepresentation = selectedRow.Cells[1].Value.ToString();
-            var id = $"{selectedFullName}, {selectedRepresentation}";
-            var employee = employeeRepository.GetEmployeeById(id);
+            var selectedOffice = selectedRow.Cells[1].Value.ToString();
+            var id = $"{selectedFullName}, {selectedOffice}";
+            var employee = repository.GetEmployeeById(id);
 
             if (e.ColumnIndex == 2)
             {
-                var detalization = new FullDayDetalizationForm(id, employeeRepository);
+                var detalization = new FullDayDetalizationForm(id, repository);
                 detalization.ShowDialog();
                 selectedRow.Cells[2].Value = employee.HoursFullDays / 8;
             }
 
             if (e.ColumnIndex == 3)
             {
-                var detalization = new PartialDayDetalizationForm(id, employeeRepository);
+                var detalization = new PartialDayDetalizationForm(id, repository);
                 detalization.ShowDialog();
                 selectedRow.Cells[3].Value = employee.HoursPartialDays;
             }
@@ -127,19 +132,18 @@ namespace EmployeesTable.Forms
             }
 
             dgvEmployees.Rows.Clear();
-            filteredEmployees = employeeRepository.GetEmployeesWithFullNameBegin(input.Text).ToList();
+            filteredEmployees = repository.GetEmployeesWithFullNameBegin(input.Text).ToList();
 
             if (filteredEmployees != null)
                 foreach (var employee in filteredEmployees)
-                    dgvEmployees.Rows.Add(employee.FullName, employee.Representation,
+                    dgvEmployees.Rows.Add(employee.FullName, employee.Office,
                         employee.HoursFullDays / 8, employee.HoursPartialDays);
         }
 
-        private async void btLoadOrder_Click(object sender, EventArgs e)
+        private async void btImportOrder_Click(object sender, EventArgs e)
         {
-            var parser = new OrderParser();
+            var parser = new OrderParser(repository);
             string orderPath = null;
-            var orderDatas = new List<OrderData>();
 
             using (var openFileDialog = new OpenFileDialog())
             {
@@ -149,40 +153,33 @@ namespace EmployeesTable.Forms
                     orderPath = openFileDialog.FileName;
             }
 
-            pbStatusImportOrder.Visible = true;
-            pbStatusImportOrder.Style = ProgressBarStyle.Marquee;
-            pbStatusImportOrder.MarqueeAnimationSpeed = 30;
+            EnableProgressBar(false);
 
-            btImportOrder.Enabled = false;
-
-            if (orderPath != null)
-                await Task.Run(() => orderDatas = parser.Parse(orderPath));
-
-            if (orderDatas.Count > 0)
-                await Task.Run(() => employeeTableFormHelper.AddOrderData(parser, orderDatas));
+            if (orderPath != null && parser.TryParse(orderPath, out var orderData))
+                await Task.Run(() => employeeTableFormHelper.AddOrderData(parser, orderData));
 
             LoadEmployeesWith(filterParameters);
-            btImportOrder.Enabled = true;
-            pbStatusImportOrder.Style = ProgressBarStyle.Continuous;
-            pbStatusImportOrder.MarqueeAnimationSpeed = 0;
-            pbStatusImportOrder.Visible = false;
+            EnableProgressBar(true);
+        }
+
+        private void EnableProgressBar(bool isEnable)
+        {
+            pbStatusImportOrder.Visible = !isEnable;
+            pbStatusImportOrder.Style = isEnable ? ProgressBarStyle.Continuous : ProgressBarStyle.Marquee;
+            pbStatusImportOrder.MarqueeAnimationSpeed = isEnable ? 0 : 30;
+            btImportOrder.Enabled = isEnable;
         }
 
         private void btExportTable_Click(object sender, EventArgs e)
         {
-            employeeTableFormHelper.CopyAlltoClipboard(dgvEmployees);
-            object misValue = Missing.Value;
-            var xlexcel = new Application {Visible = true};
-            var xlWorkBook = xlexcel.Workbooks.Add(misValue);
-            var xlWorkSheet = (Worksheet) xlWorkBook.Worksheets.Item[1];
-            var CR = (Range) xlWorkSheet.Cells[1, 1];
-            CR.Select();
-            xlWorkSheet.PasteSpecial(CR, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, true);
+            btExportTable.Enabled = false;
+            employeeTableFormHelper.ExportTableToExcel(filteredEmployees);
+            btExportTable.Enabled = true;
         }
 
         private void BtnGridFilter_Click(object sender, EventArgs e)
         {
-            var gridFilter = new GridFilterForm(allEmployees, filterParameters);
+            var gridFilter = new GridFilterForm(filterParameters);
 
             if (gridFilter.ShowDialog() == DialogResult.OK)
             {
@@ -200,9 +197,9 @@ namespace EmployeesTable.Forms
                 {
                     ID = Guid.NewGuid().ToString(),
                     FullName = addData.Employee.FullName,
-                    Representation = addData.Employee.Representation
+                    Office = addData.Employee.Office
                 };
-                employeeRepository.SaveEmployee($"{employee.FullName}, {employee.Representation}", employee);
+                repository.SaveEmployee($"{employee.FullName}, {employee.Office}", employee);
                 LoadEmployeesWith(filterParameters);
             }
         }
@@ -215,16 +212,16 @@ namespace EmployeesTable.Forms
                 return;
 
             var selectedFullName = selectedRow.Cells[0].Value.ToString();
-            var selectedRepresentation = selectedRow.Cells[1].Value.ToString();
-            var id = $"{selectedFullName}, {selectedRepresentation}";
-            var editData = new AddEmployeeDataForm(employeeRepository.GetEmployeeById(id), "Редактировать сотрудника");
+            var selectedOffice = selectedRow.Cells[1].Value.ToString();
+            var id = $"{selectedFullName}, {selectedOffice}";
+            var editData = new AddEmployeeDataForm(repository.GetEmployeeById(id), "Редактировать сотрудника");
 
             if (editData.ShowDialog() == DialogResult.OK)
             {
                 if (id != editData.Employee.GetFullNameID)
-                    employeeRepository.RecreateEmployee(id, editData.Employee);
+                    repository.RecreateEmployee(id, editData.Employee);
                 else
-                    employeeRepository.UpdateEmployee(id, editData.Employee);
+                    repository.UpdateEmployee(id, editData.Employee);
 
                 LoadEmployeesWith(filterParameters);
             }
@@ -238,8 +235,8 @@ namespace EmployeesTable.Forms
                 return;
 
             var selectedFullName = dgvEmployees.Rows[rowIndex].Cells[0].Value.ToString();
-            var selectedRepresentation = dgvEmployees.Rows[rowIndex].Cells[1].Value.ToString();
-            var id = $"{selectedFullName}, {selectedRepresentation}";
+            var selectedOffice = dgvEmployees.Rows[rowIndex].Cells[1].Value.ToString();
+            var id = $"{selectedFullName}, {selectedOffice}";
 
             var mbAreYouSure = MessageBox.Show(@"Вы уверены, что хотите удалить запись?", @"Удаление",
                 MessageBoxButtons.YesNo,
@@ -248,18 +245,14 @@ namespace EmployeesTable.Forms
             if (mbAreYouSure == DialogResult.No)
                 return;
 
-            employeeRepository.DeleteEmployee(id);
+            repository.DeleteEmployee(id);
             dgvEmployees.Rows.RemoveAt(rowIndex);
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            LoadEmployeesWith(filterParameters);
-        }
+            tstbFullNameSearcher.Control.Text = "";
 
-        private void cbPaging_CheckedChanged(object sender, EventArgs e)
-        {
-            bnPaging.Visible = cbPaging.Checked;
             if (cbPaging.Checked)
             {
                 bnPaging.BindingSource = bsPaging;
@@ -268,6 +261,23 @@ namespace EmployeesTable.Forms
             }
             else
             {
+                LoadEmployeesWith(filterParameters);
+            }
+        }
+
+        private void cbPaging_CheckedChanged(object sender, EventArgs e)
+        {
+            bnPaging.Visible = cbPaging.Checked;
+            if (cbPaging.Checked)
+            {
+                slbEmployeesCount.Margin = new Padding(210, 3, 1, 3);
+                bnPaging.BindingSource = bsPaging;
+                bsPaging.CurrentChanged += bsPaging_CurrentChanged;
+                bsPaging.DataSource = new PageOffsetList(filteredEmployees.Count);
+            }
+            else
+            {
+                slbEmployeesCount.Margin = new Padding(1, 3, 1, 3);
                 LoadEmployeesWith(filterParameters);
             }
         }

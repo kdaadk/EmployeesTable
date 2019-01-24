@@ -4,12 +4,12 @@ using System.Windows.Forms;
 
 namespace EmployeesTable.Forms
 {
-    public partial class PartialDayDetalizationForm : Form
+    public sealed partial class PartialDayDetalizationForm : Form
     {
-        private readonly EmployeeRepository employeeRepository;
+        private readonly Repository employeeRepository;
         private readonly string id;
 
-        public PartialDayDetalizationForm(string id, EmployeeRepository employeeRepository)
+        public PartialDayDetalizationForm(string id, Repository employeeRepository)
         {
             this.employeeRepository = employeeRepository;
             this.id = id;
@@ -86,12 +86,12 @@ namespace EmployeesTable.Forms
 
         private PartialDayDetalization GetPDetalization(DataGridViewRow selectedRow)
         {
+            double.TryParse(selectedRow.Cells[1]?.Value.ToString(), out var workHours);
             return new PartialDayDetalization
             {
                 WorkDate = DateTime.Parse(selectedRow.Cells[0]?.Value.ToString()),
-                WorkHours = double.Parse(selectedRow.Cells[1]?.Value.ToString()),
-                Used = selectedRow.Cells[2].Value?.ToString() == "Да" ? Used.YesFull
-                    : selectedRow.Cells[2].Value?.ToString() == "Частично" ? Used.YesPartially : Used.No,
+                WorkHours = workHours,
+                Used = UsedDetector.DetectFromComboBox(selectedRow.Cells[2].Value?.ToString()),
                 Comment = selectedRow.Cells[3].Value?.ToString()
             };
         }

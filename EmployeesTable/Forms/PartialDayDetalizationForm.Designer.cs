@@ -2,7 +2,7 @@
 
 namespace EmployeesTable.Forms
 {
-    partial class PartialDayDetalizationForm
+    sealed partial class PartialDayDetalizationForm
     {
         /// <summary>
         /// Required designer variable.

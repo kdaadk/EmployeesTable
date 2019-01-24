@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace EmployeesTable.Forms
 {
-    public partial class AddPartialDayDetalizationDataForm : Form
+    public sealed partial class AddPartialDayDetalizationDataForm : Form
     {
         public PartialDayDetalization Detalization { get; set; }
 
@@ -13,7 +13,6 @@ namespace EmployeesTable.Forms
             this.Detalization = Detalization;
             InitializeComponent();
             Text = headName;
-
         }
 
 
@@ -29,11 +28,7 @@ namespace EmployeesTable.Forms
         {
             Detalization.WorkDate = tpWorkDate.Value;
             Detalization.WorkHours = double.Parse(tbHours.Text);
-            Detalization.Used = cbRest.Text == @"Да"
-                ? Used.YesFull
-                : cbRest.Text == @"Частично"
-                    ? Used.YesPartially
-                    : Used.No;
+            Detalization.Used = UsedDetector.DetectFromComboBox(cbRest.Text);
             Detalization.Comment = tbComment.Text;
 
             DialogResult = DialogResult.OK;

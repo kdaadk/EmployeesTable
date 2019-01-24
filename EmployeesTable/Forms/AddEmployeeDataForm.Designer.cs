@@ -33,8 +33,8 @@ namespace EmployeesTable.Forms
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddEmployeeDataForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cbFired = new System.Windows.Forms.CheckBox();
-            this.lbRepresentation = new System.Windows.Forms.Label();
-            this.tbRepresentation = new System.Windows.Forms.TextBox();
+            this.lbOffice = new System.Windows.Forms.Label();
+            this.tbOffice = new System.Windows.Forms.TextBox();
             this.lbFullName = new System.Windows.Forms.Label();
             this.tbFullName = new System.Windows.Forms.TextBox();
             this.lbComment = new System.Windows.Forms.Label();
@@ -48,8 +48,8 @@ namespace EmployeesTable.Forms
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.cbFired);
-            this.groupBox1.Controls.Add(this.lbRepresentation);
-            this.groupBox1.Controls.Add(this.tbRepresentation);
+            this.groupBox1.Controls.Add(this.lbOffice);
+            this.groupBox1.Controls.Add(this.tbOffice);
             this.groupBox1.Controls.Add(this.lbFullName);
             this.groupBox1.Controls.Add(this.tbFullName);
             this.groupBox1.Controls.Add(this.lbComment);
@@ -71,22 +71,22 @@ namespace EmployeesTable.Forms
             this.cbFired.TabIndex = 3;
             this.cbFired.UseVisualStyleBackColor = true;
             // 
-            // lbRepresentation
+            // lbOffice
             // 
-            this.lbRepresentation.AutoSize = true;
-            this.lbRepresentation.Location = new System.Drawing.Point(7, 49);
-            this.lbRepresentation.Name = "lbRepresentation";
-            this.lbRepresentation.Size = new System.Drawing.Size(111, 13);
-            this.lbRepresentation.TabIndex = 1;
-            this.lbRepresentation.Text = "Представительство:";
+            this.lbOffice.AutoSize = true;
+            this.lbOffice.Location = new System.Drawing.Point(7, 49);
+            this.lbOffice.Name = "lbOffice";
+            this.lbOffice.Size = new System.Drawing.Size(111, 13);
+            this.lbOffice.TabIndex = 1;
+            this.lbOffice.Text = "Представительство:";
             // 
-            // tbRepresentation
+            // tbOffice
             // 
-            this.tbRepresentation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbRepresentation.Location = new System.Drawing.Point(119, 47);
-            this.tbRepresentation.Name = "tbRepresentation";
-            this.tbRepresentation.Size = new System.Drawing.Size(211, 20);
-            this.tbRepresentation.TabIndex = 1;
+            this.tbOffice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbOffice.Location = new System.Drawing.Point(119, 47);
+            this.tbOffice.Name = "tbOffice";
+            this.tbOffice.Size = new System.Drawing.Size(211, 20);
+            this.tbOffice.TabIndex = 1;
             // 
             // lbFullName
             // 
@@ -173,8 +173,8 @@ namespace EmployeesTable.Forms
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lbFullName;
         private System.Windows.Forms.TextBox tbFullName;
-        private System.Windows.Forms.Label lbRepresentation;
-        private System.Windows.Forms.TextBox tbRepresentation;
+        private System.Windows.Forms.Label lbOffice;
+        private System.Windows.Forms.TextBox tbOffice;
         private System.Windows.Forms.Label lbComment;
         private System.Windows.Forms.TextBox tbComment;
         private System.Windows.Forms.Label lbFired;

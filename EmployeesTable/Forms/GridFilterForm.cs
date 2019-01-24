@@ -34,112 +34,117 @@ namespace EmployeesTable.Forms
             @"Финансово - экономическое управление",
             @"Финансовый отдел"
         };
-        private readonly List<Employee> allEmployees;
-        private readonly Dictionary<string, List<string>> representationDictionary;
-        public GridFilterParameters Parameters { get; set; }
+
+        private readonly Dictionary<string, List<string>> officeDictionary;
 
 
-        public GridFilterForm(List<Employee> allEmployees, GridFilterParameters parameters)
+        public GridFilterForm(GridFilterParameters parameters)
         {
-            this.allEmployees = allEmployees;
             Parameters = parameters;
-            representationDictionary = new Dictionary<string, List<string>>();
+            officeDictionary = new Dictionary<string, List<string>>();
             InitializeComponent();
         }
+
+        public GridFilterParameters Parameters { get; set; }
 
 
         private void GridFilter_Load(object sender, EventArgs e)
         {
-            LoadRepresentationsToCheckedListBox();
+            LoadOfficesToCheckedListBox();
             cbFiredEmployees.Checked = Parameters.IsFired;
             nudDaysNumberFrom.Value = (decimal) Parameters.DaysNumberFrom;
-            nudDaysNumberTo.Value = (decimal)Parameters.DaysNumberTo;
-            cbRepresentation.SelectedText = Parameters.RepresentationGroupName;
+            nudDaysNumberTo.Value = (decimal) Parameters.DaysNumberTo;
+            cbOffice.SelectedText = Parameters.OfficeGroupName;
             cbAnyDaysNumber.Checked = Parameters.AnyDaysNumber;
 
-            if (clbRepresentation.Items.Count == 0)
+            if (clbOffice.Items.Count == 0)
                 return;
 
-            for (int i = 0; i < clbRepresentation.Items.Count; i++)
+            if (Parameters.OfficeGroupName == @"Все")
             {
-                var valuesRepresentation = representationDictionary[(string)clbRepresentation.Items[i]];
-                if (valuesRepresentation.Any(x => Parameters.Representations.Contains(x)))
-                    clbRepresentation.SetItemChecked(i, true);
+                SetAllItemChecked(true);
+                return;
+            }
+
+            for (var i = 0; i < clbOffice.Items.Count; i++)
+            {
+                var valuesOffice = officeDictionary[(string) clbOffice.Items[i]];
+                if (valuesOffice.Any(x => Parameters.SelectedOffices.Contains(x)))
+                    clbOffice.SetItemChecked(i, true);
             }
         }
 
-        private void LoadRepresentationsToCheckedListBox()
+        private void LoadOfficesToCheckedListBox()
         {
-            var allRepresentations = allEmployees.Select(x => x.Representation).Distinct();
-            var representationsWithTwoWhiteSpace = allRepresentations.Where(x => x.Contains("  "));
+            var allOffices = Parameters.AllOffices;
+            var officesWithTwoWhiteSpace = allOffices.Where(x => x.Contains("  "));
 
-            foreach (var r in representationsWithTwoWhiteSpace)
-                representationDictionary.Add(r.Replace("  ", " "), new List<string> {r});
+            foreach (var r in officesWithTwoWhiteSpace)
+                officeDictionary.Add(r.Replace("  ", " "), new List<string> {r});
 
-            var representationsWithOneWhiteSpace = allRepresentations.Where(x => !x.Contains("  "));
+            var officesWithOneWhiteSpace = allOffices.Where(x => !x.Contains("  "));
 
-            foreach (var r in representationsWithOneWhiteSpace)
-            {
-                if (!representationDictionary.ContainsKey(r))
-                    representationDictionary.Add(r, new List<string> {r});
+            foreach (var r in officesWithOneWhiteSpace)
+                if (!officeDictionary.ContainsKey(r))
+                    officeDictionary.Add(r, new List<string> {r});
                 else
-                    representationDictionary[r].Add(r);
-            }
+                    officeDictionary[r].Add(r);
 
-            foreach (var representation in representationDictionary.OrderBy(r => r.Key))
-                clbRepresentation.Items.Add(representation.Key);
+            foreach (var office in officeDictionary.OrderBy(r => r.Key))
+                clbOffice.Items.Add(office.Key);
         }
 
         private void btOK_Click(object sender, EventArgs e)
         {
             Parameters.IsFired = cbFiredEmployees.Checked;
-            Parameters.DaysNumberFrom = (double)nudDaysNumberFrom.Value;
-            Parameters.DaysNumberTo = (double)nudDaysNumberTo.Value;
-            Parameters.Representations.Clear();
-            var representations = clbRepresentation.CheckedItems.OfType<string>().ToList();
+            Parameters.DaysNumberFrom = (double) nudDaysNumberFrom.Value;
+            Parameters.DaysNumberTo = (double) nudDaysNumberTo.Value;
+            Parameters.SelectedOffices.Clear();
+            var offices = clbOffice.CheckedItems.OfType<string>().ToList();
 
-            foreach (var representation in representations)
-                 Parameters.Representations.AddRange(representationDictionary[representation]);
+            foreach (var office in offices)
+                Parameters.SelectedOffices.AddRange(officeDictionary[office]);
 
             DialogResult = DialogResult.OK;
         }
 
-        private void clRepresentation_MouseClick(object sender, MouseEventArgs e)
+        private void clOffice_MouseClick(object sender, MouseEventArgs e)
         {
-            clbRepresentation.CheckOnClick = true;
+            clbOffice.CheckOnClick = true;
         }
 
-        private void cbRepresentation_SelectedIndexChanged(object sender, EventArgs e)
+        private void cbOffice_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbRepresentation.SelectedItem.ToString() == @"Все")
+            if (cbOffice.SelectedItem.ToString() == @"Все")
             {
-                Parameters.RepresentationGroupName = @"Все";
-                for (int i = 0; i < clbRepresentation.Items.Count; i++)
-                    clbRepresentation.SetItemChecked(i, true);
+                Parameters.OfficeGroupName = @"Все";
+                for (var i = 0; i < clbOffice.Items.Count; i++)
+                    clbOffice.SetItemChecked(i, true);
             }
 
-            if (cbRepresentation.SelectedItem.ToString() == @"Центральный офис")
+            if (cbOffice.SelectedItem.ToString() == @"Центральный офис")
             {
-                UncheckedAll();
-                Parameters.RepresentationGroupName = @"Центральный офис";
+                SetAllItemChecked(false);
+                Parameters.OfficeGroupName = @"Центральный офис";
                 foreach (var centralOffice in centralOffices)
                 {
-                    var index = clbRepresentation.Items.IndexOf(centralOffice);
-                    clbRepresentation.SetItemChecked(index, true);
+                    var index = clbOffice.Items.IndexOf(centralOffice);
+                    if (index != -1)
+                        clbOffice.SetItemChecked(index, true);
                 }
             }
 
-            if (cbRepresentation.SelectedItem.ToString() == @"Выбрать из списка")
+            if (cbOffice.SelectedItem.ToString() == @"Выбрать из списка")
             {
-                Parameters.RepresentationGroupName = @"Выбрать из списка";
-                UncheckedAll();
+                Parameters.OfficeGroupName = @"Выбрать из списка";
+                SetAllItemChecked(false);
             }
         }
 
-        private void UncheckedAll()
+        private void SetAllItemChecked(bool value)
         {
-            for (int i = 0; i < clbRepresentation.Items.Count; i++)
-                clbRepresentation.SetItemChecked(i, false);
+            for (var i = 0; i < clbOffice.Items.Count; i++)
+                clbOffice.SetItemChecked(i, value);
         }
 
         private void cbAnyDaysNumber_CheckedChanged(object sender, EventArgs e)
@@ -156,7 +161,6 @@ namespace EmployeesTable.Forms
                 nudDaysNumberFrom.Enabled = true;
                 nudDaysNumberTo.Enabled = true;
             }
-
         }
     }
 }

@@ -12,7 +12,7 @@ namespace EmployeesTable
 
         public string ID { get; set; }
         public string FullName { get; set; }
-        public string Representation { get; set; }
+        public string Office { get; set; }
         public double HoursFullDays { get; set; }
         public double HoursPartialDays { get; set; }
         public string Comment { get; set; }
@@ -20,6 +20,6 @@ namespace EmployeesTable
         public List<PartialDayDetalization> PartialDayDetalization { get; set; }
         public bool Fired { get; set; }
 
-        public string GetFullNameID => $"{FullName}, {Representation}";
+        public string GetFullNameID => $"{FullName}, {Office}";
     }
 }

@@ -35,13 +35,13 @@ namespace EmployeesTable.Forms
             this.btCancelbtCancel = new System.Windows.Forms.Button();
             this.lbFiredEmployees = new System.Windows.Forms.Label();
             this.cbFiredEmployees = new System.Windows.Forms.CheckBox();
-            this.lbRepresentation = new System.Windows.Forms.Label();
+            this.lbOffice = new System.Windows.Forms.Label();
             this.lbDaysNumberFrom = new System.Windows.Forms.Label();
             this.lbDaysNumberTo = new System.Windows.Forms.Label();
             this.nudDaysNumberFrom = new System.Windows.Forms.NumericUpDown();
             this.nudDaysNumberTo = new System.Windows.Forms.NumericUpDown();
-            this.clbRepresentation = new System.Windows.Forms.CheckedListBox();
-            this.cbRepresentation = new System.Windows.Forms.ComboBox();
+            this.clbOffice = new System.Windows.Forms.CheckedListBox();
+            this.cbOffice = new System.Windows.Forms.ComboBox();
             this.cbAnyDaysNumber = new System.Windows.Forms.CheckBox();
             this.lbAnyDaysNumber = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudDaysNumberFrom)).BeginInit();
@@ -88,14 +88,14 @@ namespace EmployeesTable.Forms
             this.cbFiredEmployees.TabIndex = 1;
             this.cbFiredEmployees.UseVisualStyleBackColor = true;
             // 
-            // lbRepresentation
+            // lbOffice
             // 
-            this.lbRepresentation.AutoSize = true;
-            this.lbRepresentation.Location = new System.Drawing.Point(20, 110);
-            this.lbRepresentation.Name = "lbRepresentation";
-            this.lbRepresentation.Size = new System.Drawing.Size(108, 13);
-            this.lbRepresentation.TabIndex = 10;
-            this.lbRepresentation.Text = "Представительство";
+            this.lbOffice.AutoSize = true;
+            this.lbOffice.Location = new System.Drawing.Point(20, 110);
+            this.lbOffice.Name = "lbOffice";
+            this.lbOffice.Size = new System.Drawing.Size(108, 13);
+            this.lbOffice.TabIndex = 10;
+            this.lbOffice.Text = "Представительство";
             // 
             // lbDaysNumberFrom
             // 
@@ -130,38 +130,32 @@ namespace EmployeesTable.Forms
             this.nudDaysNumberTo.Name = "nudDaysNumberTo";
             this.nudDaysNumberTo.Size = new System.Drawing.Size(36, 20);
             this.nudDaysNumberTo.TabIndex = 3;
-            this.nudDaysNumberTo.Value = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
             // 
-            // clbRepresentation
+            // clbOffice
             // 
-            this.clbRepresentation.FormattingEnabled = true;
-            this.clbRepresentation.Location = new System.Drawing.Point(24, 137);
-            this.clbRepresentation.Name = "clbRepresentation";
-            this.clbRepresentation.Size = new System.Drawing.Size(385, 409);
-            this.clbRepresentation.TabIndex = 6;
-            this.clbRepresentation.MouseClick += new System.Windows.Forms.MouseEventHandler(this.clRepresentation_MouseClick);
+            this.clbOffice.FormattingEnabled = true;
+            this.clbOffice.Location = new System.Drawing.Point(24, 137);
+            this.clbOffice.Name = "clbOffice";
+            this.clbOffice.Size = new System.Drawing.Size(385, 409);
+            this.clbOffice.TabIndex = 6;
+            this.clbOffice.MouseClick += new System.Windows.Forms.MouseEventHandler(this.clOffice_MouseClick);
             // 
-            // cbRepresentation
+            // cbOffice
             // 
-            this.cbRepresentation.FormattingEnabled = true;
-            this.cbRepresentation.Items.AddRange(new object[] {
+            this.cbOffice.FormattingEnabled = true;
+            this.cbOffice.Items.AddRange(new object[] {
             "Все",
             "Выбрать из списка",
             "Центральный офис"});
-            this.cbRepresentation.Location = new System.Drawing.Point(134, 107);
-            this.cbRepresentation.Name = "cbRepresentation";
-            this.cbRepresentation.Size = new System.Drawing.Size(275, 21);
-            this.cbRepresentation.TabIndex = 5;
-            this.cbRepresentation.SelectedIndexChanged += new System.EventHandler(this.cbRepresentation_SelectedIndexChanged);
+            this.cbOffice.Location = new System.Drawing.Point(134, 107);
+            this.cbOffice.Name = "cbOffice";
+            this.cbOffice.Size = new System.Drawing.Size(275, 21);
+            this.cbOffice.TabIndex = 5;
+            this.cbOffice.SelectedIndexChanged += new System.EventHandler(this.cbOffice_SelectedIndexChanged);
             // 
             // cbAnyDaysNumber
             // 
             this.cbAnyDaysNumber.AutoSize = true;
-            this.cbAnyDaysNumber.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbAnyDaysNumber.Location = new System.Drawing.Point(135, 80);
             this.cbAnyDaysNumber.Name = "cbAnyDaysNumber";
             this.cbAnyDaysNumber.Size = new System.Drawing.Size(15, 14);
@@ -185,13 +179,13 @@ namespace EmployeesTable.Forms
             this.ClientSize = new System.Drawing.Size(437, 597);
             this.Controls.Add(this.cbAnyDaysNumber);
             this.Controls.Add(this.lbAnyDaysNumber);
-            this.Controls.Add(this.cbRepresentation);
-            this.Controls.Add(this.clbRepresentation);
+            this.Controls.Add(this.cbOffice);
+            this.Controls.Add(this.clbOffice);
             this.Controls.Add(this.nudDaysNumberTo);
             this.Controls.Add(this.nudDaysNumberFrom);
             this.Controls.Add(this.lbDaysNumberTo);
             this.Controls.Add(this.lbDaysNumberFrom);
-            this.Controls.Add(this.lbRepresentation);
+            this.Controls.Add(this.lbOffice);
             this.Controls.Add(this.cbFiredEmployees);
             this.Controls.Add(this.lbFiredEmployees);
             this.Controls.Add(this.btOK);
@@ -213,13 +207,13 @@ namespace EmployeesTable.Forms
         private System.Windows.Forms.Button btCancelbtCancel;
         private System.Windows.Forms.Label lbFiredEmployees;
         private System.Windows.Forms.CheckBox cbFiredEmployees;
-        private System.Windows.Forms.Label lbRepresentation;
+        private System.Windows.Forms.Label lbOffice;
         private System.Windows.Forms.Label lbDaysNumberFrom;
         private System.Windows.Forms.Label lbDaysNumberTo;
         private System.Windows.Forms.NumericUpDown nudDaysNumberFrom;
         private System.Windows.Forms.NumericUpDown nudDaysNumberTo;
-        private System.Windows.Forms.CheckedListBox clbRepresentation;
-        private ComboBox cbRepresentation;
+        private System.Windows.Forms.CheckedListBox clbOffice;
+        private ComboBox cbOffice;
         private CheckBox cbAnyDaysNumber;
         private Label lbAnyDaysNumber;
     }

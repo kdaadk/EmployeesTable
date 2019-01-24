@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Runtime.Remoting.Channels;
 using System.Windows.Forms;
 
@@ -48,10 +49,11 @@ namespace EmployeesTable.Forms
             this.BtnGridFilter = new System.Windows.Forms.ToolStripButton();
             this.btnRefresh = new System.Windows.Forms.ToolStripButton();
             this.stripStatus = new System.Windows.Forms.StatusStrip();
+            this.slbEmployeesCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.pbStatusImportOrder = new System.Windows.Forms.ToolStripProgressBar();
             this.dgvEmployees = new System.Windows.Forms.DataGridView();
             this.fullName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.representation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.office = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.hoursFullDaysBtn = new System.Windows.Forms.DataGridViewButtonColumn();
             this.hoursPartialDaysBtn = new System.Windows.Forms.DataGridViewButtonColumn();
             this.comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -162,7 +164,7 @@ namespace EmployeesTable.Forms
             this.btImportOrder.Size = new System.Drawing.Size(81, 22);
             this.btImportOrder.Text = "Загрузить";
             this.btImportOrder.ToolTipText = "Загрузить приказ с диска";
-            this.btImportOrder.Click += new System.EventHandler(this.btLoadOrder_Click);
+            this.btImportOrder.Click += new System.EventHandler(this.btImportOrder_Click);
             // 
             // btExportTable
             // 
@@ -204,11 +206,17 @@ namespace EmployeesTable.Forms
             // stripStatus
             // 
             this.stripStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.slbEmployeesCount,
             this.pbStatusImportOrder});
             this.stripStatus.Location = new System.Drawing.Point(0, 303);
             this.stripStatus.Name = "stripStatus";
             this.stripStatus.Size = new System.Drawing.Size(1075, 22);
             this.stripStatus.TabIndex = 3;
+            // 
+            // slbEmployeesCount
+            // 
+            this.slbEmployeesCount.Name = "slbEmployeesCount";
+            this.slbEmployeesCount.Size = new System.Drawing.Size(0, 17);
             // 
             // pbStatusImportOrder
             // 
@@ -220,7 +228,7 @@ namespace EmployeesTable.Forms
             // 
             this.dgvEmployees.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.fullName,
-            this.representation,
+            this.office,
             this.hoursFullDaysBtn,
             this.hoursPartialDaysBtn,
             this.comment});
@@ -239,12 +247,12 @@ namespace EmployeesTable.Forms
             this.fullName.ReadOnly = true;
             this.fullName.Width = 250;
             // 
-            // representation
+            // office
             // 
-            this.representation.HeaderText = "Представительство";
-            this.representation.Name = "representation";
-            this.representation.ReadOnly = true;
-            this.representation.Width = 250;
+            this.office.HeaderText = "Представительство";
+            this.office.Name = "office";
+            this.office.ReadOnly = true;
+            this.office.Width = 250;
             // 
             // hoursFullDaysBtn
             // 
@@ -409,7 +417,7 @@ namespace EmployeesTable.Forms
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripSeparator toolStripSeparator2;
         private DataGridViewTextBoxColumn fullName;
-        private DataGridViewTextBoxColumn representation;
+        private DataGridViewTextBoxColumn office;
         private DataGridViewButtonColumn hoursFullDaysBtn;
         private DataGridViewButtonColumn hoursPartialDaysBtn;
         private DataGridViewTextBoxColumn comment;
@@ -429,6 +437,6 @@ namespace EmployeesTable.Forms
         private ToolStripButton bindingNavigatorMoveLastItem;
         private BindingSource bsPaging;
         private CheckBox cbPaging;
+        private ToolStripStatusLabel slbEmployeesCount;
     }
 }
-

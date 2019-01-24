@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace EmployeesTable.Forms
 {
-    public partial class AddFullDayDetalizationDataForm : Form
+    public sealed partial class AddFullDayDetalizationDataForm : Form
     {
         public AddFullDayDetalizationDataForm(FullDayDetalization Detalization, string headName)
         {
@@ -30,14 +30,10 @@ namespace EmployeesTable.Forms
         {
             Detalization.RestDate =
                 string.IsNullOrWhiteSpace(tpRestDate.CustomFormat) ? (DateTime?) null : tpRestDate.Value;
-            Detalization.Payment = cbPayment.Text == @"Оплата" ? Payment.Money : Payment.Rest;
+            Detalization.Payment = PaymentDetector.DetectFromComboBox(cbPayment.Text);
             Detalization.WorkDate = tpWorkDate.Value;
             Detalization.WorkHours = double.Parse(tbHours.Text);
-            Detalization.Used = cbUsed.Text == @"Да"
-                ? Used.YesFull
-                : cbUsed.Text == @"Частично"
-                    ? Used.YesPartially
-                    : Used.No;
+            Detalization.Used = UsedDetector.DetectFromComboBox(cbUsed.Text);
             Detalization.Comment = tbComment.Text;
 
             DialogResult = DialogResult.OK;

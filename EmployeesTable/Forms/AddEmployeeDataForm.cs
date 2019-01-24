@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace EmployeesTable.Forms
 {
-    public partial class AddEmployeeDataForm : Form
+    public sealed partial class AddEmployeeDataForm : Form
     {
         public AddEmployeeDataForm(Employee employee, string headName)
         {
@@ -20,7 +20,7 @@ namespace EmployeesTable.Forms
             if (Employee != null)
             {
                 tbFullName.Text = Employee.FullName;
-                tbRepresentation.Text = Employee.Representation;
+                tbOffice.Text = Employee.Office;
                 tbComment.Text = Employee.Comment;
                 cbFired.Checked = Employee.Fired;
             }
@@ -29,7 +29,7 @@ namespace EmployeesTable.Forms
         private void btOK_Click(object sender, EventArgs e)
         {
             Employee.FullName = tbFullName.Text;
-            Employee.Representation = tbRepresentation.Text;
+            Employee.Office = tbOffice.Text;
             Employee.Comment = tbComment.Text;
             Employee.Fired = cbFired.Checked;
 

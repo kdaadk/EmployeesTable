@@ -68,7 +68,8 @@ namespace EmployeesTable.Forms
             this.cbRest.FormattingEnabled = true;
             this.cbRest.Items.AddRange(new object[] {
             "Не использован",
-            "Да"});
+            "Да",
+            "Частично"});
             this.cbRest.Location = new System.Drawing.Point(90, 71);
             this.cbRest.Name = "cbRest";
             this.cbRest.Size = new System.Drawing.Size(130, 21);

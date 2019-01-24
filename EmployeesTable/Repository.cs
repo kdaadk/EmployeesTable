@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using EmployeesTable.Import;
 using TinyStore;
+using Application = System.Windows.Forms.Application;
 
 namespace EmployeesTable
 {
-    public class EmployeeRepository
+    public class Repository
     {
         private readonly Func<DialogResult> notUniqueDate = () => MessageBox.Show(
             @"Выбрана уже существующая дата работы.", @"Ошибка при заполнении",
@@ -15,7 +17,7 @@ namespace EmployeesTable
 
         private readonly Store store;
 
-        public EmployeeRepository()
+        public Repository()
         {
             store = new Store(Path.GetDirectoryName(Application.ExecutablePath));
         }
@@ -23,6 +25,16 @@ namespace EmployeesTable
         public void SaveEmployee(string id, Employee employee)
         {
             store.Save(id, employee);
+        }
+
+        public void SaveOrderData(string id, OrderData orderData)
+        {
+             store.Save(id, orderData);
+        }
+
+        public bool IsOrderUniq(string id)
+        {
+            return store.FindByQuery<OrderData>(x => x.ID == id).Any();
         }
 
         public void RecreateEmployee(string id, Employee employee)
@@ -36,7 +48,7 @@ namespace EmployeesTable
             store.ModifyById<Employee>(id, e =>
             {
                 e.FullName = employee.FullName;
-                e.Representation = employee.Representation;
+                e.Office = employee.Office;
                 e.Comment = employee.Comment;
             });
         }
@@ -154,14 +166,22 @@ namespace EmployeesTable
 
         public IEnumerable<Employee> GetEmployeesWith(GridFilterParameters parameters)
         {
-            if(!parameters.AnyDaysNumber)
+            if (parameters.OfficeGroupName == @"Все" && !parameters.AnyDaysNumber)
                 return store.FindByQuery<Employee>(e =>
                     e.Fired == parameters.IsFired
-                    && parameters.Representations.Contains(e.Representation)
+                    && e.HoursFullDays >= parameters.DaysNumberFrom * 8
+                    && e.HoursFullDays <= parameters.DaysNumberTo * 8).OrderBy(e => e.FullName);
+            if (parameters.OfficeGroupName == @"Все")
+                return store.FindByQuery<Employee>(e =>
+                    e.Fired == parameters.IsFired).OrderBy(e => e.FullName);
+            if (!parameters.AnyDaysNumber)
+                return store.FindByQuery<Employee>(e =>
+                    e.Fired == parameters.IsFired
+                    && parameters.SelectedOffices.Contains(e.Office)
                     && e.HoursFullDays >= parameters.DaysNumberFrom * 8
                     && e.HoursFullDays <= parameters.DaysNumberTo * 8).OrderBy(e => e.FullName);
             return store.FindByQuery<Employee>(e => e.Fired == parameters.IsFired
-                && parameters.Representations.Contains(e.Representation)).OrderBy(e => e.FullName);
+                && parameters.SelectedOffices.Contains(e.Office)).OrderBy(e => e.FullName);
         }
 
         public void DeleteEmployee(string id)
@@ -231,6 +251,16 @@ namespace EmployeesTable
         private bool IsUniqueWorkFullDayDate(FullDayDetalization detalization, Employee employee)
         {
             return employee.FullDayDetalizations.All(d => d.WorkDate?.Date != detalization?.WorkDate?.Date);
+        }
+
+        public bool TryGetNewOffices(List<string> prevOffices, out List<string> newOffices)
+        {
+            newOffices = GetAllEmployees()
+                .Select(e => e.Office)
+                .Distinct()
+                .Where(r => !prevOffices
+                    .Contains(r)).ToList();
+            return newOffices.Count > 0;
         }
     }
 }
