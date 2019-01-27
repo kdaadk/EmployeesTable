@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace EmployeesTable.Forms
+namespace EmployeesTable.Feature.FilterEmployee
 {
     partial class GridFilterForm
     {

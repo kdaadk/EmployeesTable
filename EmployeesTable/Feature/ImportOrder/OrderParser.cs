@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Spire.Doc;
 
-namespace EmployeesTable.Import
+namespace EmployeesTable.Feature.ImportOrder
 {
     public class OrderParser
     {

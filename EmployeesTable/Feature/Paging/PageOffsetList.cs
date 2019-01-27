@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EmployeesTable
+namespace EmployeesTable.Feature.Paging
 {
     public class PageOffsetList : System.ComponentModel.IListSource
     {

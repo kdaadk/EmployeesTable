@@ -4,80 +4,21 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using EmployeesTable.Import;
-using NsExcel = Microsoft.Office.Interop.Excel;
 
-namespace EmployeesTable
+namespace EmployeesTable.Feature.ImportOrder
 {
-    public class EmployeeTableFormHelper
+    public class ImportOrder
     {
         private readonly Repository repository;
         private readonly StringBuilder Log;
 
-        public EmployeeTableFormHelper(Repository repository)
+        public ImportOrder(Repository repository)
         {
             this.repository = repository;
             Log = new StringBuilder();
         }
 
-        public void ExportTableToExcel(List<Employee> employees)
-        {
-            var excapp = new NsExcel.Application{Visible = true};
-
-
-            var xlWorkbook = excapp.Workbooks.Add(NsExcel.XlWBATemplate.xlWBATWorksheet);
-            var sheet = (NsExcel.Worksheet)xlWorkbook.Sheets[1];
-            int counter = 1;
-
-            foreach (var employee in employees)
-            {
-                var cellNameA = "A" + counter;
-                var cellNameB = "B" + counter;
-                var cellNameC = "C" + counter;
-                var cellNameD = "D" + counter;
-                var cellNameE = "E" + counter;
-                sheet.Range[cellNameA, cellNameA].Value2 = employee.FullName;
-                sheet.Range[cellNameB, cellNameB].Value2 = employee.Office;
-                sheet.Range[cellNameC, cellNameC].Value2 = employee.HoursFullDays / 8;
-                sheet.Range[cellNameD, cellNameD].Value2 = employee.HoursPartialDays;
-                sheet.Range[cellNameE, cellNameE].Value2 = employee.Comment;
-                ++counter;
-            }
-        }
-
-        private void SaveLog()
-        {
-            var now = DateTime.Now;
-            var logPath = $"{Path.GetDirectoryName(Application.ExecutablePath)}\\Logs";
-            var filePath = $"{logPath}\\{now.ToShortDateString()}.{now.Hour}.{now.Minute}.{now.Second}.txt";
-
-            if (!Directory.Exists(logPath))
-                Directory.CreateDirectory(logPath);
-            File.WriteAllLines(filePath, Log.ToString().Split('\n'));
-        }
-
-        public string GetDeclension(int number, string nominativ, string genetiv, string plural)
-        {
-            number = number % 100;
-
-            if (number >= 11 && number <= 19)
-                return plural;
-
-            var i = number % 10;
-            switch (i)
-            {
-                case 1:
-                    return nominativ;
-                case 2:
-                case 3:
-                case 4:
-                    return genetiv;
-                default:
-                    return plural;
-            }
-        }
-
-        public void AddOrderData(OrderParser parser, List<OrderData> orderData)
+        public void AddData(OrderParser parser, List<OrderData> orderData)
         {
             var recordCounter = 0;
             var newEmployeesName = new List<string>();
@@ -119,13 +60,35 @@ namespace EmployeesTable
             foreach (var data in orderData)
                 repository.SaveOrderData(Guid.NewGuid().ToString(), data);
 
-                var loadInfo = $@"Загружено {recordCounter} записей
+            var loadInfo = $@"Загружено {recordCounter} записей
 Из них новых сотрудников {newEmployeesName.Count}:
 Посмотреть их можно в файле: {$"{Path.GetDirectoryName(Application.ExecutablePath)}\\Logs"}";
 
             MessageBox.Show(loadInfo, @"Импорт приказа", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Log.AppendLine(loadInfo);
             SaveLog();
+        }
+
+        public bool Import()
+        {
+            var parser = new OrderParser(repository);
+            string orderPath = null;
+
+            using (var openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = @"doc files (*.doc;*.docx)|*.doc;*docx";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    orderPath = openFileDialog.FileName;
+            }
+
+            if (orderPath != null && parser.TryParse(orderPath, out var orderData))
+            {
+                AddData(parser, orderData);
+                return true;
+            }
+
+            return false;
         }
 
         private bool TryGetAllDetalizations(IEnumerable<string> workDates, Payment payment,
@@ -163,6 +126,17 @@ namespace EmployeesTable
             }
 
             return true;
+        }
+
+        private void SaveLog()
+        {
+            var now = DateTime.Now;
+            var logPath = $"{Path.GetDirectoryName(Application.ExecutablePath)}\\Logs";
+            var filePath = $"{logPath}\\{now.ToShortDateString()}.{now.Hour}.{now.Minute}.{now.Second}.txt";
+
+            if (!Directory.Exists(logPath))
+                Directory.CreateDirectory(logPath);
+            File.WriteAllLines(filePath, Log.ToString().Split('\n'));
         }
     }
 }

@@ -79,15 +79,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataGridViewExtensions.cs" />
     <Compile Include="Employee.cs" />
-    <Compile Include="Paging.cs" />
+    <Compile Include="EmployeeLoader.cs" />
+    <Compile Include="Feature\AddEmployee\AddEmployee.cs" />
+    <Compile Include="Feature\DeleteEmployee\DeleteEmployee.cs" />
+    <Compile Include="Feature\EditEmployee\EditEmployee.cs" />
+    <Compile Include="Feature\ExportExcel\ExportExcel.cs" />
+    <Compile Include="Feature\ImportOrder\ImportOrder.cs" />
+    <Compile Include="Feature\Paging\Paging.cs" />
     <Compile Include="Repository.cs" />
-    <Compile Include="EmployeeTableFormHelper.cs" />
     <Compile Include="EnumExtensions.cs" />
-    <Compile Include="Forms\AddEmployeeDataForm.cs">
+    <Compile Include="Feature\AddEmployee\AddEmployeeDataForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\AddEmployeeDataForm.Designer.cs">
+    <Compile Include="Feature\AddEmployee\AddEmployeeDataForm.Designer.cs">
       <DependentUpon>AddEmployeeDataForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\AddFullDayDetalizationDataForm.cs">
@@ -120,17 +126,17 @@
     <Compile Include="Forms\EmployeeTableForm.Designer.cs">
       <DependentUpon>EmployeeTableForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\GridFilterForm.cs">
+    <Compile Include="Feature\FilterEmployee\GridFilterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\GridFilterForm.Designer.cs">
+    <Compile Include="Feature\FilterEmployee\GridFilterForm.Designer.cs">
       <DependentUpon>GridFilterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FullDayDetalization.cs" />
-    <Compile Include="GridFilterParameters.cs" />
-    <Compile Include="Import\OrderData.cs" />
-    <Compile Include="Import\OrderParser.cs" />
-    <Compile Include="PageOffsetList.cs" />
+    <Compile Include="Feature\FilterEmployee\GridFilterParameters.cs" />
+    <Compile Include="Feature\ImportOrder\OrderData.cs" />
+    <Compile Include="Feature\ImportOrder\OrderParser.cs" />
+    <Compile Include="Feature\Paging\PageOffsetList.cs" />
     <Compile Include="PartialDayDetalization.cs" />
     <Compile Include="Payment.cs" />
     <Compile Include="PaymentDetector.cs" />
@@ -138,7 +144,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Used.cs" />
     <Compile Include="UsedDetector.cs" />
-    <EmbeddedResource Include="Forms\AddEmployeeDataForm.resx">
+    <EmbeddedResource Include="Feature\AddEmployee\AddEmployeeDataForm.resx">
       <DependentUpon>AddEmployeeDataForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AddFullDayDetalizationDataForm.resx">
@@ -156,7 +162,7 @@
     <EmbeddedResource Include="Forms\EmployeeTableForm.resx">
       <DependentUpon>EmployeeTableForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\GridFilterForm.resx">
+    <EmbeddedResource Include="Feature\FilterEmployee\GridFilterForm.resx">
       <DependentUpon>GridFilterForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -212,5 +218,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

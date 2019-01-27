@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace EmployeesTable.Forms
+namespace EmployeesTable.Feature.AddEmployee
 {
     public sealed partial class AddEmployeeDataForm : Form
     {

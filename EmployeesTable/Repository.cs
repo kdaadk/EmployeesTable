@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using EmployeesTable.Import;
+using EmployeesTable.Feature.FilterEmployee;
+using EmployeesTable.Feature.ImportOrder;
 using TinyStore;
 using Application = System.Windows.Forms.Application;
 

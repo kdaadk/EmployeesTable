@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EmployeesTable.Import
+namespace EmployeesTable.Feature.ImportOrder
 {
     public class OrderData
     {

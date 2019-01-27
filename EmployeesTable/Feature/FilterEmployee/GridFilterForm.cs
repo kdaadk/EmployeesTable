@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace EmployeesTable.Forms
+namespace EmployeesTable.Feature.FilterEmployee
 {
     public partial class GridFilterForm : Form
     {
@@ -46,7 +46,6 @@ namespace EmployeesTable.Forms
         }
 
         public GridFilterParameters Parameters { get; set; }
-
 
         private void GridFilter_Load(object sender, EventArgs e)
         {
