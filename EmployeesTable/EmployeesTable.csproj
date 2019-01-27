@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Employee.cs" />
+    <Compile Include="Paging.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="EmployeeTableFormHelper.cs" />
     <Compile Include="EnumExtensions.cs" />

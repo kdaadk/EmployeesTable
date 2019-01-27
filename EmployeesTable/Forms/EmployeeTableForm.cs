@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -25,6 +26,18 @@ namespace EmployeesTable.Forms
         {
             filteredEmployees = new List<Employee>();
             repository = new Repository();
+
+            //string[] filePaths = Directory.GetFiles
+            //(@"C:\Users\klopov\Desktop\PersonalWorks\EmployeesTableNetFramework\EmployeesTable\bin\Debug\tinyDb\Employee\", "*.*",
+            //    SearchOption.TopDirectoryOnly);
+
+            //foreach (var filePath in filePaths)
+            //{
+            //    var text = File.ReadAllLines(filePath);
+            //    var changedText = text.Select(t => t.Replace("Representation", "Office"));
+            //    File.WriteAllLines(filePath, changedText);
+            //}
+
             var selectedOffices = repository.GetAllEmployees().Select(e => e.Office).Distinct().ToList();
             var allOffices = repository.GetAllEmployees().Select(e => e.Office).Distinct().ToList();
             filterParameters = new GridFilterParameters
@@ -55,18 +68,6 @@ namespace EmployeesTable.Forms
                     employee.HoursFullDays / 8, employee.HoursPartialDays, employee.Comment);
 
             slbEmployeesCount.Text = $@"Найдено: {filteredEmployees.Count} {employeeTableFormHelper.GetDeclension(filteredEmployees.Count, "сотрудник", "сотрудника", "сотрудников")}";
-        }
-
-
-
-        private void bsPaging_CurrentChanged(object sender, EventArgs e)
-        {
-            var offset = (int)bsPaging.Current;
-            dgvEmployees.Rows.Clear();
-            for (var i = offset; i < offset + 50 && i < filteredEmployees.Count; i++)
-                dgvEmployees.Rows.Add(filteredEmployees[i].FullName, filteredEmployees[i].Office,
-                    filteredEmployees[i].HoursFullDays / 8, filteredEmployees[i].HoursPartialDays,
-                    filteredEmployees[i].Comment);
         }
 
         private void EmployeeTableForm_Load(object sender, EventArgs e)
@@ -185,6 +186,8 @@ namespace EmployeesTable.Forms
             {
                 filterParameters = gridFilter.Parameters;
                 LoadEmployeesWith(gridFilter.Parameters);
+                var paging = new Paging(bnPaging, bsPaging, dgvEmployees, filteredEmployees);
+                paging.Checked();
             }
         }
 
@@ -255,9 +258,8 @@ namespace EmployeesTable.Forms
 
             if (cbPaging.Checked)
             {
-                bnPaging.BindingSource = bsPaging;
-                bsPaging.CurrentChanged += bsPaging_CurrentChanged;
-                bsPaging.DataSource = new PageOffsetList(filteredEmployees.Count);
+                var paging = new Paging(bnPaging, bsPaging, dgvEmployees, filteredEmployees);
+                paging.Checked();
             }
             else
             {
@@ -267,13 +269,13 @@ namespace EmployeesTable.Forms
 
         private void cbPaging_CheckedChanged(object sender, EventArgs e)
         {
+            var paging = new Paging(bnPaging, bsPaging, dgvEmployees, filteredEmployees);
+
             bnPaging.Visible = cbPaging.Checked;
             if (cbPaging.Checked)
             {
                 slbEmployeesCount.Margin = new Padding(210, 3, 1, 3);
-                bnPaging.BindingSource = bsPaging;
-                bsPaging.CurrentChanged += bsPaging_CurrentChanged;
-                bsPaging.DataSource = new PageOffsetList(filteredEmployees.Count);
+                paging.Checked();
             }
             else
             {
