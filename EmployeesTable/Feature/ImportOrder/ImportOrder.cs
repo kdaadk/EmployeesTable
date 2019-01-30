@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using EmployeesTable.Model;
 
 namespace EmployeesTable.Feature.ImportOrder
 {

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace EmployeesTable
+namespace EmployeesTable.Extensions
 {
     public static class DataGridViewExtensions
     {

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Forms;
+using EmployeesTable.Extensions;
+using EmployeesTable.Model;
 
 namespace EmployeesTable.Forms
 {
@@ -14,7 +16,6 @@ namespace EmployeesTable.Forms
             InitializeComponent();
             Text = headName;
         }
-
 
         private void AddDataToDb_Load(object sender, EventArgs e)
         {

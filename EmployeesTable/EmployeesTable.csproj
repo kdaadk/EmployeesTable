@@ -49,7 +49,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Elegantthemes-Beautiful-Flat-Booklet.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Elegantthemes-Beautiful-Flat-Booklet.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
@@ -79,8 +79,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataGridViewExtensions.cs" />
-    <Compile Include="Employee.cs" />
+    <Compile Include="Extensions\DataGridViewExtensions.cs" />
+    <Compile Include="Model\Employee.cs" />
     <Compile Include="EmployeeLoader.cs" />
     <Compile Include="Feature\AddEmployee\AddEmployee.cs" />
     <Compile Include="Feature\DeleteEmployee\DeleteEmployee.cs" />
@@ -89,7 +89,7 @@
     <Compile Include="Feature\ImportOrder\ImportOrder.cs" />
     <Compile Include="Feature\Paging\Paging.cs" />
     <Compile Include="Repository.cs" />
-    <Compile Include="EnumExtensions.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Feature\AddEmployee\AddEmployeeDataForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -132,12 +132,12 @@
     <Compile Include="Feature\FilterEmployee\GridFilterForm.Designer.cs">
       <DependentUpon>GridFilterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FullDayDetalization.cs" />
+    <Compile Include="Model\FullDayDetalization.cs" />
     <Compile Include="Feature\FilterEmployee\GridFilterParameters.cs" />
     <Compile Include="Feature\ImportOrder\OrderData.cs" />
     <Compile Include="Feature\ImportOrder\OrderParser.cs" />
     <Compile Include="Feature\Paging\PageOffsetList.cs" />
-    <Compile Include="PartialDayDetalization.cs" />
+    <Compile Include="Model\PartialDayDetalization.cs" />
     <Compile Include="Payment.cs" />
     <Compile Include="PaymentDetector.cs" />
     <Compile Include="Program.cs" />
@@ -196,7 +196,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Elegantthemes-Beautiful-Flat-Booklet.ico" />
+    <Content Include="Resources\Elegantthemes-Beautiful-Flat-Booklet.ico" />
     <Content Include="Resources\btAddEmployee.Image.png" />
     <Content Include="Resources\btDeleteEmployee.Image.png" />
     <Content Include="Resources\btEditEmployee.Image.png" />

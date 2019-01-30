@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using EmployeesTable.Extensions;
 
 namespace EmployeesTable.Feature.DeleteEmployee
 {

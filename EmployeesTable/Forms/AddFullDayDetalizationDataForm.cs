@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Forms;
+using EmployeesTable.Extensions;
+using EmployeesTable.Model;
 
 namespace EmployeesTable.Forms
 {

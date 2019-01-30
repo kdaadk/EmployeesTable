@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using EmployeesTable.Extensions;
+using EmployeesTable.Model;
 
 namespace EmployeesTable.Forms
 {

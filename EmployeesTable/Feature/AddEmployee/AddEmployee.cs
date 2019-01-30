@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using EmployeesTable.Model;
 
 namespace EmployeesTable.Feature.AddEmployee
 {

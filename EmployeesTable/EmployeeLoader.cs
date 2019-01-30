@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using EmployeesTable.Feature.FilterEmployee;
+using EmployeesTable.Model;
 
 namespace EmployeesTable
 {

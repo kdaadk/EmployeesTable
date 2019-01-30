@@ -1,11 +1,9 @@
 ﻿using System;
 
-namespace EmployeesTable
+namespace EmployeesTable.Model
 {
-    public class FullDayDetalization
+    public class PartialDayDetalization
     {
-        public Payment Payment { get; set; }
-        public DateTime? RestDate { get; set; }
         public string ID { get; set; }
         public DateTime? WorkDate { get; set; }
         public double WorkHours { get; set; }

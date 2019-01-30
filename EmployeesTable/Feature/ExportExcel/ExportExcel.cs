@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
+using EmployeesTable.Model;
 using NsExcel = Microsoft.Office.Interop.Excel;
 
 namespace EmployeesTable.Feature.ExportExcel

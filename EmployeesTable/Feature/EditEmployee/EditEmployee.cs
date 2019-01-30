@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using EmployeesTable.Extensions;
 using EmployeesTable.Feature.AddEmployee;
 
 namespace EmployeesTable.Feature.EditEmployee

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using EmployeesTable.Feature.FilterEmployee;
 using EmployeesTable.Feature.ImportOrder;
+using EmployeesTable.Model;
 using TinyStore;
 using Application = System.Windows.Forms.Application;
 
