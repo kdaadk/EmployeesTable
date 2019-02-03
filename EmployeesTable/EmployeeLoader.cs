@@ -8,7 +8,7 @@ namespace EmployeesTable
     public class EmployeeLoader
     {
         private readonly DataGridView dataGridEmployees;
-        readonly List<Employee> filteredEmployees;
+        private readonly List<Employee> filteredEmployees;
         private readonly Repository repository;
         private readonly ToolStripStatusLabel employeeCounter;
 
@@ -34,8 +34,18 @@ namespace EmployeesTable
             foreach (var employee in filteredEmployees)
                 dataGridEmployees.Rows.Add(employee.FullName, employee.Office,
                     employee.HoursFullDays / 8, employee.HoursPartialDays, employee.Comment);
+        }
 
-            employeeCounter.Text = $@"Найдено: {filteredEmployees.Count} {GetDeclension(filteredEmployees.Count, "сотрудник", "сотрудника", "сотрудников")}";
+        public List<Employee> GetAndLoadWith(GridFilterParameters parameters)
+        {
+            LoadWith(parameters);
+            RefreshEmployeeCounter(filteredEmployees.Count);
+            return filteredEmployees;
+        }
+
+        public void RefreshEmployeeCounter(int employeeNumber)
+        {
+            employeeCounter.Text = $@"Найдено: {employeeNumber} {GetDeclension(employeeNumber, "сотрудник", "сотрудника", "сотрудников")}";
         }
 
         private string GetDeclension(int number, string nominativ, string genetiv, string plural)

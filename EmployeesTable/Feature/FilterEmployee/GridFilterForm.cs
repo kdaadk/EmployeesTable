@@ -55,9 +55,18 @@ namespace EmployeesTable.Feature.FilterEmployee
             nudDaysNumberTo.Value = (decimal) Parameters.DaysNumberTo;
             cbOffice.SelectedText = Parameters.OfficeGroupName;
             cbAnyDaysNumber.Checked = Parameters.AnyDaysNumber;
+            nudDaysNumberFrom.Enabled = !cbAnyDaysNumber.Checked;
+            nudDaysNumberTo.Enabled = !cbAnyDaysNumber.Checked;
 
             if (clbOffice.Items.Count == 0)
                 return;
+
+            if (cbAnyDaysNumber.Checked)
+            {
+                Parameters.AnyDaysNumber = true;
+                nudDaysNumberFrom.Enabled = false;
+                nudDaysNumberTo.Enabled = false;
+            }
 
             if (Parameters.OfficeGroupName == @"Все")
             {
@@ -98,6 +107,7 @@ namespace EmployeesTable.Feature.FilterEmployee
             Parameters.IsFired = cbFiredEmployees.Checked;
             Parameters.DaysNumberFrom = (double) nudDaysNumberFrom.Value;
             Parameters.DaysNumberTo = (double) nudDaysNumberTo.Value;
+            Parameters.AnyDaysNumber = cbAnyDaysNumber.Checked;
             Parameters.SelectedOffices.Clear();
             var offices = clbOffice.CheckedItems.OfType<string>().ToList();
 
@@ -148,18 +158,9 @@ namespace EmployeesTable.Feature.FilterEmployee
 
         private void cbAnyDaysNumber_CheckedChanged(object sender, EventArgs e)
         {
-            if (cbAnyDaysNumber.Checked)
-            {
-                Parameters.AnyDaysNumber = true;
-                nudDaysNumberFrom.Enabled = false;
-                nudDaysNumberTo.Enabled = false;
-            }
-            else
-            {
-                Parameters.AnyDaysNumber = false;
-                nudDaysNumberFrom.Enabled = true;
-                nudDaysNumberTo.Enabled = true;
-            }
+            Parameters.AnyDaysNumber = cbAnyDaysNumber.Checked;
+            nudDaysNumberFrom.Enabled = !cbAnyDaysNumber.Checked;
+            nudDaysNumberTo.Enabled = !cbAnyDaysNumber.Checked;
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Runtime.Remoting.Channels;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace EmployeesTable.Forms
 {
@@ -57,23 +54,9 @@ namespace EmployeesTable.Forms
             this.hoursFullDaysBtn = new System.Windows.Forms.DataGridViewButtonColumn();
             this.hoursPartialDaysBtn = new System.Windows.Forms.DataGridViewButtonColumn();
             this.comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bnPaging = new System.Windows.Forms.BindingNavigator(this.components);
-            this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
-            this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
-            this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
-            this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
-            this.cbPaging = new System.Windows.Forms.CheckBox();
-            this.bsPaging = new System.Windows.Forms.BindingSource(this.components);
             this.stripMenu.SuspendLayout();
             this.stripStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployees)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bnPaging)).BeginInit();
-            this.bnPaging.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsPaging)).BeginInit();
             this.SuspendLayout();
             // 
             // stripMenu
@@ -273,114 +256,11 @@ namespace EmployeesTable.Forms
             this.comment.ReadOnly = true;
             this.comment.Width = 300;
             // 
-            // bnPaging
-            // 
-            this.bnPaging.AddNewItem = null;
-            this.bnPaging.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.bnPaging.CountItem = this.bindingNavigatorCountItem;
-            this.bnPaging.DeleteItem = null;
-            this.bnPaging.Dock = System.Windows.Forms.DockStyle.None;
-            this.bnPaging.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bindingNavigatorMoveFirstItem,
-            this.bindingNavigatorMovePreviousItem,
-            this.bindingNavigatorSeparator,
-            this.bindingNavigatorPositionItem,
-            this.bindingNavigatorCountItem,
-            this.bindingNavigatorSeparator1,
-            this.bindingNavigatorMoveNextItem,
-            this.bindingNavigatorMoveLastItem});
-            this.bnPaging.Location = new System.Drawing.Point(0, 303);
-            this.bnPaging.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
-            this.bnPaging.MoveLastItem = this.bindingNavigatorMoveLastItem;
-            this.bnPaging.MoveNextItem = this.bindingNavigatorMoveNextItem;
-            this.bnPaging.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
-            this.bnPaging.Name = "bnPaging";
-            this.bnPaging.PositionItem = this.bindingNavigatorPositionItem;
-            this.bnPaging.Size = new System.Drawing.Size(203, 25);
-            this.bnPaging.TabIndex = 4;
-            this.bnPaging.Visible = false;
-            // 
-            // bindingNavigatorCountItem
-            // 
-            this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(35, 22);
-            this.bindingNavigatorCountItem.Text = "of {0}";
-            this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
-            // 
-            // bindingNavigatorMoveFirstItem
-            // 
-            this.bindingNavigatorMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
-            this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
-            this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorMoveFirstItem.Text = "Move first";
-            // 
-            // bindingNavigatorMovePreviousItem
-            // 
-            this.bindingNavigatorMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
-            this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
-            this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorMovePreviousItem.Text = "Move previous";
-            // 
-            // bindingNavigatorSeparator
-            // 
-            this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
-            this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 25);
-            // 
-            // bindingNavigatorPositionItem
-            // 
-            this.bindingNavigatorPositionItem.AccessibleName = "Position";
-            this.bindingNavigatorPositionItem.AutoSize = false;
-            this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
-            this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 23);
-            this.bindingNavigatorPositionItem.Text = "0";
-            this.bindingNavigatorPositionItem.ToolTipText = "Current position";
-            // 
-            // bindingNavigatorSeparator1
-            // 
-            this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
-            this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // bindingNavigatorMoveNextItem
-            // 
-            this.bindingNavigatorMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
-            this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
-            this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorMoveNextItem.Text = "Move next";
-            // 
-            // bindingNavigatorMoveLastItem
-            // 
-            this.bindingNavigatorMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
-            this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
-            this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
-            this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 22);
-            this.bindingNavigatorMoveLastItem.Text = "Move last";
-            // 
-            // cbPaging
-            // 
-            this.cbPaging.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbPaging.AutoSize = true;
-            this.cbPaging.Location = new System.Drawing.Point(929, 307);
-            this.cbPaging.Name = "cbPaging";
-            this.cbPaging.Size = new System.Drawing.Size(127, 17);
-            this.cbPaging.TabIndex = 5;
-            this.cbPaging.Text = "Включить пейджинг";
-            this.cbPaging.UseVisualStyleBackColor = true;
-            this.cbPaging.CheckedChanged += new System.EventHandler(this.cbPaging_CheckedChanged);
-            // 
             // EmployeeTableForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1075, 325);
-            this.Controls.Add(this.cbPaging);
-            this.Controls.Add(this.bnPaging);
             this.Controls.Add(this.dgvEmployees);
             this.Controls.Add(this.stripStatus);
             this.Controls.Add(this.stripMenu);
@@ -394,10 +274,6 @@ namespace EmployeesTable.Forms
             this.stripStatus.ResumeLayout(false);
             this.stripStatus.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployees)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bnPaging)).EndInit();
-            this.bnPaging.ResumeLayout(false);
-            this.bnPaging.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsPaging)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -426,17 +302,6 @@ namespace EmployeesTable.Forms
         private ToolStripButton btAddEmployee;
         private ToolStripLabel lbSearchIcon;
         private ToolStripButton btnRefresh;
-        private BindingNavigator bnPaging;
-        private ToolStripLabel bindingNavigatorCountItem;
-        private ToolStripButton bindingNavigatorMoveFirstItem;
-        private ToolStripButton bindingNavigatorMovePreviousItem;
-        private ToolStripSeparator bindingNavigatorSeparator;
-        private ToolStripTextBox bindingNavigatorPositionItem;
-        private ToolStripSeparator bindingNavigatorSeparator1;
-        private ToolStripButton bindingNavigatorMoveNextItem;
-        private ToolStripButton bindingNavigatorMoveLastItem;
-        private BindingSource bsPaging;
-        private CheckBox cbPaging;
         private ToolStripStatusLabel slbEmployeesCount;
     }
 }

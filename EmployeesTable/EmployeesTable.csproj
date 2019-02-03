@@ -87,7 +87,6 @@
     <Compile Include="Feature\EditEmployee\EditEmployee.cs" />
     <Compile Include="Feature\ExportExcel\ExportExcel.cs" />
     <Compile Include="Feature\ImportOrder\ImportOrder.cs" />
-    <Compile Include="Feature\Paging\Paging.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Feature\AddEmployee\AddEmployeeDataForm.cs">
@@ -136,7 +135,6 @@
     <Compile Include="Feature\FilterEmployee\GridFilterParameters.cs" />
     <Compile Include="Feature\ImportOrder\OrderData.cs" />
     <Compile Include="Feature\ImportOrder\OrderParser.cs" />
-    <Compile Include="Feature\Paging\PageOffsetList.cs" />
     <Compile Include="Model\PartialDayDetalization.cs" />
     <Compile Include="Payment.cs" />
     <Compile Include="PaymentDetector.cs" />

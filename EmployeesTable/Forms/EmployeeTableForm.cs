@@ -9,14 +9,13 @@ using EmployeesTable.Feature.EditEmployee;
 using EmployeesTable.Feature.ExportExcel;
 using EmployeesTable.Feature.FilterEmployee;
 using EmployeesTable.Feature.ImportOrder;
-using EmployeesTable.Feature.Paging;
 using EmployeesTable.Model;
 
 namespace EmployeesTable.Forms
 {
     public partial class EmployeeTableForm : Form
     {
-        private Repository repository;
+        private readonly Repository repository;
         private List<Employee> filteredEmployees;
         private GridFilterParameters filterParameters;
         private readonly EmployeeLoader gridLoader;
@@ -52,7 +51,7 @@ namespace EmployeesTable.Forms
 
         private void EmployeeTableForm_Load(object sender, EventArgs e)
         {
-            gridLoader.LoadWith(filterParameters);
+            gridLoader.GetAndLoadWith(filterParameters);
         }
 
         private void EmployeeTableForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -104,12 +103,13 @@ namespace EmployeesTable.Forms
 
             if (string.IsNullOrWhiteSpace(input.Text))
             {
-                gridLoader.LoadWith(filterParameters);
+                filteredEmployees = gridLoader.GetAndLoadWith(filterParameters);
                 return;
             }
 
             dgvEmployees.Rows.Clear();
             filteredEmployees = repository.GetEmployeesWithFullNameBegin(input.Text).ToList();
+            gridLoader.RefreshEmployeeCounter(filteredEmployees.Count);
 
             if (filteredEmployees != null)
                 foreach (var employee in filteredEmployees)
@@ -122,7 +122,7 @@ namespace EmployeesTable.Forms
             EnableProgressBar(false);
             var importOrder = new ImportOrder(repository);
             if (importOrder.Import())
-                gridLoader.LoadWith(filterParameters);
+                filteredEmployees = gridLoader.GetAndLoadWith(filterParameters);
             EnableProgressBar(true);
         }
 
@@ -147,9 +147,8 @@ namespace EmployeesTable.Forms
             if (gridFilter.ShowDialog() == DialogResult.OK)
             {
                 filterParameters = gridFilter.Parameters;
-                gridLoader.LoadWith(filterParameters);
-                var paging = new Paging(bnPaging, bsPaging, dgvEmployees, filteredEmployees);
-                paging.Checked();
+                filteredEmployees = gridLoader.GetAndLoadWith(filterParameters);
+                tstbFullNameSearcher.Text = null;
             }
         }
 
@@ -157,7 +156,7 @@ namespace EmployeesTable.Forms
         {
             var addEmployee = new AddEmployee(repository);
             if (addEmployee.Perform())
-                gridLoader.LoadWith(filterParameters);
+                filteredEmployees = gridLoader.GetAndLoadWith(filterParameters);
         }
 
         private void btEmployeeEdit_Click(object sender, EventArgs e)
@@ -165,7 +164,7 @@ namespace EmployeesTable.Forms
             var selectedRow = dgvEmployees.GetSelectedRow();
             var editEmployee = new EditEmployee(repository);
             if (editEmployee.Perform(selectedRow))
-                gridLoader.LoadWith(filterParameters);
+                gridLoader.GetAndLoadWith(filterParameters);
         }
 
         private void btEmployeeDelete_Click(object sender, EventArgs e)
@@ -174,35 +173,16 @@ namespace EmployeesTable.Forms
             var selectedRow = dgvEmployees.GetSelectedRow();
             var deleteEmployee = new DeleteEmployee(repository);
             if (deleteEmployee.Perform(selectedRow))
+            {
                 dgvEmployees.Rows.RemoveAt(selectedRowIndex);
+                gridLoader.RefreshEmployeeCounter(filteredEmployees.Count -1);
+            }
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            tstbFullNameSearcher.Control.Text = "";
-            var paging = new Paging(bnPaging, bsPaging, dgvEmployees, filteredEmployees);
-
-            if (cbPaging.Checked)
-                paging.Checked();
-            else
-                gridLoader.LoadWith(filterParameters);
-        }
-
-        private void cbPaging_CheckedChanged(object sender, EventArgs e)
-        {
-            var paging = new Paging(bnPaging, bsPaging, dgvEmployees, filteredEmployees);
-
-            bnPaging.Visible = cbPaging.Checked;
-            if (cbPaging.Checked)
-            {
-                slbEmployeesCount.Margin = new Padding(210, 3, 1, 3);
-                paging.Checked();
-            }
-            else
-            {
-                slbEmployeesCount.Margin = new Padding(1, 3, 1, 3);
-                gridLoader.LoadWith(filterParameters);
-            }
+            tstbFullNameSearcher.Text = null;
+            filteredEmployees = gridLoader.GetAndLoadWith(filterParameters);
         }
     }
 }
